@@ -37,11 +37,17 @@ Login: Dani
 Database: Dani
 Sign up: Fernanda
 
-Account: 
-Firstname
-Lastname
-email (username)
-password:
-isAdmin:
+## Important
+Security
+Style: darkmode, maybe switchable?
+Mainpage/eventpage
+Navbar: Home/logo, Search bar? Login, sign up (Logged in : Account img?, name)
+Search bar
+Account dropdown - settings(change password, put image, delete account), history (what events were booked)
+Admin sidebar: Manage events, Manage accounts, event/user statistics
+Footer
 
-
+## Features for later
+Chat - related to events
+Send mail, send sms
+Payment API - payment history
