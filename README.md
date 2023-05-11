@@ -4,7 +4,7 @@
 ### Overview: 
 Create an online event management platform that allows users to create, manage, and join events. The platform will have features like event creation, event search, user authentication, and authorization.
 ## Main Features:
-### User Authentication & Authorization:
+### User Authentication & Authorization: 
 Use Passport.js for authentication and authorization with the platform.
 Allow users to sign up and log in using their email and password or with social media accounts (e.g., Google, Facebook).
 Implement role-based access control for different user types (e.g., event organizers, attendees).
@@ -21,9 +21,27 @@ Allow users to join events as attendees.
 Ticket sale
 Implement a feature to track attendance and display the list of attendees on the event page.
 Send email notifications to attendees about upcoming events and updates.
-### Database:
+### Database: 
 Use a database like MongoDB or PostgreSQL to store user and event data.
 Create database schemas for users, events, and attendance.
 Implement CRUD operations for managing data.
 ### API:
 Develop a RESTful API using Node.js and Express.js to handle all backend operations.
+
+
+
+## TODO:
+
+Frontpage: Fernanda
+Login: Dani
+Database: Dani
+Sign up: Fernanda
+
+Account: 
+Firstname
+Lastname
+email (username)
+password:
+isAdmin:
+
+
