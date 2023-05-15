@@ -2,15 +2,14 @@ import { MongoClient } from 'mongodb';
 
 let dbConnection;
 
-const connectToDb = (cb) => {
-  MongoClient.connect('mongodb://localhost:27017/eventmanager')
+const connectToDb = () => {
+  MongoClient.connect('mongodb://127.0.0.1:27017/eventmanager')
     .then((client) => {
       dbConnection = client.db();
-      return cb();
+  
     })
     .catch((err) => {
       console.log(err);
-      return cb(err);
     });
 };
 

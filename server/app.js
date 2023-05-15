@@ -11,9 +11,11 @@ app.use(cors());
 
 import loginRouter from "./routers/loginRouter.js";
 app.use(loginRouter);
+import getUsers from "./routers/getUsers.js"
+app.use(getUsers);
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
-
