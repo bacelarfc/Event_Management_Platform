@@ -22,7 +22,7 @@
     });
 
     if (!response.ok) {
-      errorMessage = "Invalid username or password.";
+      errorMessage = "Invalid email or password.";
       return;
     }
 
