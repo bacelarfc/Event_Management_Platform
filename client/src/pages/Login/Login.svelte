@@ -1,6 +1,7 @@
 <script>
-    import "../../styles/login.css";
+  import "../../styles/login.css";
   import { login } from "../../store/store.js";
+  import { navigate } from "svelte-navigator";
 
   let email = "";
   let password = "";
@@ -16,9 +17,9 @@
     const response = await fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
 
     if (!response.ok) {
@@ -30,9 +31,8 @@
 
     login(accessToken, refreshToken);
 
-    location.href = '/';
+    navigate("/", { replace: true }); 
   }
-
 </script>
 
 <div class="login">
@@ -40,7 +40,8 @@
   <form
     class="login-container"
     on:submit|preventDefault={handleSubmit}
-    method="POST">
+    method="POST"
+  >
     <ion-icon name="flower-outline" class="login__icon" />
     <label for="username">Username:</label>
     <input
@@ -50,7 +51,7 @@
       placeholder="Email"
       required
     />
-    <br>
+    <br />
     <label for="password">Password:</label>
     <input
       class="input-field"
@@ -60,12 +61,12 @@
       required
     />
     {#if errorMessage}
-    <p>{errorMessage}</p>
-  {/if}
+      <p>{errorMessage}</p>
+    {/if}
     <button class="sign-up" type="button"
       ><a href="/signUp">Not a member? Sign up!</a>
-      </button>
-    <br>
-    <input id="submit-button" type="submit" value="Submit"/>
+    </button>
+    <br />
+    <input id="submit-button" type="submit" value="Submit" />
   </form>
 </div>

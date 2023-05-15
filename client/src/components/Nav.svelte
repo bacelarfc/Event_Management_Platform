@@ -6,7 +6,7 @@
     import { removeToken } from '../utils/auth.js'; 
   import { navigate } from 'svelte-navigator'; 
 
-  function handleLogout() {
+  function handleLogin() {
     removeToken();
     navigate('/login');
   }
@@ -15,7 +15,7 @@
   <ul>
       <li><Link to="/">Home</Link></li>
     </ul>
-    <button on:click={handleLogout}>Log out</button>
+    <button on:click={handleLogin}>Log in</button>
   </nav>
   
 

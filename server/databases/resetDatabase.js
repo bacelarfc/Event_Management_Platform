@@ -1,17 +1,18 @@
 import { MongoClient } from "mongodb";
+import dotenv from 'dotenv';
+dotenv.config();
 
-// MongoDB connection URI
-const uri = 'mongodb://127.0.0.1:27017/eventmanager';
+const DATABASE_URL = process.env.DATABASE_URL;
 
-// Sample user data
+
 const userData = [
   {
     "_id": "646232d1cfd6080c8242090d",
     "id": "1",
     "firstName": "John",
     "lastName": "Doe",
-    "email": "johndoe@example.com",
-    "password": "password123",
+    "email": "test@test.com",
+    "password": "test",
     "isAdmin": false
   },
   {
@@ -35,7 +36,7 @@ const userData = [
 ];
 
 async function main() {
-  const client = new MongoClient(uri);
+  const client = new MongoClient(DATABASE_URL);
 
   try {
     await client.connect();
@@ -43,20 +44,18 @@ async function main() {
     const database = client.db();
     const usersCollection = database.collection('users');
 
-    // Drop the users collection if it exists
     await usersCollection.drop().catch(() => {});
 
-    // Create a new users collection with the sample data
     await usersCollection.insertMany(userData);
 
     console.log('Users collection created and populated successfully.');
   } catch (error) {
+
     console.error('An error occurred:', error);
   } finally {
-    // Close the MongoDB client
+
     await client.close();
   }
 }
 
-// Run the script
 main();

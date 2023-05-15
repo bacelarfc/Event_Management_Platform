@@ -1,6 +1,5 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
-//import db from "../databases/connection.js";
 import bcrypt from "bcrypt";
 import { getDb, connectToDb } from '../databases/connection.js';
 import { authenticateToken } from "../middlewares/authenticateToken.js";
@@ -11,7 +10,6 @@ const router = Router();
 
 // Get User information from token
 router.get('api/auth/user', authenticateToken, async (req, res) => {
-  //const users = await db.all("SELECT * FROM users;");
   res.json(users.find(user => user.email === req.user.email));
 });
 
