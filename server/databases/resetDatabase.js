@@ -44,7 +44,7 @@ async function main() {
     const database = client.db();
     const usersCollection = database.collection('users');
 
-    await usersCollection.drop().catch(() => {});
+    await usersCollection.drop().catch(() => { });
 
     await usersCollection.insertMany(userData);
 
