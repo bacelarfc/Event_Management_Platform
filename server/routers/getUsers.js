@@ -1,5 +1,5 @@
 import express from 'express';
-import { getDb, connectToDb } from '../database/connection.js';
+import { getDb, connectToDb } from '../databases/connection.js';
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.use(async (req, res, next) => {
 // GET /users
 router.get('/users', async (req, res) => {
   try {
-    const db = await getDb();
+    const db = getDb();
     const users = await db.collection('users').find().toArray();
     res.json(users);
   } catch (error) {
