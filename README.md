@@ -32,22 +32,20 @@ Develop a RESTful API using Node.js and Express.js to handle all backend operati
 
 ## TODO:
 
-Frontpage: Fernanda
-Login: Dani
-Database: Dani
-Sign up: Fernanda
+Admin CRUD: Daniel
+Admin Authorization/Roles: Fernanda
 
 ## Important
-Security
-Style: darkmode, maybe switchable?
+Style: darkmode, maybe switchable? <br> 
 Mainpage/eventpage
-Navbar: Home/logo, Search bar? Login, sign up (Logged in : Account img?, name)
-Search bar
-Account dropdown - settings(change password, put image, delete account), history (what events were booked)
-Admin sidebar: Manage events, Manage accounts, event/user statistics
+<br> 
+Navbar: Home/logo <br>  Search bar? <br> 
+Login, sign up (Logged in : Account img?, name) <br> 
+Account dropdown - settings(change password, put image, delete account), history (what events were booked)<br> 
+Admin sidebar: Manage events, Manage accounts, event/user statistics<br>
 Footer
 
 ## Features for later
-Chat - related to events
-Send mail, send sms
+Chat - related to events <br> 
+Send mail, send sms<br> 
 Payment API - payment history

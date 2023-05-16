@@ -1,71 +1,60 @@
-import { Router } from "express";
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import bcrypt from "bcrypt";
-import { getDb, connectToDb } from '../databases/connection.js';
-import { authenticateToken } from "../middlewares/authenticateToken.js";
+import passport from 'passport';
+import { createUser, getUserByEmail } from '../databases/userQueries.js';
+import passportConfig from '../middlewares/passport.js';
 
+const router = express.Router();
+passportConfig(passport);
 
-const router = Router();
-
-
-// Get User information from token
-router.get('api/auth/user', authenticateToken, async (req, res) => {
-  res.json(users.find(user => user.email === req.user.email));
+router.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the front page!' });
 });
 
-// Middleware makes sure you are connected to database
-router.use(async (req, res, next) => {
-  try {
-    await connectToDb();
-    next();
-  } catch (error) {
-    console.error('Failed to connect to the database:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+  router.get('/home', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({ message: 'Welcome to the home page!', user: req.user });
+  });
 
+  router.post('/login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      console.log(`Login attempt for email: ${email}`); // Debug log
 
-router.post('/api/auth/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const db = getDb();
-    const users = await db.collection('users').find().toArray();
+      const user = await getUserByEmail(email);
+  
+      if (!user) {
+        console.log(`No user found for email: ${email}`); // Debug log
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const isMatch = await bcrypt.compare(password, user.password);
+  
+      if (isMatch) {
+        const payload = { id: user.id, email: user.email };
+  
+        const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: '1h',
+        });
+        console.log(`Login successful for email: ${email}`); // Debug log
+        console.log(`Generated token: Bearer ${token}`); // Debug log
 
-    // Check if the email exists
-    const user = users.find(u => u.email === email);
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+        res.json({ message: 'Logged in', token: 'Bearer ' + token });
+      } else {
+        console.log(`Password mismatch for email: ${email}`); // Debug log
+        res.status(400).json({ message: 'Incorrect password' });
+      }
+    } catch (error) {
+      console.log('Error during login:', error); 
+      res.status(500).json({ message: 'Error logging in', error });
     }
-
-      //   Compare the hashed password with the input password using bcrypt
-  //   const isMatch = await bcrypt.compare(password, user.password);
-  //   if (!isMatch) {
-  //     return res.status(401).json({ error: 'Invalid username or password' });
-  //   }
-
-
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-
-    // Generate JWT token
-    const token = generateAccessToken(user);
-    res.send({ accessToken: token });
-  } catch (error) {
-    console.error('Failed to handle login request:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
 });
 
-// Closes token
-router.delete('/logout', (req, res) => {
-  refreshTokens = refreshTokens.filter(token => token !== req.body.token)
-  res.sendStatus(204);
-});
+  router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { id, email } = req.user.user;
+    res.json({ id, email });
+  });
 
-// Creates new token with expire time of 1h
-function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-}
-
-export default router;
+  export default router;

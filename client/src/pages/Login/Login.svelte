@@ -1,45 +1,29 @@
 <script>
   import "../../styles/login.css";
-  import { login } from "../../store/store.js";
+  import { login, setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
 
   let email = "";
   let password = "";
-  let errorMessage = "";
+  let errorMessage = ""
 
-  async function handleSubmit() {
-    // Check if the username and password fields are not empty
-    if (email.trim() === "" || password.trim() === "") {
-      errorMessage = "Please enter your email and password.";
-      return;
+  async function handleLogin() {
+    try {
+      const response = await login(email, password);
+      setToken(response.token);
+      navigate("/home", { replace: true }); 
+    } catch (error) {
+      console.error("Error logging in", error.message);
     }
-
-    const response = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!response.ok) {
-      errorMessage = "Invalid email or password.";
-      return;
-    }
-
-    const { accessToken, refreshToken } = await response.json();
-
-    login(accessToken, refreshToken);
-
-    navigate("/", { replace: true }); 
   }
 </script>
+
 
 <div class="login">
   <div class="login-triangle" />
   <form
     class="login-container"
-    on:submit|preventDefault={handleSubmit}
+    on:submit|preventDefault={handleLogin}
     method="POST"
   >
     <ion-icon name="flower-outline" class="login__icon" />

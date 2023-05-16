@@ -33,7 +33,7 @@ const userData = [
 ];
 
 async function main() {
-  const client = new MongoClient(DATABASE_URL);
+  const client = new MongoClient(process.env.DATABASE_URL);
 
   try {
     await client.connect();

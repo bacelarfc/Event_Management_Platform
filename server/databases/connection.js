@@ -7,21 +7,26 @@ const DATABASE_URL = process.env.DATABASE_URL;
 let dbConnection;
 
 const connectToDb = async () => {
-  await MongoClient.connect(DATABASE_URL)
-    .then((client) => {
-      dbConnection = client.db();
-
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const client = await MongoClient.connect(DATABASE_URL);
+    dbConnection = client.db(); 
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getDb = () => {
   if (!dbConnection) {
-    throw new Error('Database connection has not been established.');
+    throw new Error('Error connecting to database.');
   }
   return dbConnection;
 };
 
-export { connectToDb, getDb };
+const getConnection = () => {
+  if (!dbConnection) {
+    throw new Error('Error connecting to database.');
+  }
+  return dbConnection.client;
+};
+
+export { connectToDb, getDb, getConnection };

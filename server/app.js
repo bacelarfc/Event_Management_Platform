@@ -10,7 +10,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 import loginRouter from "./routers/loginRouter.js";
-app.use(loginRouter);
+
+import registerRouter from "./routers/registerRouter.js";
+
+app.use(registerRouter);
+
+app.use('/api/auth',loginRouter);
+
 import getUsers from "./routers/getUsers.js"
 app.use(getUsers);
 

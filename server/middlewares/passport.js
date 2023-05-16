@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.MY_ACCESS_TOKEN,
+  secretOrKey: process.env.ACCESS_TOKEN_SECRET,
 };
 
 export default (passport) => {
@@ -16,7 +16,7 @@ export default (passport) => {
         const user = await getUserByEmail(jwt_payload.email);
 
         if (user) {
-          const token = jwt.sign({ email: jwt_payload.email }, process.env.MY_ACCESS_TOKEN, { expiresIn: '1h' });
+          const token = jwt.sign({ email: jwt_payload.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
           return done(null, { user, token });
         } else {
           console.log('User not found!');
