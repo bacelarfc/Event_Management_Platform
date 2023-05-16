@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-// Middleware that checks if the user has a valid, unexpired token 
 export const authenticateToken = (req, res, next) => {
   const token = req.headers['authorization'];
   if (token == null) return res.sendStatus(401);

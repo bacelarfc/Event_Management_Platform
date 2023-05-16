@@ -1,25 +1,60 @@
-POST http://localhost:8080/api/auth/signUp
+
+// ---USERS---
+
+
+// GetAll
+GET http://localhost:8080/users
+Content-Type: application/json
+###
+
+// Create
+POST http://localhost:8080/createUser
 Content-Type: application/json
 
 {
-    "email": "test@example.com",
-      "password": "password123"
+  "email": "1@1.com",
+  "password": "1"
 }
 
-##
+###
 
+// PUT
+PUT http://localhost:8080/users/1@1.com
+Content-Type: application/json
+
+{
+  "email": "1@2.com",
+  "password": "newpassword"
+}
+###
+
+// DELETE
+DELETE http://localhost:8080/users/1@2.com
+###
+
+
+
+
+// ---SIGNUP and LOGIN---
+
+// Signup
+POST http://localhost:8080/signUp
+Content-Type: application/json
+
+{
+  "email": "1@1.com",
+  "password": "1"
+}
+
+###
+
+// Login
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "johndoe@example.com",
-      "password": "password123"
+  "email": "1@1.com",
+  "password": "1"
 }
-
-
-###
-
-
-GET http://localhost:8080/users
 
 ###

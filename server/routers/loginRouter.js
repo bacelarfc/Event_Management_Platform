@@ -4,7 +4,7 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import { createUser, getUserByEmail } from '../databases/userQueries.js';
+import { getUserByEmail } from '../databases/userQueries.js';
 import passportConfig from '../middlewares/passport.js';
 
 const router = express.Router();
