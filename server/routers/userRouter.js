@@ -17,7 +17,7 @@ router.get('/users', async (req, res) => {
 
 router.post('/createUser', async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email, password, firstName, lastName, isAdmin } = req.body;
       const existingUser = await getUserByEmail(email);
   
       if (existingUser) {
@@ -29,6 +29,9 @@ router.post('/createUser', async (req, res) => {
       const newUser = {
         email,
         password: hash,
+        firstName,
+        lastName,
+        isAdmin
       };
   
       const userId = await createUser(newUser);
@@ -69,10 +72,6 @@ router.post('/createUser', async (req, res) => {
       res.status(500).json({ message: 'Error updating user', error });
     }
   });
-  
-  
-  
-
 
 router.delete('/users/:email', async (req, res) => {
     try {
