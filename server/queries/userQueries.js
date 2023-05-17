@@ -1,4 +1,4 @@
-import { connectToDb, getDb } from "./connection.js";
+import { connectToDb, getDb } from "../databases/connection.js";
 
 export async function getUserByEmail(email) {
   try {

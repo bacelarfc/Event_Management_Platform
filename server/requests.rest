@@ -1,5 +1,31 @@
 
-// ---USERS---
+// -----SIGNUP and LOGIN------------------------------------
+
+
+// Signup
+POST http://localhost:8080/signUp
+Content-Type: application/json
+
+{
+  "email": "1@1.com",
+  "password": "1"
+}
+
+###
+
+// Login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "1@1.com",
+  "password": "1"
+}
+
+###
+
+
+// -----USERS-------------------------------------------------
 
 
 // GetAll
@@ -34,27 +60,52 @@ DELETE http://localhost:8080/users/1@2.com
 
 
 
+// ------EVENTS--------------------------------------------
 
-// ---SIGNUP and LOGIN---
+// GetAll
+GET http://localhost:8080/events
+Content-Type: application/json
+###
 
-// Signup
-POST http://localhost:8080/signUp
+// Get by ID
+GET http://localhost:8080/events/1
+Content-Type: application/json
+###
+
+// Create
+POST http://localhost:8080/createEvent
 Content-Type: application/json
 
 {
-  "email": "1@1.com",
-  "password": "1"
+  "name": "Event Name",
+  "date": "2023-05-18",
+  "time": "10:00 AM",
+  "description": "Event description",
+  "image": "event-image.jpg",
+  "ticket_max": 100,
+  "ticket_left": 100,
+  "price": 10.99
 }
 
 ###
 
-// Login
-POST http://localhost:8080/api/auth/login
+// Update
+PUT http://localhost:8080/events/1
 Content-Type: application/json
 
 {
-  "email": "1@1.com",
-  "password": "1"
+  "name": "Updated Event Name",
+  "date": "2023-05-19",
+  "time": "11:00 AM",
+  "description": "Updated event description",
+  "image": "updated-event-image.jpg",
+  "ticket_max": 150,
+  "ticket_left": 120,
+  "price": 15.99
 }
 
+###
+
+// Delete
+DELETE http://localhost:8080/events/1
 ###

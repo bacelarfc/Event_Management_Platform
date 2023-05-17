@@ -1,6 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { getUserByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../databases/userQueries.js';
+import { getUserByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../queries/userQueries.js';
 
 const router = express.Router();
 

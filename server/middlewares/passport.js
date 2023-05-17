@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { getUserByEmail } from '../databases/userQueries.js';
+import { getUserByEmail } from '../queries/userQueries.js';
 import jwt from 'jsonwebtoken';
 
 const opts = {
