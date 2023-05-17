@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { check, validationResult } from 'express-validator';
-import { getUserByEmail, setUserAdminStatusByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../databases/userQueries.js';
+import { getUserByEmail, setUserAdminStatusByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../queries/userQueries.js';
 
 const router = express.Router();
 
