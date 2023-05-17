@@ -70,7 +70,7 @@
         required
       />
       <button class="log-in" type="button"
-        ><a href="#/">Already a user? Log in!</a></button
+        ><a href="/login">Already a user? Log in!</a></button
       >
       <input id="submit-button" type="submit" value="Sign up"/>
     </form>

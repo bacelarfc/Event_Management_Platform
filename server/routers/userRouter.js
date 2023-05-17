@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import { getUserByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../databases/userQueries.js';
+import { check, validationResult } from 'express-validator';
+import { getUserByEmail, setUserAdminStatusByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../databases/userQueries.js';
 
 const router = express.Router();
 
@@ -87,5 +88,33 @@ router.delete('/users/:email', async (req, res) => {
         res.status(500).json({ message: 'Error deleting user', error });
     }
 });
+
+//only temporarely 
+router.patch(
+  '/users/:userEmail/admin',
+  [
+    // Validate and sanitize inputs
+    check('userEmail').isEmail().normalizeEmail(),
+    check('isAdmin').isBoolean()
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const { userEmail } = req.params;
+      const { isAdmin } = req.body;
+
+      const updatedUser = await setUserAdminStatusByEmail(userEmail, isAdmin);
+
+      res.json({ message: 'User admin status updated', user: updatedUser });
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating user admin status', error });
+    }
+  }
+);
+
 
 export default router;

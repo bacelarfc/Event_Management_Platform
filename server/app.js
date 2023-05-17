@@ -11,9 +11,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(registerRouter);
-app.use(userRouter);
 app.use('/api/auth',loginRouter);
+app.use('/api/auth',registerRouter);
+app.use(userRouter);
+
 
 
 const PORT = process.env.PORT || 8080;
