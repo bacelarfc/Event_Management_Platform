@@ -9,27 +9,18 @@
   import ManageEvents from './pages/Admin/ManageEvents.svelte';
   import UserForm from './pages/Admin/UserForm.svelte';
 
-  function requireAuth(route) {
-    if (!isAuthenticated) {
-      // Redirect to login if not authenticated
-      return Login;
-    }
-    return route.component;
+  
+  function requireAuth(authenticatedComponent) {
+    return isAuthenticated ? authenticatedComponent : Login;
   }
 </script>
 
 <Router>
-  <Route path="/login" component="{Login}" />
-  <Route path="/signUp" component="{SignUp}" />
-  <Route path="/home" component="{requireAuth}" />
-  <Route path="/manageUsers" component="{ManageUsers}" />
-  <Route path="/manageEvents" component="{ManageEvents}" />
-  <Route path="/userForm" component="{UserForm}" />
-  <Route path="/" let:params>
-    {#if isAuthenticated}
-      <Home />
-    {:else}
-      <Frontpage />
-    {/if}
-  </Route>
+  <Route path="/login" component={Login} />
+  <Route path="/signUp" component={SignUp} />
+  <Route path="/home" component={requireAuth(Home)} />
+  <Route path="/manageUsers" component={ManageUsers} />
+  <Route path="/manageEvents" component={ManageEvents} />
+  <Route path="/userForm" component={UserForm} />
+  <Route path="/" component={Frontpage} />
 </Router>
