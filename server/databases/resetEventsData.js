@@ -10,33 +10,36 @@ const eventData = [
     name: "Event 1",
     date: "2023-05-20",
     time: "14:00",
+    location: "Copenhagen",
     description: "Event 1 description",
     image: "event1.jpg",
     ticket_max: 100,
     ticket_left: 50,
-    price: 10
+    price: 100
   },
   {
     id: "2",
     name: "Event 2",
     date: "2023-06-10",
     time: "18:30",
+    location: "Copenhagen",
     description: "Event 2 description",
     image: "event2.jpg",
     ticket_max: 200,
     ticket_left: 100,
-    price: 15
+    price: 150
   },
   {
     id: "3",
     name: "Event 3",
     date: "2023-07-05",
     time: "12:00",
+    location: "Copenhagen",
     description: "Event 3 description",
     image: "event3.jpg",
     ticket_max: 150,
     ticket_left: 75,
-    price: 20
+    price: 200
   }
 ];
 

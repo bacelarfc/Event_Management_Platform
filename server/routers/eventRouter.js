@@ -27,13 +27,24 @@ router.get('/events/:id', async (req, res) => {
 
 router.post('/createEvent', async (req, res) => {
     try {
-        const { name, date, time, description, image, ticket_max, ticket_left, price } = req.body;
+        const {
+            name,
+            date,
+            time,
+            description,
+            location,
+            image,
+            ticket_max,
+            ticket_left,
+            price,
+        } = req.body;
 
         const newEvent = {
             name,
             date,
             time,
             description,
+            location,
             image,
             ticket_max,
             ticket_left,
@@ -46,6 +57,7 @@ router.post('/createEvent', async (req, res) => {
         res.status(500).json({ message: 'Error creating event', error });
     }
 });
+
 
 router.put('/events/:id', async (req, res) => {
     try {
