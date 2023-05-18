@@ -6,17 +6,23 @@ import loginRouter from "./routers/loginRouter.js";
 import registerRouter from "./routers/registerRouter.js";
 import userRouter from "./routers/userRouter.js";
 import eventRouter from "./routers/eventRouter.js";
+import imageRouter from './routers/imageRouter.js';
+
+
 
 dotenv.config();
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(cors());
 
 app.use('/api/auth',loginRouter);
 app.use(eventRouter);
 app.use('/api/auth',registerRouter);
 app.use(userRouter);
+app.use(imageRouter);
 
 
 
