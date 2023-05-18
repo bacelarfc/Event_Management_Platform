@@ -14,44 +14,44 @@
     let ticket_max = 0;
     let ticket_left = 0;
     let price = 0;
-    let errorMessage = "";
   
     async function handleCreateEvent() {
-      const formData = new FormData();
-      formData.append("image", image);
-  
-      try {
-        const uploadResponse = await fetch("http://localhost:8080/upload", {
-          method: "POST",
-          body: formData,
-        });
-  
-        if (!uploadResponse.ok) {
-          console.error("Failed to upload image.");
-          return;
-        }
-  
-        const imagePath = await uploadResponse.json();
-  
-        const event = {
-          name,
-          date,
-          time,
-          location,
-          description,
-          image: imagePath.success ? imagePath.filename : null, // Check if upload was successful and set the image field accordingly
-          ticket_max,
-          ticket_left,
-          price,
-        };
-        const eventId = await createEvent(event);
-        toastr.success("Event was created");
-        navigate("/manageEvents");
-      } catch (error) {
-        toastr.error("Error creating event");
-        console.error("Error creating event:", error);
-      }
+  const formData = new FormData();
+  formData.append('image', image);
+
+  try {
+    const uploadResponse = await fetch('http://localhost:8080/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!uploadResponse.ok) {
+      console.error('Failed to upload image.');
+      return;
     }
+
+    const responseJson = await uploadResponse.json();
+    const filename = responseJson.filename;
+
+    const event = {
+      name,
+      date,
+      time,
+      location,
+      description,
+      image: filename ? filename : null,
+      ticket_max,
+      ticket_left,
+      price,
+    };
+    const eventId = await createEvent(event);
+    toastr.success('Event was created');
+    navigate('/manageEvents');
+  } catch (error) {
+    toastr.error('Error creating event');
+    console.error('Error creating event:', error);
+  }
+}
   
     function goBack() {
       navigate("/manageEvents");
