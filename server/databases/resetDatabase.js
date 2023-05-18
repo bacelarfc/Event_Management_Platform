@@ -8,7 +8,6 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const userData = [
   {
     "_id": "646232d1cfd6080c8242090d",
-    "id": "1",
     "firstName": "John",
     "lastName": "Doe",
     "email": "test@test.com",
@@ -17,7 +16,6 @@ const userData = [
   },
   {
     "_id": "646232d1cfd6080c8242090e",
-    "id": "2",
     "firstName": "Jane",
     "lastName": "Smith",
     "email": "janesmith@example.com",
@@ -26,7 +24,6 @@ const userData = [
   },
   {
     "_id": "646232d1cfd6080c8242090f",
-    "id": "3",
     "firstName": "David",
     "lastName": "Johnson",
     "email": "davidjohnson@example.com",

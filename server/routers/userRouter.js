@@ -94,7 +94,6 @@ router.patch(
   [
     // Validate and sanitize inputs
     check('userEmail').isEmail().normalizeEmail(),
-    check('isAdmin').isBoolean()
   ],
   async (req, res) => {
     try {
@@ -104,9 +103,14 @@ router.patch(
       }
 
       const { userEmail } = req.params;
-      const { isAdmin } = req.body;
 
-      const updatedUser = await setUserAdminStatusByEmail(userEmail, isAdmin);
+      const user = await getUserByEmail(userEmail);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      const updatedIsAdmin = !user.isAdmin;
+      const updatedUser = await setUserAdminStatusByEmail(userEmail, updatedIsAdmin);
 
       res.json({ message: 'User admin status updated', user: updatedUser });
     } catch (error) {
@@ -114,6 +118,7 @@ router.patch(
     }
   }
 );
+
 
 
 export default router;

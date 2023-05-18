@@ -1,11 +1,13 @@
 import { connectToDb, getDb } from "../databases/connection.js";
+import { ObjectId } from 'mongodb';
 
 export async function getEventById(id) {
   try {
     await connectToDb();
     const db = getDb();
     const eventsCollection = db.collection('events');
-    const event = await eventsCollection.findOne({ id });
+    const objectId = new ObjectId(id);
+    const event = await eventsCollection.findOne({ _id: objectId });
     return event;
   } catch (error) {
     console.error('An error occurred:', error);
@@ -31,7 +33,6 @@ export async function createEvent(event) {
     await connectToDb();
     const db = getDb();
     const eventsCollection = db.collection('events');
-
     const result = await eventsCollection.insertOne(event);
     return result.insertedId;
   } catch (error) {
@@ -45,8 +46,8 @@ export async function updateEvent(id, updatedData) {
     await connectToDb();
     const db = getDb();
     const eventsCollection = db.collection('events');
-
-    const result = await eventsCollection.updateOne({ id }, { $set: updatedData });
+    const objectId = new ObjectId(id);
+    const result = await eventsCollection.updateOne({ _id: objectId }, { $set: updatedData });
     return result.modifiedCount;
   } catch (error) {
     console.error('An error occurred:', error);
@@ -59,8 +60,8 @@ export async function deleteEvent(id) {
     await connectToDb();
     const db = getDb();
     const eventsCollection = db.collection('events');
-
-    const result = await eventsCollection.deleteOne({ id });
+    const objectId = new ObjectId(id);
+    const result = await eventsCollection.deleteOne({ _id: objectId });
     return result.deletedCount;
   } catch (error) {
     console.error('An error occurred:', error);

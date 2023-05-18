@@ -7,7 +7,9 @@
   import Frontpage from './pages/Home/Frontpage.svelte';
   import ManageUsers from './pages/Admin/ManageUsers.svelte';
   import ManageEvents from './pages/Admin/ManageEvents.svelte';
-  import UserForm from './pages/Admin/UserForm.svelte';
+  import CreateUserForm from './pages/Admin/CreateUserForm.svelte';
+  import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
+  import EditEventForm from './pages/Admin/EditEventForm.svelte'
 
   
   function requireAuth(authenticatedComponent) {
@@ -21,6 +23,8 @@
   <Route path="/home" component={requireAuth(Home)} />
   <Route path="/manageUsers" component={ManageUsers} />
   <Route path="/manageEvents" component={ManageEvents} />
-  <Route path="/userForm" component={UserForm} />
+  <Route path="/userForm" component={CreateUserForm} />
+  <Route path="/createEvent" component={CreateEventForm} />
+  <Route path="/editEvent/:eventId" component={EditEventForm} />
   <Route path="/" component={Frontpage} />
 </Router>
