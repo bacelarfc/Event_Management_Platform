@@ -1,11 +1,14 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
 import mongoose from 'mongoose';
 
 const router = express.Router();
 
-mongoose.connect('mongodb://127.0.0.1:27017/eventmanager', {
+dotenv.config();
+
+mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -17,7 +20,7 @@ const Event = mongoose.model('Event', {
   time: String,
   location: String,
   description: String,
-  image: String, // Store the filename directly as a string in the image field
+  image: String,
   ticket_max: Number,
   ticket_left: Number,
   price: Number,
@@ -35,9 +38,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('image'), async (req, res) => {
+router.post('/image/upload', upload.single('image'), async (req, res) => {
     try {
-      
       res.status(200).json({ success: true, filename: req.file.filename });
     } catch (error) {
       console.error(error);

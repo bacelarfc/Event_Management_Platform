@@ -50,9 +50,11 @@
                     <th>Name</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>Location</th>
+                    <th>Location</th>  
+                    <th>Tickets Max</th>
                     <th>Tickets left</th>
                     <th>Price</th>
+                    <th>Image name</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -62,9 +64,11 @@
                         <td>{event.name}</td>
                         <td>{event.date}</td>
                         <td>{event.time}</td>
-                        <td>{event.location}</td>
+                        <td>{event.location}</td>                 
+                        <td>{event.ticket_max}</td>
                         <td>{event.ticket_left}</td>
                         <td>{event.price} DKK</td>
+                        <td>{event.image}</td>
                         <td>
                             <button
                                 class="edit-button"

@@ -1,66 +1,75 @@
 <script>
-    import "../../styles/form.css";
-    import { navigate } from "svelte-navigator";
-    import { createEvent } from "../../utils/eventAPI";
-    import "toastr/build/toastr.min.css";
-    import toastr from "toastr";
-  
-    let name = "";
-    let date = "";
-    let time = "";
-    let description = "";
-    let location = "";
-    let image = null;
-    let ticket_max = 0;
-    let ticket_left = 0;
-    let price = 0;
-  
-    async function handleCreateEvent() {
-  const formData = new FormData();
-  formData.append('image', image);
+  import "../../styles/form.css";
+  import { navigate } from "svelte-navigator";
+  import { createEvent } from "../../utils/eventAPI";
+  import "toastr/build/toastr.min.css";
+  import toastr from "toastr";
 
-  try {
-    const uploadResponse = await fetch('http://localhost:8080/upload', {
-      method: 'POST',
-      body: formData,
-    });
+  let name = "";
+  let date = "";
+  let time = "";
+  let description = "";
+  let location = "";
+  let image = null;
+  let ticket_max = 0;
+  let ticket_left = 0;
+  let price = 0;
+  let errorMessage = "";
 
-    if (!uploadResponse.ok) {
-      console.error('Failed to upload image.');
+  async function handleCreateEvent() {
+    if (!name || !date || !time || !location || !description || !image || !ticket_max || !ticket_left || !price) {
+      errorMessage = "Please fill in all required fields.";
+      toastr.error("Please fill in all required fields.");
       return;
     }
 
-    const responseJson = await uploadResponse.json();
-    const filename = responseJson.filename;
+    const formData = new FormData();
+    formData.append("image", image);
 
-    const event = {
-      name,
-      date,
-      time,
-      location,
-      description,
-      image: filename ? filename : null,
-      ticket_max,
-      ticket_left,
-      price,
-    };
-    const eventId = await createEvent(event);
-    toastr.success('Event was created');
-    navigate('/manageEvents');
-  } catch (error) {
-    toastr.error('Error creating event');
-    console.error('Error creating event:', error);
-  }
-}
-  
-    function goBack() {
+    try {
+      const uploadResponse = await fetch("http://localhost:8080/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        toastr.error("Failed to upload image");
+        console.error("Failed to upload image.");
+        return;
+      }
+
+      const responseJson = await uploadResponse.json();
+      const filename = responseJson.filename;
+
+      const event = {
+        name,
+        date,
+        time,
+        location,
+        description,
+        image: filename ? filename : null,
+        ticket_max,
+        ticket_left,
+        price,
+      };
+
+      await createEvent(event);
+      toastr.success("Event was created");
       navigate("/manageEvents");
+    } catch (error) {
+      toastr.error("Error creating event");
+      console.error("Error creating event:", error);
     }
-  
-    function handleImageUpload(event) {
-      image = event.target.files[0];
-    }
-  </script>
+  }
+
+  function goBack() {
+    navigate("/manageEvents");
+  }
+
+  function handleImageUpload(event) {
+    image = event.target.files[0];
+  }
+</script>
 
 <h1>Create Event</h1>
 
@@ -116,10 +125,7 @@
     </div>
 
     <div class="form-group">
-        <button class="create-button" type="button" on:click={handleCreateEvent}
-            >Create</button
-        >
-        <button class="back-button" type="button" on:click={goBack}>Back</button
-        >
+        <button class="create-button" type="button" on:click={handleCreateEvent}>Create</button>
+        <button class="back-button" type="button" on:click={goBack}>Back</button>
     </div>
 </div>
