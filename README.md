@@ -32,8 +32,9 @@ Develop a RESTful API using Node.js and Express.js to handle all backend operati
 
 ## TODO:
 
-Admin CRUD: Daniel
-Admin Authorization/Roles: Fernanda
+Admin CRUD: Daniel<br>
+Search, Images: Daniel<br>
+Admin Authorization/Roles: Fernanda<br>
 
 ## Important
 Style: darkmode, maybe switchable? <br> 
