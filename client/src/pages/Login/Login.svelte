@@ -1,6 +1,6 @@
 <script>
   import "../../styles/login.css";
-  import { login, setToken } from "../../utils/auth.js";
+  import { login } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
 
   let email = "";
@@ -10,7 +10,8 @@
   async function handleLogin() {
     try {
       const response = await login(email, password);
-      setToken(response.token);
+      const token = response.token;
+    localStorage.setItem("jwtToken", token)
       navigate("/home", { replace: true }); 
     } catch (error) {
       console.error("Error logging in", error.message);

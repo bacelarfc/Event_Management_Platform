@@ -10,8 +10,9 @@
   import CreateUserForm from './pages/Admin/CreateUserForm.svelte';
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
+  import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
 
-  
+
   function requireAuth(authenticatedComponent) {
     return isAuthenticated ? authenticatedComponent : Login;
   }
@@ -21,6 +22,7 @@
   <Route path="/login" component={Login} />
   <Route path="/signUp" component={SignUp} />
   <Route path="/home" component={requireAuth(Home)} />
+  <Route path="/ticketsFrontpage" component={requireAuth(TicketsFrontpage)} />
   <Route path="/manageUsers" component={ManageUsers} />
   <Route path="/manageEvents" component={ManageEvents} />
   <Route path="/userForm" component={CreateUserForm} />

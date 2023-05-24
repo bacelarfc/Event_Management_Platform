@@ -1,0 +1,78 @@
+.side-panel {
+    background-color: #fff;
+    color: #1c3563;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 500px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    transition: transform 0.3s ease-in-out;
+    overflow-y: scroll;
+  }
+  
+  .side-panel.open {
+    transform: translateX(0%);
+  }
+  
+  .side-panel form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Adjusted alignment */
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .side-panel label {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 10px;
+  }
+  
+  .side-panel input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .payment-panel {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .payment-panel h2 {
+    margin-bottom: 20px;
+  }
+  
+  .payment-panel form > * {
+    margin-bottom: 10px;
+  }
+  
+  .payment-panel .buttons {
+    display: flex;
+    justify-content: center;
+  
+    
+  }
+  
+  .payment-panel .buttons button {
+    margin: 0 10px;  /* Add spacing between the buttons */
+  }
+
+  .payment-panel .buttons.bottom {
+    align-self: flex-end;
+    margin-top: auto;
+    margin-bottom: 20px; /* Add some spacing from the content */
+  }
