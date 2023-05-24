@@ -43,7 +43,7 @@
   {#each events as event (event._id)}
     <li class="card" aria-labelledby="event card">
       <div class="card__filter">
-        <img class="card__photo" src="https://i1.sndcdn.com/artworks-000192685399-co64se-t500x500.jpg" alt="A man in colorful clothing with the sun behind him on a beach." />
+        <img class="card__photo" src="http://localhost:8080/images/{event.image}" alt="{event.name}" />
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
@@ -51,7 +51,7 @@
         <p>{event.description}</p>
         <div class="card__buttons">
           <div class="card__buttons btn secondary">
-            <img class="card__photo" src="http://localhost:8080/images/{event.image}" alt="{event.name}" />
+            <input type="number" min="1" max="10" bind:value={event.tickets} />
           </div>
           <button on:click={() => addToCart(event)}>Buy</button>
    
