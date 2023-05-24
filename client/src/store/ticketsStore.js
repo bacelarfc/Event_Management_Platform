@@ -29,3 +29,4 @@
   export const sidePanelOpen = writable(false);
 
   export const step = writable(1);
+  
