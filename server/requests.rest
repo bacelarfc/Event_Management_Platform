@@ -55,6 +55,13 @@ Content-Type: application/json
 }
 ###
 
+// PATCH Admin
+PATCH http://localhost:8080/users/1@1.com/admin
+Content-Type: application/json
+
+
+###
+
 // DELETE
 DELETE http://localhost:8080/users/1@2.com
 ###
@@ -69,7 +76,7 @@ Content-Type: application/json
 ###
 
 // Get by ID
-GET http://localhost:8080/events/1
+GET http://localhost:8080/events/64661ed1098eb5382b98d4e7
 Content-Type: application/json
 ###
 
@@ -81,6 +88,7 @@ Content-Type: application/json
   "name": "New Event",
   "date": "2023-05-19",
   "time": "10:00 AM",
+  "location": "Copenhagen",
   "description": "Event description",
   "image": "event-image.jpg",
   "ticket_max": 100,
@@ -91,7 +99,7 @@ Content-Type: application/json
 ###
 
 // Update
-PUT http://localhost:8080/events/1
+PUT http://localhost:8080/events/646626129b266f2520e3a38c
 Content-Type: application/json
 
 {
@@ -108,5 +116,5 @@ Content-Type: application/json
 ###
 
 // Delete
-DELETE http://localhost:8080/events/1
+DELETE http://localhost:8080/events/64661ed1098eb5382b98d4e7
 ###
