@@ -23,6 +23,7 @@
     "mongodb": "^5.5.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
+    "stripe": "^12.6.0",
     "svelte-toast": "^1.0.0"
   }
 }

@@ -78,8 +78,8 @@ POST http://localhost:8080/createEvent
 Content-Type: application/json
 
 {
-  "name": "Event Name",
-  "date": "2023-05-18",
+  "name": "New Event",
+  "date": "2023-05-19",
   "time": "10:00 AM",
   "description": "Event description",
   "image": "event-image.jpg",
