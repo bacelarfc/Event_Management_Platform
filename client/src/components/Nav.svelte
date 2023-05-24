@@ -8,10 +8,10 @@
   import { onMount } from "svelte";
 
   function handleLogout() {
-    removeToken();
-    navigate("/login");
-  }
-
+  removeToken();
+  console.log(localStorage.getItem('token'));  // Add this line
+  navigate("/login");
+}
   const openCart = () => sidePanelOpen.set(true);
 
   function handleDropdownClick(event) {
@@ -35,7 +35,7 @@
   <ul>
     <li><Link to="/home">Home</Link></li>
     <li><Link to="/ticketsFrontpage">Frontpage</Link></li>
-    <li><a href="#" on:click|preventDefault={openCart}>Cart</a></li>
+    <li><a href="/dontwant" on:click|preventDefault={openCart}>Cart</a></li>
   </ul>
   <div class="dropdown">
     <button class="dropbtn" on:click={handleDropdownClick}>Admin</button>
