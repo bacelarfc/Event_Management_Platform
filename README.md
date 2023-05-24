@@ -31,10 +31,10 @@ Develop a RESTful API using Node.js and Express.js to handle all backend operati
 
 
 ## TODO:
-
-Admin CRUD: Daniel<br>
-Search, Images: Daniel<br>
-Admin Authorization/Roles: Fernanda<br>
+Analytics: Dani
+Account settings: Dani
+Switchable: Fernanda
+Refactor payments: send SMS. Fernanda
 
 ## Important
 Style: darkmode, maybe switchable? <br> 
@@ -49,4 +49,4 @@ Footer
 ## Features for later
 Chat - related to events <br> 
 Send mail, send sms<br> 
-Payment API - payment history
+Payment API - payment history done

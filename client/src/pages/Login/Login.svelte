@@ -1,7 +1,7 @@
 <script>
   import "../../styles/login.css";
   import { login } from "../../utils/auth.js";
-  
+  import { setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
 
   let email = "";
@@ -12,7 +12,7 @@
     try {
       const response = await login(email, password);
       const token = response.token;
-    localStorage.setItem("jwtToken", token)
+      setToken(response.token);
       navigate("/home", { replace: true }); 
     } catch (error) {
       console.error("Error logging in", error.message);
