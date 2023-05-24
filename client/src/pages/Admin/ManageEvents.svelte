@@ -69,7 +69,8 @@
     <button class="create-button" on:click={() => navigate(`/createEvent`)}>
         Create new Event
     </button>
-
+    <br />
+    <br />
     {#if filteredEvents.length === 0}
         <p>No events</p>
     {:else}

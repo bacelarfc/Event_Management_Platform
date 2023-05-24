@@ -1,6 +1,4 @@
 <script>
-  import dotenv from 'dotenv';
-  dotenv.config();
   import { onMount } from "svelte";
   import { loadStripe } from '@stripe/stripe-js';
   import { cart, totalCost } from "../store/ticketsStore";
@@ -12,7 +10,7 @@
   let stripe;
   let cardElement;
 
-  const stripePromise = loadStripe(process.env.STRIPE_API_PUBLIC_KEY);
+  const stripePromise = loadStripe("pk_test_51NBFoQFfaWs6FhuYqHb0GgFWVO70YgEtQJTGkE5N8d69glQU6daaH2lkI8Y1jFu02wpSYJv33FTEbojECAODyt1W00FltV9Ynj");
 
   onMount(async () => {
     stripe = await stripePromise;
@@ -31,7 +29,8 @@
       console.error('Payment processing error:', error);
     } else {
       try {
-        const totalCostValue = $totalCost; // Use $totalCost here
+        const totalCostValue = $totalCost;
+        const eventId = $cart?.event?._id;
 
         console.log($cart);
 
@@ -49,7 +48,8 @@
           body: JSON.stringify({
             amount: Math.round(totalCostValue * 100),
             email: $cart.customer.email,
-            paymentMethodId: paymentMethod.id
+            paymentMethodId: paymentMethod.id,
+            eventId: eventId
           })
         });
         console.log("payment method", paymentMethod);

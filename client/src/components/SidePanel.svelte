@@ -19,14 +19,14 @@
     // Validate the total cost
     if (isNaN(totalCost) || totalCost < 1) {
       console.error('Invalid total cost');
-      // Handle the error condition appropriately (e.g., show an error message to the user)
       return;
     }
 
     cart.update((cartData) => ({ 
       ...cartData, 
       customer: { name, surname, email },
-      totalCost, // Add total cost to cart data
+      totalCost,
+      eventId: $cart.event._id,
       showPaymentPanel: true 
     }));
   }
@@ -55,7 +55,6 @@
         <button on:click={handleNext}>Next</button>
       </form>
     {:else}
-      <!-- Payment panel content -->
       <PaymentPanel {handlePrevious} />
     {/if}
   </div>
