@@ -10,10 +10,10 @@
   let events = [];
 
   const addToCart = (event) => {
-  const { name, time, description, price } = event;
+  const { _id, name, time, description, price } = event;
   cart.update((value) => ({
     ...value,
-    event: { name, time, description, price },
+    event: {_id, name, time, description, price },
     tickets: event.tickets,
     showPaymentPanel: false,
   }));

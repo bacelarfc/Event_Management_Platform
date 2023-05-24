@@ -10,7 +10,7 @@ router.use(express.json());
 
 router.post('/payment', async (req, res) => {
   try {
-    const { paymentMethodId, amount, email } = req.body;
+    const {eventId, paymentMethodId, amount, email,  } = req.body;
     const currency = 'EUR'; // Set the currency to EUR
     console.log(req.body);
     console.log(`Received paymentMethodId: ${paymentMethodId}`)
@@ -24,7 +24,7 @@ router.post('/payment', async (req, res) => {
     console.log(paymentIntent); // add this line
 
     // Insert order document into the orders collection
-    await createOrder(email, paymentIntent.id, Math.round(amount * 100), currency);
+    await createOrder(eventId, email, paymentIntent.id, Math.round(amount * 100), currency);
 
     res.json({ success: true, message: 'Payment processed successfully' });
   } catch (error) {
