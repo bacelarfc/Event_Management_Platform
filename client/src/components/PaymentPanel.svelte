@@ -1,5 +1,6 @@
 <script>
   import dotenv from 'dotenv';
+  dotenv.config();
   import { onMount } from "svelte";
   import { loadStripe } from '@stripe/stripe-js';
   import { cart, totalCost } from "../store/ticketsStore";

@@ -11,18 +11,41 @@
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
+  import { navigate } from 'svelte-navigator';
+  import { onMount, onDestroy } from 'svelte';
+
+  import AuthenticatedRoute from './components/AuthenticatedRoute.svelte';
 
 
-  function requireAuth(authenticatedComponent) {
-    return isAuthenticated ? authenticatedComponent : Login;
+  let userAuthenticated = false;
+
+// Subscribe to the store
+const unsubscribe = isAuthenticated.subscribe(value => {
+  userAuthenticated = value;
+});
+
+// If authenticated, navigate to home
+onMount(() => {
+  if(userAuthenticated) {
+    navigate('/home');
   }
+});
+
+onDestroy(() => {
+  unsubscribe();
+});
+
 </script>
 
 <Router>
   <Route path="/login" component={Login} />
   <Route path="/signUp" component={SignUp} />
-  <Route path="/home" component={requireAuth(Home)} />
-  <Route path="/ticketsFrontpage" component={requireAuth(TicketsFrontpage)} />
+  <AuthenticatedRoute to="/home">
+    <Route path="/home" component={Home} />
+  </AuthenticatedRoute>
+  <AuthenticatedRoute>
+  <Route path="/ticketsFrontpage" component={TicketsFrontpage} />
+  </AuthenticatedRoute>
   <Route path="/manageUsers" component={ManageUsers} />
   <Route path="/manageEvents" component={ManageEvents} />
   <Route path="/userForm" component={CreateUserForm} />

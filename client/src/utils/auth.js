@@ -1,6 +1,7 @@
 const API_BASE_URL = 'http://localhost:8080'
 import { user } from '../store/store.js';
 
+
 async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -55,8 +56,12 @@ export function getToken() {
 }
 
 export function removeToken() {
+  console.log('Token before removal: ', localStorage.getItem('token'));
   localStorage.removeItem('token');
+  console.log('Token after removal: ', localStorage.getItem('token'));
 }
+
+
 
 export async function getUser() {
     try {

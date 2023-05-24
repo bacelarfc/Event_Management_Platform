@@ -1,6 +1,7 @@
 <script>
   import "../../styles/login.css";
   import { login } from "../../utils/auth.js";
+  
   import { navigate } from "svelte-navigator";
 
   let email = "";

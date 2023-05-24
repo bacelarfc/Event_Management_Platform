@@ -22,9 +22,6 @@
     0
   );
   
-  export function setToken(token) {
-    localStorage.setItem('jwtToken', token);
-  }
 
   export const sidePanelOpen = writable(false);
 

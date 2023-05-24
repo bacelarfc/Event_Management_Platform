@@ -51,7 +51,7 @@
         <p>{event.description}</p>
         <div class="card__buttons">
           <div class="card__buttons btn secondary">
-            <input type="number" min="1" max="10" bind:value={event.tickets} />
+            <img class="card__photo" src="http://localhost:8080/images/{event.image}" alt="{event.name}" />
           </div>
           <button on:click={() => addToCart(event)}>Buy</button>
    
