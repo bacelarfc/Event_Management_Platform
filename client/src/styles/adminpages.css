@@ -1,9 +1,13 @@
+
+    
+    
     .table-container {
       border: 1px solid #ccc;
       background-color: #f0f0f0;
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      min-width: 150vh;
     }
   
     table {
@@ -43,7 +47,7 @@
     }
 
     .create-button {
-        background-color: green;
+        background-color: var(--second-color);
     }
   
     .edit-button {
@@ -58,3 +62,22 @@
     button:hover {
       background-color: gray;
     }
+
+    .search-bar, title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+  }
+
+
+  .search-bar input {
+      width: 150vh;
+      padding: 10px;
+      font-family: var(--body-font);
+      font-size: var(--normal-font-size);
+      color: var(--secondary-color);
+      border: none;
+      border-radius: 5px;
+      outline: none;
+  }
