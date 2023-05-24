@@ -5,30 +5,19 @@
     import toastr from "toastr";
     import { signUp } from "../../utils/auth.js";
   
-    // toastr.options = {
-    //   closeButton: true,
-    //   progressBar: true,
-    //   positionClass: "toast-top-center",
-    //   showDuration: "300",
-    //   hideDuration: "1000",
-    //   timeOut: "5000",
-    //   extendedTimeOut: "1000",
-    //   tapToDismiss: false,
-    //   preventDuplicates: true,
-    // };
-  
     let email = "";
     let password = "";
     let confirmPassword = "";
+    let firstName = "";
+    let lastName = "";
   
     async function handleSignUp() {
       try {
         if (password !== confirmPassword) {
-          toastr.error("Passwords do not match");
           throw new Error("Passwords do not match");
         }
   
-        const response = await signUp(email, password);
+        const response = await signUp(email, password, firstName, lastName);
         toastr.success("Registered successfully");
         navigate("/login");
       } catch (error) {
@@ -43,6 +32,22 @@
     <div class="register-triangle" />
     <form class="register-container" on:submit|preventDefault={handleSignUp}>
       <h3>Create your account</h3>
+      <label for="firstName">First Name:</label>
+      <input
+        class="input-field"
+        type="firstName"
+        bind:value={firstName}
+        placeholder="First Name"
+        required
+      />
+      <label for="lastName">Last Name:</label>
+      <input
+        class="input-field"
+        type="lastName"
+        bind:value={lastName}
+        placeholder="Last Name"
+        required
+      />
       <label for="email">Email:</label>
       <input
         class="input-field"
@@ -51,7 +56,6 @@
         placeholder="Email"
         required
       />
-      <br>
       <label for="password">Password:</label>
       <input
         class="input-field"
@@ -60,7 +64,6 @@
         placeholder="Password"
         required
       />
-      <br>
       <label for="confirm-password">Confirm Password:</label>
       <input
         class="input-field"

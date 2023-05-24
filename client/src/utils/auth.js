@@ -28,9 +28,9 @@ async function request(method, url, data) {
   }
 }
 
-export async function signUp(email, password) {
+export async function signUp(email, password, firstName, lastName) {
   try {
-    const response = await request('POST', '/api/auth/signUp', { email, password });
+    const response = await request('POST', '/api/auth/signUp', { email, password, firstName, lastName });
     return response;
   } catch (error) {
     throw error;

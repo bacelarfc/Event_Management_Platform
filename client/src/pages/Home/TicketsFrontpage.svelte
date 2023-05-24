@@ -47,6 +47,7 @@
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
+        <h3>{event.location}</h3>
         <time>{event.date}</time>
         <p>{event.description}</p>
         <div class="card__buttons">

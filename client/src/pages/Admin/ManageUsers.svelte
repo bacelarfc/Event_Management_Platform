@@ -22,18 +22,19 @@
   }
 
   async function handleUpdateAdminStatus(email) {
-    try {
-      const updatedUser = await updateUserAdminStatus(email);
-      const index = userList.findIndex(user => user.email === email);
-      if (index !== -1) {
-        userList[index] = updatedUser.user;
-      }
-      toastr.success("User admin status updated");
-    } catch (error) {
-      toastr.error("Error updating user admin status");
-      console.error('Error updating user admin status:', error);
+  try {
+    const updatedUser = await updateUserAdminStatus(email);
+    const index = userList.findIndex(user => user.email === email);
+    if (index !== -1) {
+      userList[index] = updatedUser.user;
+      filteredUsers[index] = updatedUser.user;
     }
+    toastr.success("User admin status updated");
+  } catch (error) {
+    toastr.error("Error updating user admin status");
+    console.error('Error updating user admin status:', error);
   }
+}
 
   async function handleDeleteUser(email) {
     try {

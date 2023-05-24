@@ -12,7 +12,7 @@ passportConfig(passport);
 
 router.post('/signUp', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName } = req.body;
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
@@ -25,6 +25,8 @@ router.post('/signUp', async (req, res) => {
     const newUser = {
       email,
       password: hash,
+      firstName,
+      lastName,
       isAdmin: false,  
     };
 
