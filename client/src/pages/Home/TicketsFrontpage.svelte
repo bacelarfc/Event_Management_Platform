@@ -28,7 +28,7 @@
         return;
       }
       events = await response.json();
-      // Initialize tickets property
+
       events = events.map(event => ({ ...event, tickets: 1 }));
     } catch (error) {
       console.log('Fetch Error: ', error);

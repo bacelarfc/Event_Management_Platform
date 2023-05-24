@@ -1,7 +1,7 @@
 <script>
     import "../../styles/adminpages.css";
     import Nav from "../../components/Nav.svelte";
-    import { onMount, createEventDispatcher } from "svelte";
+    import { onMount } from "svelte";
     import { navigate } from "svelte-navigator";
     import { getEvents, deleteEvent } from "../../utils/eventAPI.js";
 
@@ -43,10 +43,8 @@
         });
     }
 
-    const dispatch = createEventDispatcher();
-
     function handleEditEvent(eventId) {
-        dispatch("editEvent", eventId);
+        navigate(`/editEvent/${eventId}`)
     }
 
     onMount(fetchData);
