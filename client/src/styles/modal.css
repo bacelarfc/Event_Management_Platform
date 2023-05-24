@@ -1,0 +1,86 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 20px;
+    border: 2px solid var(--mariner); /* same as .card border */
+    width: 60%; /* reduced width */
+    height: 80%; /* increased height */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative; /* allows positioning of .close button */
+  }
+  
+  .event-details, .ticket-purchase {
+    width: 45%;
+  }
+  
+  .event-details h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: regular;
+    font-size: 37px;
+    color: var(--mariner);
+    letter-spacing: -1.06px;
+  }
+  
+  .event-details p {
+    font-family: 'IBM Plex Mono', sans-serif;
+    font-weight: regular;
+    font-size: 14px;
+    color: var(--emperor);
+  }
+  
+  .ticket-purchase label, .ticket-purchase input, .ticket-purchase button {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .ticket-purchase {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 20px;
+    width: 60%; /* reduced width */
+    height: 80%; /* increased height */
+    display: flex;
+    position: relative; /* allows positioning of .close button */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .ticket-purchase button {
+    padding: 10px;
+    background-color: var(--mariner);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+  }
+  .close {
+    color: var(--emperor);
+    position: absolute; /* absolute positioning relative to .modal-content */
+    top: 10px; /* adjust as needed */
+    right: 10px; /* adjust as needed */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  #quantity {
+    width: 100px;
+  }
+  .confirmation-details {
+    margin-bottom: 1rem;
+  }
