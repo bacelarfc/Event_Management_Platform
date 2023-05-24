@@ -4,6 +4,8 @@
   import { cart, totalCost } from "../store/ticketsStore";
   import '../styles/paymentPanel.css';
   import { sidePanelOpen } from "../store/ticketsStore";
+  import "toastr/build/toastr.min.css";
+  import toastr from "toastr";
 
   export let handlePrevious;
 
@@ -56,11 +58,14 @@
         if (response.ok) {
           const jsonResponse = await response.json();
           console.log(jsonResponse);
+          toastr.success("Order was successfull");
         } else {
+          toastr.error("Order failed");
           console.error("Payment processing error:", await response.text());
         }
         closeCart();
       } catch (err) {
+        toastr.error("Order failed");
         console.error('Error while sending payment:', err);
       }
     }

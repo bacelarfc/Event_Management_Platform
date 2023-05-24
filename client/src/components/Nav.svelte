@@ -9,7 +9,7 @@
 
   function handleLogout() {
   removeToken();
-  console.log(localStorage.getItem('token'));  // Add this line
+  console.log(localStorage.getItem('token')); 
   navigate("/login");
 }
   const openCart = () => sidePanelOpen.set(true);
