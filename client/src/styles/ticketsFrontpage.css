@@ -46,7 +46,8 @@
   }
   
   .card__photo {
-    width: 100%;
+    width: 36.5vh;
+    height: 30vh;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
   }
