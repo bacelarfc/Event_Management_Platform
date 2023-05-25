@@ -1,11 +1,12 @@
 import { connectToDb, getDb } from "../databases/connection.js";
 
-const createOrder = async (email, paymentIntentId, amount, currency) => {
+const createOrder = async (eventId, email, paymentIntentId, amount, currency) => {
   try {
     await connectToDb();
     const ordersCollection = getDb().collection('orders');
 
     await ordersCollection.insertOne({
+      eventId: eventId,
       email: email,
       paymentIntentId: paymentIntentId,
       amount: amount,

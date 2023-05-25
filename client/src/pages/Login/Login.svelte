@@ -6,7 +6,7 @@
 
   let email = "";
   let password = "";
-  let errorMessage = ""
+  let errorMessage = "";
 
   async function handleLogin() {
     try {
@@ -20,7 +20,6 @@
   }
 </script>
 
-
 <div class="login">
   <div class="login-triangle" />
   <form
@@ -28,7 +27,9 @@
     on:submit|preventDefault={handleLogin}
     method="POST"
   >
+    <h2>Login</h2>
     <ion-icon name="flower-outline" class="login__icon" />
+
     <label for="username">Username:</label>
     <input
       class="input-field"
@@ -37,7 +38,6 @@
       placeholder="Email"
       required
     />
-    <br />
     <label for="password">Password:</label>
     <input
       class="input-field"
