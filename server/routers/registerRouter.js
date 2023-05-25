@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { createUser, getUserByEmail } from '../queries/userQueries.js';
 import passportConfig from '../middlewares/passport.js';
