@@ -11,19 +11,16 @@ router.use(express.json());
 router.post('/payment', async (req, res) => {
   try {
     const {eventId, paymentMethodId, amount, email,  } = req.body;
-    const currency = 'EUR'; // Set the currency to EUR
+    const currency = 'EUR'; 
     console.log(req.body);
     console.log(`Received paymentMethodId: ${paymentMethodId}`)
-    // Perform the payment processing logic using the Stripe API
     const paymentIntent = await stripeClient.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to cents and round it
+      amount: Math.round(amount * 100),
       currency,
   payment_method: paymentMethodId,
   confirm: true,
     });
-    console.log(paymentIntent); // add this line
-
-    // Insert order document into the orders collection
+    console.log(paymentIntent); 
     await createOrder(eventId, email, paymentIntent.id, Math.round(amount * 100), currency);
 
     res.json({ success: true, message: 'Payment processed successfully' });
