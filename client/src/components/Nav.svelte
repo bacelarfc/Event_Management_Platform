@@ -6,9 +6,12 @@
   import { navigate } from "svelte-navigator";
   import { sidePanelOpen } from "../store/ticketsStore";
   import { onMount } from "svelte";
+  import { isAuthenticated } from '../store/store.js';
+
 
   function handleLogout() {
-  removeToken();
+  localStorage.removeItem("userToken");
+    isAuthenticated.set(false);
   console.log(localStorage.getItem('token')); 
   navigate("/login");
 }

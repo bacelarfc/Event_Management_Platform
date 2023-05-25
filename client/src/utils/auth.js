@@ -49,6 +49,7 @@ export async function login(email, password) {
 
 export function setToken(token) {
     localStorage.setItem('token', token.replace('Bearer ', ''));
+    console.log('Token after setting: ', localStorage.getItem('token'));
 }
 
 export function getToken() {

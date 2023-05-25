@@ -3,6 +3,7 @@
   import { login } from "../../utils/auth.js";
   import { setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
+    import { isAuthenticated } from '../../store/store.js';
 
   let email = "";
   let password = "";
@@ -13,6 +14,7 @@
       const response = await login(email, password);
       const token = response.token;
       setToken(response.token);
+      isAuthenticated.set(true);
       navigate("/home", { replace: true }); 
     } catch (error) {
       console.error("Error logging in", error.message);
