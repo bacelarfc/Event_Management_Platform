@@ -13,20 +13,19 @@
   }
   
   .card {
-    margin-top: 50px;
-    padding: 13px;
-    max-width: 318px;
+    margin-top: 10px; 
+    padding: 6px; 
+    max-width: 248px;
     width: 100%;
     background: linear-gradient(-120deg, var(--lavendar-magenta) 0%, var(--dodger-blue) 60%, var(--governor-bay) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    max-height: fit-content;
   }
   
   .card__filter {
-    height: 212px;
+    height: 160px; 
     overflow: hidden;
     position: relative;
     object-fit: cover;
@@ -46,8 +45,7 @@
   }
   
   .card__photo {
-    width: 36.5vh;
-    height: 30vh;
+    width: 100%;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
   }
@@ -58,17 +56,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1em;
+    padding: 0.5em;
     box-sizing: border-box;
   }
   
   .card h2 {
     font-family: 'Poppins', sans-serif;
     font-weight: regular;
-    font-size: 37px;
     color: var(--mariner);
     letter-spacing: -1.06px;
-    margin: 0 0.4em 0.4em 0;
+    font-size: 28px; /* Reduced font-size */
+    margin: 0 0.2em 0.2em 0; /* Reduced margin */
   }
   
   .card time,
@@ -76,16 +74,16 @@
   .card .card__location {
     font-family: 'IBM Plex Mono', sans-serif;
     font-weight: regular;
-    font-size: 14px;
     color: var(--emperor);
-    margin: 0.18em;
+    font-size: 12px; /* Reduced font-size */
+    margin: 0.1em; /* Reduced margin */
   }
   
   .card__location {
     text-decoration-color: var(--shocking-pink);
     -webkit-text-decoration-color: var(--shocking-pink);
     transition: all 250ms ease;
-    max-width: 13.3em;
+    max-width: 10em; 
   }
   
   .card__location:hover {
@@ -97,15 +95,14 @@
     display: flex;
     align-items: center;
     width: 100%;
-    margin: 1.5em 0 0.5em 0;
+    margin: 0.5em 0 0.2em 0;
     flex-direction: row;
   }
   
   .card__buttons .btn {
-    /* Your existing styles */
+    padding: 0.6em 1em;
     position: relative;
     border: 2px solid var(--white);
-    padding: 0.8em 1.5em;
   }
   
   .card__buttons .btn i.material-icons {
@@ -117,7 +114,7 @@
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1;
     text-transform: none;
     letter-spacing: normal;
@@ -143,10 +140,28 @@
   }
 
   .events-container {
+    margin-top: 50px; 
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 20px; /* This adds a little space around each item */
-    max-height: 600px; /* Set this to your desired max height */
-    overflow-y: auto; /* Creates a scrollbar when content exceeds max-height */
+    justify-content: center;
+    gap: 20px;
+    max-height: calc(100vh - 50px - 20px); 
+    overflow-y: auto;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }
+  .icon-location {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+
+  .icon-location .iconify-icon {
+    margin-right: 18px;
+  }
+
+  .icon-location h3 {
+    margin: 19px;
+    font-size: 16px; 
+    font-weight: normal;
+    color: var(--emperor);
   }

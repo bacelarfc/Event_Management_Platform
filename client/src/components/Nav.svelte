@@ -19,9 +19,16 @@
   }
 
   function closeDropdown(event) {
-    const dropdown = event.currentTarget.parentNode;
-    dropdown.classList.remove("active");
+  // Check if clicked element is inside a dropdown
+  const dropdown = event.target.closest('.dropdown');
+  if (dropdown) {
+    dropdown.classList.remove('active');
+  } else {
+    // If clicked outside, close all dropdowns
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(d => d.classList.remove('active'));
   }
+}
 
   onMount(() => {
     document.addEventListener("click", closeDropdown);

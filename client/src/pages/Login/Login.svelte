@@ -28,8 +28,6 @@
     method="POST"
   >
     <h2>Login</h2>
-    <ion-icon name="flower-outline" class="login__icon" />
-
     <label for="username">Username:</label>
     <input
       class="input-field"

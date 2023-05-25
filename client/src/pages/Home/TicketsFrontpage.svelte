@@ -1,4 +1,5 @@
 <script>
+  import Icon from '@iconify/svelte';
   import '../../styles/global.css';
   import '../../styles/ticketsFrontpage.css'; 
   import '../../styles/modal.css'; 
@@ -47,9 +48,13 @@
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
-        <h3>{event.location}</h3>
+        <div class="icon-location">
+          <Icon icon="ion:location-outline"/>
+          <h3>{event.location}</h3>
+        </div>        
         <time>{event.date}</time>
         <p>{event.description}</p>
+        <p>Price: {event.price}DKK</p>
         <div class="card__buttons">
           <div class="card__buttons btn secondary">
             <input type="number" min="1" max="10" bind:value={event.tickets} />
