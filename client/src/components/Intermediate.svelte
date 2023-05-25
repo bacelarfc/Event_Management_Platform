@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { navigate } from 'svelte-navigator';
     import { isAuthenticated } from '../store/store.js';
   
@@ -11,11 +11,13 @@
       userAuthenticated = value;
     });
   
-    onMount(() => {
-      if (!userAuthenticated) {
-        navigate('/login');
-      }
+    $: if (!userAuthenticated) {
+      navigate('/login');
+    }
+  
+    onDestroy(() => {
+      unsubscribe();
     });
   </script>
   
-  <svelte:component this={userAuthenticated ? targetComponent : null} />
+  <svelte:component this={userAuthenticated ? targetComponent : undefined} />

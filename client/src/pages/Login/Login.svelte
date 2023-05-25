@@ -11,15 +11,15 @@
 
   async function handleLogin() {
     try {
-      const response = await login(email, password);
-      const token = response.token;
-      setToken(response.token);
-      isAuthenticated.set(true);
-      navigate("/home", { replace: true }); 
+        const response = await login(email, password);
+        const token = response.token;
+        setToken(response.token);
+        localStorage.setItem("userToken", token);
+        navigate("/home", { replace: true }); 
     } catch (error) {
-      console.error("Error logging in", error.message);
+        console.error("Error logging in", error.message);
     }
-  }
+}
 </script>
 
 <div class="login">

@@ -61,5 +61,5 @@
       <Link to="/history">History</Link>
     </div>
   </div>
-  <button on:click={handleLogout}>Log out</button>
+    <button on:click={handleLogout}>Log out</button>
 </nav>
