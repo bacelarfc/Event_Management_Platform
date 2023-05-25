@@ -6,9 +6,12 @@
   import { navigate } from "svelte-navigator";
   import { sidePanelOpen } from "../store/ticketsStore";
   import { onMount } from "svelte";
+  import { isAuthenticated } from '../store/store.js';
+
 
   function handleLogout() {
-  removeToken();
+  localStorage.removeItem("userToken");
+    isAuthenticated.set(false);
   console.log(localStorage.getItem('token')); 
   navigate("/login");
 }
@@ -56,7 +59,7 @@
     <div class="dropdown-content">
       <Link to="/accountSettings">Account Settings</Link>
       <Link to="/history">History</Link>
-      <a href="#" on:click|preventDefault={handleLogout}>Logout</a>
     </div>
   </div>
+  <button on:click={handleLogout}>Log out</button>
 </nav>
