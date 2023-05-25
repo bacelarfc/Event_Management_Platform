@@ -43,6 +43,7 @@
   {#each events as event (event._id)}
     <li class="card" aria-labelledby="event card">
       <div class="card__filter">
+        <img class="card__photo" src="http://localhost:8080/images/{event.image}" alt="{event.name}" />
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
