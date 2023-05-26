@@ -39,29 +39,33 @@
     <button on:click={() => sidePanelOpen.set(false)}>Close</button>
     <h2>{$cart?.event?.name || ""}</h2>
     {#if step === 1}
-      <form>
-        <label for="name">Name:</label>
-        <input id="name" type="text" bind:value={name} />
-        <label for="surname">Surname:</label>
-        <input id="surname" type="text" bind:value={surname} />
-        <label for="email">Email:</label>
-        <input
-          bind:value={$cart.customer.email}
-          type="email"
-          placeholder="Enter your email"
-        />
-        <label for="tickets">Tickets:</label>
-        <input
-          id="tickets"
-          type="number"
-          min="1"
-          max="10"
-          bind:value={$cart.tickets}
-          required
-        />
-        <p>Total cost: {($cart.tickets * $cart.event.price).toFixed(2)}</p>
-        <button on:click={handleNext}>Next</button>
-      </form>
+      {#if $cart.tickets === 0}
+        <p>Your cart is empty.</p>
+      {:else}
+        <form>
+          <label for="name">Name:</label>
+          <input id="name" type="text" bind:value={name} />
+          <label for="surname">Surname:</label>
+          <input id="surname" type="text" bind:value={surname} />
+          <label for="email">Email:</label>
+          <input
+            bind:value={$cart.customer.email}
+            type="email"
+            placeholder="Enter your email"
+          />
+          <label for="tickets">Tickets:</label>
+          <input
+            id="tickets"
+            type="number"
+            min="1"
+            max="10"
+            bind:value={$cart.tickets}
+            required
+          />
+          <p>Total cost: {($cart.tickets * $cart.event.price).toFixed(2)}</p>
+          <button on:click={handleNext}>Next</button>
+        </form>
+      {/if}
     {:else}
       <PaymentPanel {handlePrevious} />
     {/if}
