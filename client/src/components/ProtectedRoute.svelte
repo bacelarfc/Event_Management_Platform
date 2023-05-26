@@ -1,16 +1,16 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
-  import { navigate } from 'svelte-navigator';
-  import { isAuthenticated } from '../store/store.js';
+  import { onDestroy } from "svelte";
+  import { navigate } from "svelte-navigator";
+  import { isAuthenticated } from "../store/store.js";
 
-  export let component = null;
+  export const component = null;
 
   let userAuthenticated = false;
 
-  const unsubscribe = isAuthenticated.subscribe(value => {
+  const unsubscribe = isAuthenticated.subscribe((value) => {
     userAuthenticated = value;
     if (!userAuthenticated) {
-      navigate('/login');
+      navigate("/login");
     }
   });
 

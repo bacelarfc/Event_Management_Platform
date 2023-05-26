@@ -1,18 +1,17 @@
 const API_BASE_URL = 'http://localhost:8080'
 import { user } from '../store/store.js';
 
-
 async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
-  const token = localStorage.getItem('userToken');
+  const token = localStorage.getItem('token');
   
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
   }
   const headersObj = Object.fromEntries(headers.entries());
-
+  
   const requestOptions = {
     method: method,
     headers: headers,
@@ -48,17 +47,17 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
-  localStorage.setItem('userToken', token.replace('Bearer ', ''));
-  console.log('Token after setting: ', localStorage.getItem('userToken'))
+    localStorage.setItem('token', token.replace('Bearer ', ''));
 }
+
 export function getToken() {
-  return localStorage.getItem('userToken');
+  return localStorage.getItem('token');
 }
 
 export function removeToken() {
-  console.log('Token before removal: ', localStorage.getItem('userToken'));
-  localStorage.removeItem('userToken');
-  console.log('Token after removal: ', localStorage.getItem('userToken'));
+  console.log('Token before removal: ', localStorage.getItem('token'));
+  localStorage.removeItem('token');
+  console.log('Token after removal: ', localStorage.getItem('token'));
 }
 
 

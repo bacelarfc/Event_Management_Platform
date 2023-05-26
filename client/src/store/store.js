@@ -1,12 +1,6 @@
 import { writable } from 'svelte/store';
 
-const token = localStorage.getItem("userToken");
-
-export const isAuthenticated = writable(false);  // assuming initial state is false
-
-export function setAuthenticated() {
-  isAuthenticated.set(true);
-}
+export const isAuthenticated = writable(!!localStorage.getItem('userToken'));
 
 export function login() {
   isAuthenticated.set(true);
@@ -28,5 +22,4 @@ export const cart = writable({
     totalCost: 0,
   });
 
-  
 export const user = writable(null);

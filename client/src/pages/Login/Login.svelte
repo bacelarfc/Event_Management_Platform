@@ -1,28 +1,27 @@
 <script>
   import "../../styles/login.css";
   import { login } from "../../utils/auth.js";
-  import { setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
-    import { isAuthenticated, setAuthenticated } from '../../store/store.js';
+  import { isAuthenticated } from "../../store/store.js";
 
   let email = "";
   let password = "";
   let errorMessage = "";
 
   async function handleLogin() {
-  try {
+    try {
       const response = await login(email, password);
-      const token = response.token;
-      setToken(token);
-      localStorage.setItem("userToken", token);
-      setAuthenticated();  // set isAuthenticated to true
-      navigate("/home", { replace: true });
-  } catch (error) {
-      errorMessage = error.message;
-      console.error("Error logging in", error.message);
+      if (response && response.token) {
+        localStorage.setItem("userToken", response.token);
+        isAuthenticated.set(true);
+        navigate("/home");
+      } else {
+        console.error("Failed to login");
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
   }
-}
-
 </script>
 
 <div class="login">

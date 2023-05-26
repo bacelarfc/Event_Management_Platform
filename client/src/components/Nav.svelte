@@ -2,16 +2,15 @@
   import "../styles/global.css";
   import "../styles/navbar.css";
   import { Link } from "svelte-navigator";
-  import { removeToken } from "../utils/auth.js";
   import { navigate } from "svelte-navigator";
   import { sidePanelOpen } from "../store/ticketsStore";
   import { onMount } from "svelte";
-  import { isAuthenticated, logout } from '../store/store.js';
+  import { isAuthenticated, logout } from "../store/store.js";
 
   function handleLogout() {
     localStorage.removeItem("userToken");
-    logout();  // set isAuthenticated to false
-    console.log(localStorage.getItem('userToken')); // <- use 'userToken' instead of 'token'
+    isAuthenticated.set(false);
+    console.log(localStorage.getItem("userToken")); 
     navigate("/login");
   }
 
@@ -22,14 +21,12 @@
   }
 
   function closeDropdown(event) {
-    // Check if clicked element is inside a dropdown
-    const dropdown = event.target.closest('.dropdown');
+    const dropdown = event.target.closest(".dropdown");
     if (dropdown) {
-      dropdown.classList.remove('active');
+      dropdown.classList.remove("active");
     } else {
-      // If clicked outside, close all dropdowns
-      const dropdowns = document.querySelectorAll('.dropdown');
-      dropdowns.forEach(d => d.classList.remove('active'));
+      const dropdowns = document.querySelectorAll(".dropdown");
+      dropdowns.forEach((d) => d.classList.remove("active"));
     }
   }
 
