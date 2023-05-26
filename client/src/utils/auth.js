@@ -6,7 +6,7 @@ async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('userToken');
   
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
@@ -48,18 +48,17 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
-    localStorage.setItem('token', token.replace('Bearer ', ''));
-    console.log('Token after setting: ', localStorage.getItem('token'));
+  localStorage.setItem('userToken', token.replace('Bearer ', ''));
+  console.log('Token after setting: ', localStorage.getItem('userToken'))
 }
-
 export function getToken() {
-  return localStorage.getItem('token');
+  return localStorage.getItem('userToken');
 }
 
 export function removeToken() {
-  console.log('Token before removal: ', localStorage.getItem('token'));
-  localStorage.removeItem('token');
-  console.log('Token after removal: ', localStorage.getItem('token'));
+  console.log('Token before removal: ', localStorage.getItem('userToken'));
+  localStorage.removeItem('userToken');
+  console.log('Token after removal: ', localStorage.getItem('userToken'));
 }
 
 

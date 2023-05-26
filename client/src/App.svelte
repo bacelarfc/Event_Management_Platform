@@ -10,7 +10,7 @@
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
-  import ProtectedRoute from './components/ProtectedRoute.svelte'; // import the intermediate (protected route) component
+  import ProtectedRoute from './components/ProtectedRoute.svelte'; 
 </script>
 
 <Router>

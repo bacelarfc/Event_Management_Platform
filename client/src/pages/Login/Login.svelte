@@ -3,23 +3,26 @@
   import { login } from "../../utils/auth.js";
   import { setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
-    import { isAuthenticated } from '../../store/store.js';
+    import { isAuthenticated, setAuthenticated } from '../../store/store.js';
 
   let email = "";
   let password = "";
   let errorMessage = "";
 
   async function handleLogin() {
-    try {
-        const response = await login(email, password);
-        const token = response.token;
-        setToken(response.token);
-        localStorage.setItem("userToken", token);
-        navigate("/home", { replace: true }); 
-    } catch (error) {
-        console.error("Error logging in", error.message);
-    }
+  try {
+      const response = await login(email, password);
+      const token = response.token;
+      setToken(token);
+      localStorage.setItem("userToken", token);
+      setAuthenticated();  // set isAuthenticated to true
+      navigate("/home", { replace: true });
+  } catch (error) {
+      errorMessage = error.message;
+      console.error("Error logging in", error.message);
+  }
 }
+
 </script>
 
 <div class="login">
