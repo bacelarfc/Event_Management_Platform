@@ -9,6 +9,7 @@
   let step = 1;
 
   const handleNext = () => {
+    console.log("Hello")
   if (step === 1) {
     step = 2;
   } else {

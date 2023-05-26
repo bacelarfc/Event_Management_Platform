@@ -1,6 +1,4 @@
 <script>
-  import dotenv from "dotenv";
-  dotenv.config();
   import { onMount } from "svelte";
   import { loadStripe } from '@stripe/stripe-js';
   import { cart, totalCost } from "../store/ticketsStore";
@@ -9,12 +7,13 @@
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
 
+
   export let handlePrevious;
 
   let stripe;
   let cardElement;
 
-  const stripePromise = loadStripe(process.env.STRIPE_API_PUBLIC_KEY);
+  const stripePromise = loadStripe("pk_test_51NBFoQFfaWs6FhuYqHb0GgFWVO70YgEtQJTGkE5N8d69glQU6daaH2lkI8Y1jFu02wpSYJv33FTEbojECAODyt1W00FltV9Ynj");
 
   onMount(async () => {
     stripe = await stripePromise;
