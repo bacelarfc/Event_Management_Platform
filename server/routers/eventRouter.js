@@ -52,6 +52,7 @@ router.post('/createEvent', async (req, res) => {
         };
 
         const eventId = await createEvent(newEvent);
+        req.io.emit('event', newEvent);
         res.json({ message: 'Event created', eventId });
     } catch (error) {
         res.status(500).json({ message: 'Error creating event', error });
