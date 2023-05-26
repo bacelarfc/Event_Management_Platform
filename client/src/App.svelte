@@ -10,6 +10,7 @@
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
+  import AccountSettings from './pages/Home/AccountSettings.svelte';
   import ProtectedRoute from './components/ProtectedRoute.svelte'; // import the intermediate (protected route) component
 </script>
 
@@ -37,6 +38,9 @@
   </Route>
   <Route path="/editEvent/:eventId">
     <ProtectedRoute><EditEventForm /></ProtectedRoute>
+  </Route>
+  <Route path="/accountSettings">
+    <ProtectedRoute><AccountSettings /></ProtectedRoute>
   </Route>
   <Route path="*" component={Frontpage} />
 </Router>

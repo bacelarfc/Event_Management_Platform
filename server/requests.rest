@@ -22,8 +22,16 @@ Content-Type: application/json
   "password": "1"
 }
 
+###
+
+// Authentication
+
+GET http://localhost:8080/api/auth/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS5jb20iLCJpYXQiOjE2ODUxMTMyMDAsImV4cCI6MTY4NTExNjgwMH0.D5Lc5p3gjvVcRgfUtrRWV5P5kRxt7BsdQalKdqQw0XM
+Content-Type: application/json
 
 ###
+
+
 
 
 // -----USERS-------------------------------------------------
@@ -32,6 +40,20 @@ Content-Type: application/json
 // GetAll
 GET http://localhost:8080/users
 Content-Type: application/json
+###
+
+// Get
+GET http://localhost:8080/users/1@1.com
+
+###
+
+
+// GetUser
+GET http://localhost:8080/auth/user
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS5jb20iLCJpYXQiOjE2ODUxMTgwOTUsImV4cCI6MTY4NTEyMTY5NX0.g7CS4S4bLFfBpae98PVX6mAqac3Ue7hxpdJT_6Ubf1U
+
+
 ###
 
 // Create
@@ -50,8 +72,8 @@ PUT http://localhost:8080/users/1@1.com
 Content-Type: application/json
 
 {
-  "email": "1@2.com",
-  "password": "newpassword"
+  "email": "1@1.com",
+  "password": "1"
 }
 ###
 

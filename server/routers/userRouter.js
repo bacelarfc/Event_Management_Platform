@@ -1,98 +1,123 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import dotenv from "dotenv";
 import { check, validationResult } from 'express-validator';
-import { getUserByEmail, setUserAdminStatusByEmail, createUser, getAllUsers, updateUser, deleteUser } from '../queries/userQueries.js';
+import { authenticateToken } from '../middlewares/authenticateToken.js';
+import {
+  setUserAdminStatusByEmail,
+  createUser,
+  getAllUsers,
+  deleteUser,
+  getUserByEmail,
+  updateUser,
+} from '../queries/userQueries.js';
 
+dotenv.config();
 const router = express.Router();
 
 
 router.get('/users', async (req, res) => {
-    try {
-        const users = await getAllUsers();
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ message: 'Error retrieving users', error });
-    }
+  try {
+    const users = await getAllUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving users', error });
+  }
 });
+
+router.get('/users/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await getUserByEmail(email);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user', error });
+  }
+});
+
 
 router.post('/createUser', async (req, res) => {
-    try {
-      const { email, password, firstName, lastName, isAdmin } = req.body;
-      const existingUser = await getUserByEmail(email);
-  
-      if (existingUser) {
-        return res.status(400).json({ message: 'Email already exists' });
-      }
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(password, salt);
-  
-      const newUser = {
-        email,
-        password: hash,
-        firstName,
-        lastName,
-        isAdmin
-      };
-  
-      const userId = await createUser(newUser);
-      res.json({ message: 'User registered', userId });
-  
-    } catch (error) {
-      res.status(500).json({ message: 'Error registering user', error });
+  try {
+    const { email, password, firstName, lastName, isAdmin } = req.body;
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
     }
-  });
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
 
-  router.put('/users/:email', async (req, res) => {
-    try {
-      const { email } = req.params;
-      const updatedData = req.body;
-  
-      const { email: newEmail, password } = updatedData;
-  
-      if (newEmail !== email) {
-        const existingUser = await getUserByEmail(newEmail);
-        if (existingUser) {
-          return res.status(400).json({ message: 'Email already in use' });
-        }
-      }
-  
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(password, salt);
-        updatedData.password = hash;
-      }
-  
-      const modifiedCount = await updateUser(email, updatedData);
-      if (modifiedCount === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      res.json({ message: 'User updated' });
-    } catch (error) {
-      res.status(500).json({ message: 'Error updating user', error });
-    }
-  });
+    const newUser = {
+      email,
+      password: hash,
+      firstName,
+      lastName,
+      isAdmin
+    };
 
-router.delete('/users/:email', async (req, res) => {
-    try {
-        const { email } = req.params;
+    const userId = await createUser(newUser);
+    res.json({ message: 'User registered', userId });
 
-        const deletedCount = await deleteUser(email);
-        if (deletedCount === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json({ message: 'User deleted' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting user', error });
-    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering user', error });
+  }
 });
 
-//only temporarely 
+router.put('/users/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+    const updatedData = req.body;
+
+    const { email: newEmail, password } = updatedData;
+
+    if (newEmail !== email) {
+      const existingUser = await getUserByEmail(newEmail);
+      if (existingUser) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+    }
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+      updatedData.password = hash;
+    }
+
+    const modifiedCount = await updateUser(email, updatedData);
+    if (modifiedCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User updated' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error });
+  }
+});
+
+router.delete('/users/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const deletedCount = await deleteUser(email);
+    if (deletedCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
+});
+
+
 router.patch(
   '/users/:userEmail/admin',
   [
-    // Validate and sanitize inputs
     check('userEmail').isEmail().normalizeEmail(),
   ],
   async (req, res) => {
@@ -119,6 +144,10 @@ router.patch(
   }
 );
 
+router.get("/auth/user", authenticateToken, async (req, res) => {
+  const users = await getAllUsers();
+  res.json(users.find(user => user.username === req.user.username));
+});
 
 
 export default router;

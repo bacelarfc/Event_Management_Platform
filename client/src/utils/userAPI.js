@@ -35,9 +35,27 @@ export async function getUsers() {
     }
   }
 
+  export async function getUserByEmail(email) {
+    try {
+      const response = await request('GET', `/users/${email}`);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 export async function createUser(user) {
   try {
     const response = await request('POST', '/createUser', user);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUser(email, user) {
+  try {
+    const response = await request('PUT', `/users/${email}`, user);
     return response;
   } catch (error) {
     throw error;
