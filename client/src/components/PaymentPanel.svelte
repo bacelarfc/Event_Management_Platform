@@ -13,7 +13,7 @@
   let stripe;
   let cardElement;
 
-  const stripePromise = loadStripe("pk_test_51NBFoQFfaWs6FhuYqHb0GgFWVO70YgEtQJTGkE5N8d69glQU6daaH2lkI8Y1jFu02wpSYJv33FTEbojECAODyt1W00FltV9Ynj");
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_API_PUBLIC_KEY);
 
   onMount(async () => {
     stripe = await stripePromise;

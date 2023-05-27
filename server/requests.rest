@@ -24,14 +24,12 @@ Content-Type: application/json
 
 ###
 
-// Authentication
+// ---Authentication-----------------------------------------
 
 GET http://localhost:8080/api/auth/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS5jb20iLCJpYXQiOjE2ODUxMTMyMDAsImV4cCI6MTY4NTExNjgwMH0.D5Lc5p3gjvVcRgfUtrRWV5P5kRxt7BsdQalKdqQw0XM
 Content-Type: application/json
 
 ###
-
-
 
 
 // -----USERS-------------------------------------------------
@@ -43,7 +41,7 @@ Content-Type: application/json
 ###
 
 // Get
-GET http://localhost:8080/users/1@1.com
+GET http://localhost:8080/users/d@d.com
 
 ###
 
@@ -51,9 +49,7 @@ GET http://localhost:8080/users/1@1.com
 // GetUser
 GET http://localhost:8080/auth/user
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS5jb20iLCJpYXQiOjE2ODUxMTgwOTUsImV4cCI6MTY4NTEyMTY5NX0.g7CS4S4bLFfBpae98PVX6mAqac3Ue7hxpdJT_6Ubf1U
-
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMS5jb20iLCJpYXQiOjE2ODUyMDM0NDEsImV4cCI6MTY4NTIwNzA0MX0.0vGGsyWFvbjmaPllE2tRFE7RTup7xpUy5dzibBCRbxw
 ###
 
 // Create
