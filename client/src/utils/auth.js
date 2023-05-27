@@ -1,7 +1,6 @@
 const API_BASE_URL = 'http://localhost:8080'
 import { user } from '../store/store.js';
 
-
 async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -12,7 +11,7 @@ async function request(method, url, data) {
     headers.append('Authorization', `Bearer ${token}`);
   }
   const headersObj = Object.fromEntries(headers.entries());
-
+  
   const requestOptions = {
     method: method,
     headers: headers,
@@ -49,7 +48,6 @@ export async function login(email, password) {
 
 export function setToken(token) {
     localStorage.setItem('token', token.replace('Bearer ', ''));
-    console.log('Token after setting: ', localStorage.getItem('token'));
 }
 
 export function getToken() {

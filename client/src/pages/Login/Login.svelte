@@ -1,9 +1,8 @@
 <script>
   import "../../styles/login.css";
   import { login } from "../../utils/auth.js";
-  import { setToken } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
-    import { isAuthenticated } from '../../store/store.js';
+  import { isAuthenticated } from "../../store/store.js";
 
   let email = "";
   let password = "";
@@ -11,15 +10,18 @@
 
   async function handleLogin() {
     try {
-        const response = await login(email, password);
-        const token = response.token;
-        setToken(response.token);
-        localStorage.setItem("userToken", token);
-        navigate("/home", { replace: true }); 
+      const response = await login(email, password);
+      if (response && response.token) {
+        localStorage.setItem("userToken", response.token);
+        isAuthenticated.set(true);
+        navigate("/home");
+      } else {
+        console.error("Failed to login");
+      }
     } catch (error) {
-        console.error("Error logging in", error.message);
+      console.error("An error occurred during login:", error);
     }
-}
+  }
 </script>
 
 <div class="login">

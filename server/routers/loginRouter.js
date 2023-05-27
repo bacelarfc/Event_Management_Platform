@@ -58,8 +58,13 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { id, email, firstName, lastName, isAdmin } = req.user;
-  res.json({ id, email, firstName, lastName, isAdmin });
+  console.log(req.headers); // Log headers to verify the Authorization header
+
+  // Extract user information from the token payload
+  const { id, email } = req.user;
+
+  // Return the user data in the response
+  res.json({ id, email });
 });
 
 export default router;
