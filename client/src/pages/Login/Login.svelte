@@ -3,6 +3,8 @@
   import { login } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
   import { isAuthenticated } from "../../store/store.js";
+  import "toastr/build/toastr.min.css";
+  import toastr from "toastr";
 
   let email = "";
   let password = "";
@@ -12,13 +14,15 @@
     try {
       const response = await login(email, password);
       if (response && response.token) {
-        localStorage.setItem("userToken", response.token);
+        localStorage.setItem("token", response.token);
         isAuthenticated.set(true);
+        toastr.success("Welcome " + email);
         navigate("/home");
       } else {
         console.error("Failed to login");
       }
     } catch (error) {
+      toastr.error(error.message);
       console.error("An error occurred during login:", error);
     }
   }

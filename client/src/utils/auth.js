@@ -6,12 +6,12 @@ async function request(method, url, data) {
   headers.append('Content-Type', 'application/json');
 
   const token = localStorage.getItem('token');
-  
+
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
   }
   const headersObj = Object.fromEntries(headers.entries());
-  
+
   const requestOptions = {
     method: method,
     headers: headers,
@@ -47,7 +47,7 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
-    localStorage.setItem('token', token.replace('Bearer ', ''));
+  localStorage.setItem('token', token.replace('Bearer ', ''));
 }
 
 export function getToken() {
@@ -63,41 +63,71 @@ export function removeToken() {
 
 
 export async function getUser() {
-    try {
-      const token = getToken();
-  
-      if (!token) {
-        return null;
-      }
+  try {
+    const token = getToken();
 
-      const response = await fetch(API_BASE_URL + '/api/auth/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      console.log('getUser:', response); 
-  
-      if (response.ok) {
-        const userData = await response.json();
-        user.set(userData);
-        return userData;
-      } else {
-        removeToken();
-        user.set(null);
-        return null;
-      }
-    } catch (error) {
-      throw error;
+    if (!token) {
+      return null;
     }
-  }
 
-  export async function getUserEmail() {
-    try {
-      const userData = await getUser();
-      return userData ? userData.email : '';
-    } catch (error) {
-      console.error('Error getting user email', error.message);
-      return '';
+    const response = await fetch(API_BASE_URL + '/api/auth/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+
+    if (response.ok) {
+      const userData = await response.json();
+      user.set(userData);
+      return userData;
+    } else {
+      //removeToken();
+      user.set(null);
+      return null;
     }
+  } catch (error) {
+    throw error;
   }
+}
+
+
+export async function getUserEmail() {
+  try {
+    const userData = await getUser();
+    return userData ? userData.email : '';
+  } catch (error) {
+    console.error('Error getting user email', error.message);
+    return '';
+  }
+}
+
+
+export async function getUserFromToken() {
+  try {
+    const token = getToken();
+    const formattedToken = token.replace('Bearer ', '');
+    console.log("Getuser: " + formattedToken)
+    if (!token) {
+      return null;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: formattedToken,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      const errorData = await response.json();
+      throw errorData;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
