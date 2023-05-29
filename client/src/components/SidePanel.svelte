@@ -1,12 +1,23 @@
 <script>
   import { cart, sidePanelOpen } from "../store/ticketsStore";
   import "../styles/sidepanel.css";
+  import { onMount } from "svelte";
   import PaymentPanel from "./PaymentPanel.svelte";
+  import { getUserFromToken } from "../utils/auth";
 
-  let name = "";
-  let surname = "";
+  let firstName = "";
+  let lastName = "";
   let email = "";
   let step = 1;
+
+
+  onMount(async () => {
+    const user = await getUserFromToken();
+
+    $cart.customer.firstName = user.firstName;
+    $cart.customer.lastName = user.lastName;
+    $cart.customer.email = user.email
+  });
 
   const handleNext = () => {
     if (step === 1) {
@@ -21,7 +32,7 @@
 
       cart.update((cartData) => ({
         ...cartData,
-        customer: { name, surname, email },
+        customer: { firstName, lastName, email },
         totalCost,
         eventId: $cart.event._id,
         showPaymentPanel: true,
@@ -43,16 +54,18 @@
         <p>Your cart is empty.</p>
       {:else}
         <form>
-          <label for="name">Name:</label>
-          <input id="name" type="text" bind:value={name} />
-          <label for="surname">Surname:</label>
-          <input id="surname" type="text" bind:value={surname} />
           <label for="email">Email:</label>
           <input
+          class="read-only"
             bind:value={$cart.customer.email}
             type="email"
             placeholder="Enter your email"
+            readonly
           />
+          <label for="firstName">First Name:</label>
+          <input id="firstName" type="text" bind:value={$cart.customer.firstName} />
+          <label for="lastName">Last Name:</label>
+          <input id="lastName" type="text" bind:value={$cart.customer.lastName} />
           <label for="tickets">Tickets:</label>
           <input
             id="tickets"

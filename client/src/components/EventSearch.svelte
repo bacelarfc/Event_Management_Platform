@@ -17,3 +17,9 @@
     placeholder="Search event by name, date, or location"
   />
 </div>
+
+<style>
+  .search-bar {
+    padding-top: 15vh;
+  }
+</style>

@@ -30,6 +30,11 @@
     }
   }
 
+
+  function handleLogin() {
+    navigate("/login");
+  }
+
   onMount(() => {
     document.addEventListener("click", closeDropdown);
     return () => {
@@ -63,6 +68,6 @@
     {/if}
     <button on:click={handleLogout}>Log out</button>
   {:else}
-    <Link to="/login">Log In</Link>
+  <button on:click={handleLogin}>Log in</button>
   {/if}
 </nav>

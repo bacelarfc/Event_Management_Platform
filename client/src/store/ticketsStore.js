@@ -5,8 +5,8 @@
     tickets: 0,
     showPaymentPanel: false,
     customer: {
-      name: '',
-      surname: '',
+      firstName: '',
+      lastName: '',
       email: '',
     },
     totalCost: 0, 
