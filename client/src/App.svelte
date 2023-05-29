@@ -43,14 +43,13 @@
 </script>
 
 <Router>
-  <Route path="/" component={Frontpage} />
+  <Route path="/" component={TicketsFrontpage} />
   <Route path="/login" component={Login} />
   <Route path="/signUp" component={SignUp} />
-  <Route path="/home">
+  <!-- <Route path="/home">
     <ProtectedRoute><Home /></ProtectedRoute>
-  </Route>
+  </Route> -->
   <Route path="/ticketsFrontpage">
-    <ProtectedRoute><TicketsFrontpage /></ProtectedRoute>
   </Route>
   <Route path="/manageUsers">
     <ProtectedRoute><ManageUsers /></ProtectedRoute>

@@ -11,7 +11,7 @@
     localStorage.removeItem("token");
     isAuthenticated.set(false);
     console.log(localStorage.getItem("token")); 
-    navigate("/login");
+    navigate("/");
   }
 
   const openCart = () => sidePanelOpen.set(true);
@@ -44,19 +44,19 @@
     <li><Link to="/ticketsFrontpage">Frontpage</Link></li>
     <li><a href="/dontwant" on:click|preventDefault={openCart}>Cart</a></li>
   </ul>
-  <div class="dropdown">
-    <button class="dropbtn" on:click={handleDropdownClick}>Admin</button>
-    <div class="dropdown-content">
-      <Link to="/manageUsers">Manage Users</Link>
-      <Link to="/manageEvents">Manage Events</Link>
-    </div>
-  </div>
   {#if $isAuthenticated}
     <div class="dropdown">
       <button class="dropbtn" on:click={handleDropdownClick}>Account</button>
       <div class="dropdown-content">
         <Link to="/accountSettings">Account Settings</Link>
         <Link to="/history">History</Link>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn" on:click={handleDropdownClick}>Admin</button>
+      <div class="dropdown-content">
+        <Link to="/manageUsers">Manage Users</Link>
+        <Link to="/manageEvents">Manage Events</Link>
       </div>
     </div>
     <button on:click={handleLogout}>Log out</button>
