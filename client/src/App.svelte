@@ -11,6 +11,34 @@
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
   import ProtectedRoute from './components/ProtectedRoute.svelte'; 
+  import { onMount, onDestroy } from "svelte";
+  import { isAuthenticated } from "./store/store.js";
+
+  onMount(() => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      isAuthenticated.set(true);
+    }
+
+    // Add event listener for storage event
+    window.addEventListener('storage', syncAuthentication);
+
+    // Cleanup the listener when the component is unmounted
+    onDestroy(() => {
+      window.removeEventListener('storage', syncAuthentication);
+    });
+  });
+
+  // Function to sync authentication status across tabs
+  function syncAuthentication(event) {
+    if (event.key === 'userToken') {
+      if (event.newValue) {
+        isAuthenticated.set(true);
+      } else {
+        isAuthenticated.set(false);
+      }
+    }
+  }
 </script>
 
 <Router>

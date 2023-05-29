@@ -5,7 +5,7 @@ async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('userToken');
   
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
@@ -47,7 +47,7 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
-    localStorage.setItem('token', token.replace('Bearer ', ''));
+    localStorage.setItem('userToken', token.replace('Bearer ', ''));
 }
 
 export function getToken() {
@@ -101,3 +101,5 @@ export async function getUser() {
       return '';
     }
   }
+
+  
