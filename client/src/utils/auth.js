@@ -112,6 +112,8 @@ export async function getUserFromToken() {
       return null;
     }
 
+    console.log("Test");
+
     const response = await fetch(`${API_BASE_URL}/auth/user`, {
       method: "GET",
       headers: {
