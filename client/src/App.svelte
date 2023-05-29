@@ -11,11 +11,12 @@
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
   import ProtectedRoute from './components/ProtectedRoute.svelte'; 
+  import AccountSettings from './pages/Home/AccountSettings.svelte';
   import { onMount, onDestroy } from "svelte";
   import { isAuthenticated } from "./store/store.js";
 
   onMount(() => {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     if (token) {
       isAuthenticated.set(true);
     }
@@ -31,7 +32,7 @@
 
   // Function to sync authentication status across tabs
   function syncAuthentication(event) {
-    if (event.key === 'userToken') {
+    if (event.key === 'token') {
       if (event.newValue) {
         isAuthenticated.set(true);
       } else {
@@ -65,6 +66,9 @@
   </Route>
   <Route path="/editEvent/:eventId">
     <ProtectedRoute><EditEventForm /></ProtectedRoute>
+  </Route>
+  <Route path="/accountSettings">
+    <ProtectedRoute><AccountSettings /></ProtectedRoute>
   </Route>
   <Route path="*" component={Frontpage} />
 </Router>
