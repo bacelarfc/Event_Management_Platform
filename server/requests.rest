@@ -74,7 +74,7 @@ Content-Type: application/json
 ###
 
 // PATCH Admin
-PATCH http://localhost:8080/users/1@1.com/admin
+PATCH http://localhost:8080/users/fefe@gmail.com/admin
 Content-Type: application/json
 
 

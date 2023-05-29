@@ -40,9 +40,8 @@ router.post('/login', async (req, res) => {
     if (isMatch) {
       const payload = { id: user.id, email: user.email };
 
-      const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1h',
-      });
+      const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
       console.log(`Login successful for email: ${email}`);
       console.log(`Generated token: Bearer ${token}`);
 
@@ -58,12 +57,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log(req.headers); // Log headers to verify the Authorization header
-
-  // Extract user information from the token payload
   const { id, email } = req.user;
-
-  // Return the user data in the response
   res.json({ id, email });
 });
 

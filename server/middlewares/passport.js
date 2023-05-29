@@ -14,10 +14,8 @@ export default (passport) => {
     new JwtStrategy(opts, async (jwt_payload, done) => {
       try {
         const user = await getUserByEmail(jwt_payload.email);
-
         if (user) {
-          const token = jwt.sign({ email: jwt_payload.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-          return done(null, { user, token });
+          return done(null, user); // pass the user object, not a new token
         } else {
           console.log('User not found!');
           return done(null, false);
