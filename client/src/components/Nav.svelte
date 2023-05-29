@@ -9,11 +9,11 @@
   import { getUserFromToken } from "../utils/auth";
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    isAuthenticated.set(false);
-    console.log(localStorage.getItem("token"));
-    navigate("/");
-  }
+  localStorage.removeItem("token");
+  isAuthenticated.set(false);
+  isAdmin.set(false);
+  navigate("/");
+}
 
   const openCart = () => sidePanelOpen.set(true);
 

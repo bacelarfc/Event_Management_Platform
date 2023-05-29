@@ -23,18 +23,18 @@
           isAdmin.set(true);
         }
 
-        isAuthenticated.set(true);
+      isAuthenticated.set(true);
 
-        toastr.success("Welcome " + email);
-        navigate("/");
-      } else {
-        console.error("Failed to login");
-      }
-    } catch (error) {
-      toastr.error(error.message);
-      console.error("An error occurred during login:", error);
+      toastr.success("Welcome " + email);
+      navigate("/");
+    } else {
+      console.error("Failed to login");
     }
+  } catch (error) {
+    toastr.error(error.message);
+    console.error("An error occurred during login:", error);
   }
+}
 </script>
 
 <div class="login">

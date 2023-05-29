@@ -31,10 +31,13 @@ Develop a RESTful API using Node.js and Express.js to handle all backend operati
 
 
 ## TODO:
-Analytics: Dani
-Account settings: Dani
-Switchable: Fernanda
-Refactor payments: send SMS. Fernanda
+Analytics (how many tickets were sold): Dani
+Account History: Dani
+Reset password email: Dani 
+Switchable: Fernanda <br>
+Send SMS: Fernanda <br>
+Web sockets all events:Fernanda
+Admin: 
 
 ## Important
 Style: darkmode, maybe switchable? <br> 
