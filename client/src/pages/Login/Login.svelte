@@ -13,33 +13,32 @@
   let errorMessage = "";
 
   async function handleLogin() {
-    try {
-      const response = await login(email, password);
-      if (response && response.token) {
-        localStorage.setItem("token", response.token);
-       
-        const user = await getUserFromToken();
+  try {
+    const response = await login(email, password);
+    if (response && response.token) {
+      localStorage.setItem("token", response.token);
+     
+      const user = await getUserFromToken();
 
-        console.log("Userboolean:" + user)
-        if (user.isAdmin) {
-          isAdmin.set(true);
-          console.log("Isadmin2 " + isAdmin);
-          isAdmin.set(true);
-          console.log("Isauthenticated " + isAuthenticated);
-        }
-
-        isAuthenticated.set(true);
-
-        toastr.success("Welcome " + email);
-        navigate("/");
-      } else {
-        console.error("Failed to login");
+      console.log("Userboolean:" + user)
+      if (user.isAdmin) {
+        isAdmin.set(true);
+        console.log("Isadmin2 " + isAdmin);
+        console.log("Isauthenticated " + isAuthenticated);
       }
-    } catch (error) {
-      toastr.error(error.message);
-      console.error("An error occurred during login:", error);
+
+      isAuthenticated.set(true);
+
+      toastr.success("Welcome " + email);
+      navigate("/");
+    } else {
+      console.error("Failed to login");
     }
+  } catch (error) {
+    toastr.error(error.message);
+    console.error("An error occurred during login:", error);
   }
+}
 </script>
 
 <div class="login">

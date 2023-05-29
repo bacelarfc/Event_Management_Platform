@@ -8,11 +8,12 @@
   import { isAuthenticated, isAdmin, logout } from "../store/store.js";
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    isAuthenticated.set(false);
-    console.log(localStorage.getItem("token")); 
-    navigate("/");
-  }
+  localStorage.removeItem("token");
+  isAuthenticated.set(false);
+  isAdmin.set(false);
+  console.log(localStorage.getItem("token")); 
+  navigate("/");
+}
 
   const openCart = () => sidePanelOpen.set(true);
 
