@@ -19,13 +19,8 @@
         localStorage.setItem("token", response.token);
        
         const user = await getUserFromToken();
-
-        console.log("Userboolean:" + user)
         if (user.isAdmin) {
           isAdmin.set(true);
-          console.log("Isadmin2 " + isAdmin);
-          isAdmin.set(true);
-          console.log("Isauthenticated " + isAuthenticated);
         }
 
         isAuthenticated.set(true);
