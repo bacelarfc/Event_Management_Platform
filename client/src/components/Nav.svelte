@@ -47,7 +47,7 @@
 <nav>
   <ul>
     <li><Link to="/home">Home</Link></li>
-    <li><Link to="/ticketsFrontpage">Frontpage</Link></li>
+    <li><Link to="/">Frontpage</Link></li>
     <li><a href="/dontwant" on:click|preventDefault={openCart}>Cart</a></li>
   </ul>
   {#if $isAuthenticated}

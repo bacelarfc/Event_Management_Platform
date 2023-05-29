@@ -9,10 +9,11 @@
   import { cart, sidePanelOpen } from "../../store/ticketsStore";
   import { io } from "socket.io-client";
   import EventSearch from "../../components/EventSearch.svelte";
-
+  import { navigate } from "svelte-navigator";
   import { events } from "../../store/eventStore.js";
   import { derived } from "svelte/store";
   import { writable } from "svelte/store";
+  import { isAuthenticated } from "../../store/store";
 
   let socket;
 
@@ -58,7 +59,15 @@
   });
 
   const addToCart = (event) => {
-    const { _id, name, time, description, price } = event;
+  const { _id, name, time, description, price } = event;
+
+  let authenticated;
+  isAuthenticated.subscribe(value => authenticated = value);
+
+  if (!authenticated) {
+    // Goes to the login page if the user is not authenticated
+    navigate("/login");
+  } else {
     cart.update((value) => ({
       ...value,
       event: { _id, name, time, description, price },
@@ -66,7 +75,8 @@
       showPaymentPanel: false,
     }));
     sidePanelOpen.set(true);
-  };
+  }
+};
 
   const searchQuery = writable("");
 
