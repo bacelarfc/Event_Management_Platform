@@ -78,7 +78,7 @@
   }
 
   function goBack() {
-    navigate("/home");
+    navigate("/");
   }
 
   onMount(fetchData);

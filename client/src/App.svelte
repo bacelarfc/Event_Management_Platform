@@ -10,19 +10,46 @@
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
+  import ProtectedRoute from './components/ProtectedRoute.svelte'; 
   import AccountSettings from './pages/Home/AccountSettings.svelte';
-  import ProtectedRoute from './components/ProtectedRoute.svelte'; // import the intermediate (protected route) component
+  import { onMount, onDestroy } from "svelte";
+  import { isAuthenticated } from "./store/store.js";
+
+  onMount(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      isAuthenticated.set(true);
+    }
+
+    // Add event listener for storage event
+    window.addEventListener('storage', syncAuthentication);
+
+    // Cleanup the listener when the component is unmounted
+    onDestroy(() => {
+      window.removeEventListener('storage', syncAuthentication);
+    });
+  });
+
+  // Function to sync authentication status across tabs
+  function syncAuthentication(event) {
+    if (event.key === 'token') {
+      if (event.newValue) {
+        isAuthenticated.set(true);
+      } else {
+        isAuthenticated.set(false);
+      }
+    }
+  }
 </script>
 
 <Router>
-  <Route path="/" component={Frontpage} />
+  <Route path="/" component={TicketsFrontpage} />
   <Route path="/login" component={Login} />
   <Route path="/signUp" component={SignUp} />
-  <Route path="/home">
+  <!-- <Route path="/home">
     <ProtectedRoute><Home /></ProtectedRoute>
-  </Route>
+  </Route> -->
   <Route path="/ticketsFrontpage">
-    <ProtectedRoute><TicketsFrontpage /></ProtectedRoute>
   </Route>
   <Route path="/manageUsers">
     <ProtectedRoute><ManageUsers /></ProtectedRoute>

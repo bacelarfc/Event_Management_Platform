@@ -17,7 +17,7 @@
         localStorage.setItem("token", response.token);
         isAuthenticated.set(true);
         toastr.success("Welcome " + email);
-        navigate("/home");
+        navigate("/");
       } else {
         console.error("Failed to login");
       }
