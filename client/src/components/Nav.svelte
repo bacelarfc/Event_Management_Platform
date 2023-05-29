@@ -5,7 +5,7 @@
   import { navigate } from "svelte-navigator";
   import { sidePanelOpen } from "../store/ticketsStore";
   import { onMount } from "svelte";
-  import { isAuthenticated, logout } from "../store/store.js";
+  import { isAuthenticated, isAdmin, logout } from "../store/store.js";
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -52,6 +52,7 @@
         <Link to="/history">History</Link>
       </div>
     </div>
+    {#if $isAdmin}
     <div class="dropdown">
       <button class="dropbtn" on:click={handleDropdownClick}>Admin</button>
       <div class="dropdown-content">
@@ -59,6 +60,7 @@
         <Link to="/manageEvents">Manage Events</Link>
       </div>
     </div>
+    {/if}
     <button on:click={handleLogout}>Log out</button>
   {:else}
     <Link to="/login">Log In</Link>

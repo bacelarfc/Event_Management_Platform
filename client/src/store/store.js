@@ -1,9 +1,24 @@
 import { writable } from 'svelte/store';
+import { getUserFromToken } from '../utils/auth';
 
 export const isAuthenticated = writable(!!localStorage.getItem('token'));
+export const isAdmin = writable(false);
+
+
+async function checkAdmin() {
+  const data = await getUserFromToken();
+  if (data.user.isAdmin) {
+    console.log("true")
+    isAdmin.set(true);
+  } else {
+    console.log("false");
+    isAdmin.set(false);
+  }
+}
 
 export function login() {
   isAuthenticated.set(true);
+  checkAdmin();
 }
 
 export function logout() {

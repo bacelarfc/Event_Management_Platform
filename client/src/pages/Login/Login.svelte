@@ -3,6 +3,8 @@
   import { login } from "../../utils/auth.js";
   import { navigate } from "svelte-navigator";
   import { isAuthenticated } from "../../store/store.js";
+  import { isAdmin } from "../../store/store.js";
+  import { getUserFromToken } from "../../utils/auth.js";
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
 
@@ -15,7 +17,19 @@
       const response = await login(email, password);
       if (response && response.token) {
         localStorage.setItem("token", response.token);
+       
+        const user = await getUserFromToken();
+
+        console.log("Userboolean:" + user)
+        if (user.isAdmin) {
+          isAdmin.set(true);
+          console.log("Isadmin2 " + isAdmin);
+          isAdmin.set(true);
+          console.log("Isauthenticated " + isAuthenticated);
+        }
+
         isAuthenticated.set(true);
+
         toastr.success("Welcome " + email);
         navigate("/");
       } else {
