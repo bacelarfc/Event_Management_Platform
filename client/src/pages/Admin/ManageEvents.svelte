@@ -89,7 +89,7 @@
             <td>{event.location}</td>
             <td>{event.ticket_max}</td>
             <td>{event.ticket_left}</td>
-            <td>{event.price} DKK</td>
+            <td>{event.price} EUR</td>
             <td>{event.image}</td>
             <td>
               <button

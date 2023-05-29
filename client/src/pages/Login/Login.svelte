@@ -13,19 +13,15 @@
   let errorMessage = "";
 
   async function handleLogin() {
-  try {
-    const response = await login(email, password);
-    if (response && response.token) {
-      localStorage.setItem("token", response.token);
-     
-      const user = await getUserFromToken();
-
-      console.log("Userboolean:" + user)
-      if (user.isAdmin) {
-        isAdmin.set(true);
-        console.log("Isadmin2 " + isAdmin);
-        console.log("Isauthenticated " + isAuthenticated);
-      }
+    try {
+      const response = await login(email, password);
+      if (response && response.token) {
+        localStorage.setItem("token", response.token);
+       
+        const user = await getUserFromToken();
+        if (user.isAdmin) {
+          isAdmin.set(true);
+        }
 
       isAuthenticated.set(true);
 

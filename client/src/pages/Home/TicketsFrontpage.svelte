@@ -126,7 +126,7 @@
         </div>
         <time>{event.date}</time>
         <p>{event.description}</p>
-        <p>Price: {event.price}DKK</p>
+        <p>Price: {event.price} EUR</p>
         <div class="card__buttons">
           <div class="card__buttons btn secondary">
             <input type="number" min="1" max="10" bind:value={event.tickets} />

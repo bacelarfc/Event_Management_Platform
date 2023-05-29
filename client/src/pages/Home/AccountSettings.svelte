@@ -2,9 +2,9 @@
   import "../../styles/form.css";
   import { navigate } from "svelte-navigator";
   import { onMount } from "svelte";
-
   import { updateUser } from "../../utils/userAPI";
   import { login, getUserFromToken } from "../../utils/auth.js";
+  import Nav from "../../components/Nav.svelte";
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
 
@@ -17,17 +17,18 @@
   let isAdmin = false;
   let errorMessage = "";
 
-  async function fetchData() {
-    try {
+  onMount(async ()=> 
+{ try{
       const data = await getUserFromToken();
+      console.log(data)
       email = data.email;
       firstName = data.firstName;
       lastName = data.lastName;
       isAdmin = data.isAdmin;
     } catch (error) {
       console.error("Error:", error);
-    }
-  }
+    };
+  });
 
 
   async function handleUpdateUser() {
@@ -81,8 +82,10 @@
     navigate("/");
   }
 
-  onMount(fetchData);
+
 </script>
+
+<Nav />
 
 <h1>User Settings</h1>
 
