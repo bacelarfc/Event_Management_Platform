@@ -5,7 +5,7 @@ async function request(method, url, data) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
 
-  const token = localStorage.getItem('userToken');
+  const token = localStorage.getItem('token');
   
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
@@ -47,11 +47,12 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
-    localStorage.setItem('userToken', token.replace('Bearer ', ''));
+    localStorage.setItem('token', token.replace('Bearer ', ''));
 }
 
 export function getToken() {
-  return localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  return token ? token.replace('Bearer ', '') : null;
 }
 
 export function removeToken() {
@@ -83,7 +84,7 @@ export async function getUser() {
         user.set(userData);
         return userData;
       } else {
-        removeToken();
+       // removeToken();
         user.set(null);
         return null;
       }
@@ -99,5 +100,34 @@ export async function getUser() {
     } catch (error) {
       console.error('Error getting user email', error.message);
       return '';
+    }
+  }
+
+  export async function getUserFromToken() {
+    try {
+      const token = getToken();
+      const formattedToken = token.replace('Bearer ', '');
+      console.log("Getuser: " + formattedToken)
+      if (!token) {
+        return null;
+      }
+  
+      const response = await fetch(`${API_BASE_URL}/auth/user`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: formattedToken,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        const errorData = await response.json();
+        throw errorData;
+      }
+    } catch (error) {
+      throw error;
     }
   }

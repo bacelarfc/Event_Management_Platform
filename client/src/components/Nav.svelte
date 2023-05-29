@@ -8,9 +8,9 @@
   import { isAuthenticated, logout } from "../store/store.js";
 
   function handleLogout() {
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("token");
     isAuthenticated.set(false);
-    console.log(localStorage.getItem("userToken")); 
+    console.log(localStorage.getItem("token")); 
     navigate("/login");
   }
 
