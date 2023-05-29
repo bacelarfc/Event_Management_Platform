@@ -145,8 +145,8 @@ router.patch(
 );
 
 router.get("/auth/user", authenticateToken, async (req, res) => {
-  const users = await getAllUsers();
-  res.json(users.find(user => user.username === req.user.username));
+  const user = await getUserByEmail(req.user.email)
+  res.json(user);
 });
 
 
