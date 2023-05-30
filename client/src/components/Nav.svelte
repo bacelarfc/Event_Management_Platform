@@ -75,7 +75,7 @@
           <button class="dropbtn" on:click={handleDropdownClick}>Account</button>
           <div class="dropdown-content">
             <Link to="/accountSettings">Account Settings</Link>
-            <Link to="/history">History</Link>
+            <Link to="/accountHistory">History</Link>
           </div>
         </div>
         <button on:click={handleLogout}>Log out</button>

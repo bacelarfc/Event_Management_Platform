@@ -2,7 +2,6 @@
     import { Router, Route } from 'svelte-navigator';
     import Login from './pages/Login/Login.svelte';
     import SignUp from './pages/SignUp/Signup.svelte';
-    import Frontpage from './pages/Home/Frontpage.svelte';
     import ManageUsers from './pages/Admin/ManageUsers.svelte';
     import ManageEvents from './pages/Admin/ManageEvents.svelte';
     import CreateUserForm from './pages/Admin/CreateUserForm.svelte';
@@ -12,6 +11,7 @@
     import AdminProtectedRoute from './components/AdminProtectedRoute.svelte';
     import ProtectedRoute from './components/ProtectedRoute.svelte';
     import AccountSettings from './pages/Home/AccountSettings.svelte';
+    import AccountHistory from './pages/Home/AccountHistory.svelte';
     import { onMount, onDestroy } from "svelte";
     import { isAuthenticated, isAdmin } from "./store/store.js";
     import { getUserFromToken } from "./utils/auth";
@@ -69,6 +69,9 @@
     </Route>
   <Route path="/accountSettings">
     <ProtectedRoute><AccountSettings /></ProtectedRoute>
+  </Route>
+  <Route path="/accountHistory">
+    <ProtectedRoute><AccountHistory /></ProtectedRoute>
   </Route>
   <Route path="*" component={TicketsFrontpage} />
 </Router>

@@ -71,3 +71,23 @@ export async function deleteEvent(eventId) {
   }
 }
 
+export async function fetchOrdersByEmail(email) {
+  try {
+    const response = await request('GET', `/orders/email/${email}`);
+    const orders = response.orders;
+
+    // Fetch event names for the orders
+    const eventIds = orders.map((order) => order.eventId);
+    const events = await Promise.all(eventIds.map((eventId) => getEventById(eventId)));
+
+    // Add event names to the orders
+    const ordersWithEventNames = orders.map((order) => {
+      const event = events.find((event) => event._id === order.eventId);
+      return { ...order, eventName: event.name };
+    });
+
+    return ordersWithEventNames;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -74,7 +74,7 @@ Content-Type: application/json
 ###
 
 // PATCH Admin
-PATCH http://localhost:8080/users/fefe@gmail.com/admin
+PATCH http://localhost:8080/users/1@1.com/admin
 Content-Type: application/json
 
 
@@ -135,4 +135,44 @@ Content-Type: application/json
 
 // Delete
 DELETE http://localhost:8080/events/64661ed1098eb5382b98d4e7
+###
+
+
+ // ---Orders-----------------------------------
+
+ GET http://localhost:8080/orders
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/orders/email/1@1.com
+Content-Type: application/json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+  "eventId": "64661ed1098eb5382b98d4e7",
+  "paymentMethodId": "pm_123456789",
+  "amount": 10.99,
+  "email": "example@example.com"
+}
+
+
+###
+
+PUT http://localhost:8080/order/646626129b266f2520e3a38c
+Content-Type: application/json
+
+{
+  "amount": 15.99
+}
+
+###
+
+DELETE http://localhost:8080/order/64661ed1098eb5382b98d4e7
+Content-Type: application/json
+
 ###
