@@ -75,7 +75,7 @@
             bind:value={$cart.tickets}
             required
           />
-          <p>Total cost: {($cart.tickets * $cart.event.price).toFixed(2)}</p>
+          <p>Total cost: {($cart.tickets * $cart.event.price).toFixed(2)} EUR</p>
           <button on:click={handleNext}>Next</button>
         </form>
       {/if}

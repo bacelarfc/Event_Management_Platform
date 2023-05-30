@@ -47,20 +47,20 @@ router.get('/orders', async (req, res) => {
   }
 });
 
-router.post('/payment', async (req, res) => {
+router.post('/orders', async (req, res) => {
   try {
-    const { eventId, paymentMethodId, amount, email } = req.body;
+    const { eventId, eventName, orderDateTime, paymentMethodId, amount, email } = req.body;
     const currency = 'EUR';
     console.log(req.body);
     console.log(`Received paymentMethodId: ${paymentMethodId}`);
     const paymentIntent = await stripeClient.paymentIntents.create({
-      amount: Math.round(amount * 100),
+      amount,
       currency,
       payment_method: paymentMethodId,
       confirm: true,
     });
-    console.log(paymentIntent);
-    await createOrder(eventId, email, paymentIntent.id, Math.round(amount * 100), currency);
+
+    await createOrder(eventId, eventName, orderDateTime, email, paymentIntent.id, Math.round(amount * 100), currency);
 
     res.json({ success: true, message: 'Payment processed successfully' });
   } catch (error) {
@@ -68,6 +68,7 @@ router.post('/payment', async (req, res) => {
     res.status(500).json({ error: 'Payment processing failed' });
   }
 });
+
 
 router.delete('/orders/:id', async (req, res) => {
   try {

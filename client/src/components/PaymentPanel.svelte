@@ -6,7 +6,7 @@
   import { sidePanelOpen } from "../store/ticketsStore";
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
-
+  import { getEventById } from "../utils/eventAPI.js";
 
   export let handlePrevious;
 
@@ -43,23 +43,32 @@
           return;
         }
 
-        const response = await fetch("http://localhost:8080/payment", {
+        const event = await getEventById(eventId);
+        const eventName = event?.name || '';
+
+        const orderDateTime = new Date().toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+
+        toastr.info("Processing your order...");
+
+        const response = await fetch("http://localhost:8080/orders", {
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            amount: Math.round(totalCostValue * 100),
+            amount: totalCostValue,
             email: $cart.customer.email,
             paymentMethodId: paymentMethod.id,
-            eventId: eventId
+            eventId: eventId,
+            eventName: eventName,
+            orderDateTime: orderDateTime
           })
         });
         console.log("payment method", paymentMethod);
         if (response.ok) {
           const jsonResponse = await response.json();
           console.log(jsonResponse);
-          toastr.success("Order was successfull");
+          toastr.success("Order was successful");
         } else {
           toastr.error("Order failed");
           console.error("Payment processing error:", await response.text());
@@ -71,8 +80,8 @@
       }
     }
   };
-  const closeCart = () => sidePanelOpen.set(false);
 
+  const closeCart = () => sidePanelOpen.set(false);
 </script>
 
 <div class="side-panel">

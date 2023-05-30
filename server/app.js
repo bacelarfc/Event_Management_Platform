@@ -7,7 +7,7 @@ import loginRouter from "./routers/loginRouter.js";
 import registerRouter from "./routers/registerRouter.js";
 import userRouter from "./routers/userRouter.js";
 import eventRouter from "./routers/eventRouter.js";
-import paymentRouter from "./routers/paymentRouter.js";
+import orderRouter from "./routers/orderRouter.js";
 import imageRouter from './routers/imageRouter.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -54,7 +54,7 @@ app.use('/api/auth',loginRouter);
 app.use(eventRouter);
 app.use('/api/auth',registerRouter);
 app.use(userRouter);
-app.use(paymentRouter);
+app.use(orderRouter);
 app.use(imageRouter);
 
 

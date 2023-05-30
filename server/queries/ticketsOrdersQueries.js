@@ -1,15 +1,17 @@
 import { connectToDb, getDb } from "../databases/connection.js";
 
-export async function createOrder(eventId, email, paymentIntentId, amount, currency) {
+export async function createOrder(eventId, eventName, orderDateTime, email, paymentIntentId, amount, currency) {
   try {
     await connectToDb();
     const ordersCollection = getDb().collection('orders');
 
     await ordersCollection.insertOne({
       eventId: eventId,
+      eventName: eventName,
+      orderDateTime: orderDateTime,
       email: email,
       paymentIntentId: paymentIntentId,
-      amount: amount,
+      amount: amount/100, //temporary
       currency: currency,
     });
 
@@ -18,6 +20,7 @@ export async function createOrder(eventId, email, paymentIntentId, amount, curre
     console.error('Error creating order:', error);
   }
 };
+
 
 export async function getOrderById(id) {
   try {
