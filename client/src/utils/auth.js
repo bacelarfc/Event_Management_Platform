@@ -47,7 +47,9 @@ export async function login(email, password) {
 }
 
 export function setToken(token) {
+  if (token) {
     localStorage.setItem('token', token.replace('Bearer ', ''));
+  }
 }
 
 export function getToken() {
@@ -106,11 +108,12 @@ export async function getUser() {
   export async function getUserFromToken() {
     try {
       const token = getToken();
-      const formattedToken = token.replace('Bearer ', '');
-      console.log("Getuser: " + formattedToken)
       if (!token) {
         return null;
       }
+  
+      const formattedToken = token.replace('Bearer ', '');
+      console.log("Getuser: " + formattedToken)
   
       const response = await fetch(`${API_BASE_URL}/auth/user`, {
         method: "GET",

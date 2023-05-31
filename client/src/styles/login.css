@@ -8,7 +8,7 @@
   /*===== Colors =====*/
   --first-color: #0C5DF4;
   --second-color: #1c3563;
-  --bg-color: #12192C;
+  --bg-color: var(--bg-color-light);
   --sub-color: #B6CEFC;
   --white-color: #FFF;
 
@@ -24,6 +24,17 @@
 }
 
 /*===== BASE =====*/
+body.light-theme {
+  --bg-color: #ffffff;
+  --text-color: #12192C;
+  --link-color: #0C5DF4;
+}
+
+body.dark-theme {
+  --bg-color: #12192C;
+  --text-color: #ffffff;
+  --link-color: #B6CEFC;
+}
 
 *,
 ::before,
@@ -32,6 +43,8 @@
 }
 
 body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
   margin: 0;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
@@ -72,11 +85,11 @@ body {
 
 label {
   font-size: 1.2rem;
-  color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .sign-up {
-  color: var(--bg-color);
+  color: var(--text-color);
   text-decoration: none;
   border: none;
   background-color: transparent;
@@ -104,14 +117,14 @@ label {
   font-size: 1.2rem;
   padding: 1rem;
   cursor: pointer;
-  color: aliceblue;
+  color: var(--text-color);
   transition: background-color 0.3s ease-in-out;
 }
 
 #submit-button:hover {
   background: (var(--bg-color));
   font-weight: bold;
-  color: (var(--bg-color));
+  color: var(--text-color);
   border: 2px solid var(--second-color);
   box-sizing: border-box;
 }

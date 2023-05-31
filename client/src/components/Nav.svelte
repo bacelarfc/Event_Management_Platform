@@ -5,8 +5,9 @@
   import { navigate } from "svelte-navigator";
   import { sidePanelOpen } from "../store/ticketsStore";
   import { onMount } from "svelte";
-  import { isAuthenticated, isAdmin, logout } from "../store/store.js";
+  import { isAuthenticated, isAdmin} from "../store/store.js";
   import { getUserFromToken } from "../utils/auth";
+  import ToggleTheme from "./ToggleTheme.svelte";
 
   function handleLogout() {
   localStorage.removeItem("token");
@@ -38,14 +39,19 @@
   let user;
 
   onMount(async () => {
-    user = await getUserFromToken();
+  user = await getUserFromToken();
+  if (user) {
     isAdmin.set(user.isAdmin);
+  } else {
+    isAdmin.set(false);
+  }
 
-    document.addEventListener("click", closeDropdown);
-    return () => {
-      document.removeEventListener("click", closeDropdown);
-    };
-  });
+  document.addEventListener("click", closeDropdown);
+  return () => {
+    document.removeEventListener("click", closeDropdown);
+  };
+});
+
 
   $: {
     if (user) {
@@ -56,6 +62,7 @@
 
 <div class="navbar-container">
   <nav>
+    <ToggleTheme />
     <ul>
       <li><Link to="/">Home</Link></li>
       <li><a href="/dontwant" on:click|preventDefault={openCart}>Cart</a></li>

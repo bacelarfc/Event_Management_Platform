@@ -12,12 +12,13 @@
 
 
   onMount(async () => {
-    const user = await getUserFromToken();
-
+  const user = await getUserFromToken();
+  if (user) {
     $cart.customer.firstName = user.firstName;
     $cart.customer.lastName = user.lastName;
-    $cart.customer.email = user.email
-  });
+    $cart.customer.email = user.email;
+  }
+});
 
   const handleNext = () => {
     if (step === 1) {

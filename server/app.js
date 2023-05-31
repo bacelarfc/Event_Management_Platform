@@ -30,11 +30,17 @@ const io = new Server(server, {
   }
 });
 
-
+let currentTheme = 'dark';
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('toggle-theme', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    io.emit('themeChanged', currentTheme);
+  });
+
   socket.on('disconnect', () => {
-      console.log('user disconnected');
+    console.log('user disconnected');
   });
 });
 
@@ -50,9 +56,9 @@ app.use(cors());
 
 app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api/auth',loginRouter);
+app.use('/api/auth', loginRouter);
 app.use(eventRouter);
-app.use('/api/auth',registerRouter);
+app.use('/api/auth', registerRouter);
 app.use(userRouter);
 app.use(orderRouter);
 app.use(imageRouter);
