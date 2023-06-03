@@ -29,4 +29,5 @@
 
   .hero__subtitle {
     font-size: 2rem;
+    color: var(--text-color);
   }
