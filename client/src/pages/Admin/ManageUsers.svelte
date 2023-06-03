@@ -1,5 +1,6 @@
 <script>
   import "../../styles/adminpages.css";
+  import "../../styles/eventur.css";
   import Nav from "../../components/Nav.svelte";
   import { onMount } from "svelte";
   import { navigate } from "svelte-navigator";

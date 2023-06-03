@@ -14,6 +14,7 @@
   import { derived } from "svelte/store";
   import { writable } from "svelte/store";
   import { isAuthenticated } from "../../store/store";
+    import Eventur from "../../components/Eventur.svelte";
 
   let socket;
 
@@ -106,6 +107,7 @@
 </script>
 
 <Nav />
+<Eventur />
 <SidePanel />
 <EventSearch on:search={handleSearch} />
 <div class="events-container">

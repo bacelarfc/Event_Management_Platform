@@ -17,6 +17,8 @@
   import { isAuthenticated, isAdmin } from "./store/store.js";
   import { getUserFromToken } from "./utils/auth";
   import { theme } from "./store/themeStore";
+    import Footer from "./components/Footer.svelte";
+    import Eventur from "./components/Eventur.svelte";
 
   socket.on("themeChanged", (newTheme) => {
     theme.set(newTheme); // Update the theme in the store
@@ -70,7 +72,6 @@
     }
   }
 </script>
-
 <Router>
   <Route path="/" component={TicketsFrontpage} />
   <Route path="/login" component={Login} />
@@ -98,3 +99,4 @@
   </Route>
   <Route path="*" component={TicketsFrontpage} />
 </Router>
+<!-- <Footer /> -->

@@ -1,5 +1,5 @@
 h1{
-    color: white;
+    color: var(--text-color);;
 }
 
 
@@ -14,9 +14,15 @@ h1{
 
   .form-group {
     margin-bottom: 10px;
+    color: var(--text-color-light);;
+  }
+
+  p {
+    color: var(--text-color-light);
   }
 
   label {
+    color: var(--text-color-light);
     display: block;
     margin-bottom: 5px;
   }
@@ -28,6 +34,9 @@ h1{
     font-size: medium;
   }
 
+  h2{
+    color: var(--text-color-light);
+  }
   input {
     width: 100%;
     padding: 5px;

@@ -77,6 +77,8 @@
     color: var(--emperor);
     font-size: 12px; /* Reduced font-size */
     margin: 0.1em; /* Reduced margin */
+    flex: 1; 
+    overflow-wrap: break-word;
   }
   
   .card__location {

@@ -28,12 +28,14 @@ body.light-theme {
   --bg-color: #ffffff;
   --text-color: #12192C;
   --link-color: #0C5DF4;
+  --text-color-light:#12192C;
 }
 
 body.dark-theme {
   --bg-color: #12192C;
   --text-color: #ffffff;
   --link-color: #B6CEFC;
+  --text-color-light: #12192C;
 }
 
 *,

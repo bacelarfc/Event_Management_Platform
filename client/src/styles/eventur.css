@@ -1,0 +1,32 @@
+.hero {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .hero__image-container {
+    flex: 1;
+  }
+
+  .hero__image {
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 400px; 
+  height: 400px; 
+  }
+
+  .hero__content {
+    flex: 1;
+    text-align: center;
+    color: var(--text-color);
+  }
+
+  .hero__title {
+    color: var(--text-color);
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .hero__subtitle {
+    font-size: 2rem;
+  }

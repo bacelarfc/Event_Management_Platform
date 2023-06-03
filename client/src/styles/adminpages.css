@@ -1,7 +1,4 @@
-
-    
-    
-    .table-container {
+.table-container {
       border: 1px solid #ccc;
       background-color: #f0f0f0;
       padding: 20px;
@@ -16,7 +13,10 @@
     }
   
     h1{
-        color: white;
+      color: var(--text-color);
+    }
+    h2{
+      color: var(--text-color-light);
     }
 
     th,
@@ -32,6 +32,11 @@
   
     tr:nth-child(even) {
       background-color: #e8e8e8;
+      color: var(--text-color-light);
+    }
+
+    tr {
+      color: var(--text-color-light);
     }
   
     tr:hover {
@@ -68,16 +73,15 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
+      border: 8px black;
   }
-
 
   .search-bar input {
       width: 150vh;
       padding: 10px;
       font-family: var(--body-font);
       font-size: var(--normal-font-size);
-      color: var(--secondary-color);
-      border: none;
+      color: #1c3563;
       border-radius: 5px;
       outline: none;
   }
