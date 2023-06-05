@@ -17,19 +17,17 @@
   let isAdmin = false;
   let errorMessage = "";
 
-  onMount(async ()=> 
-{ try{
+  onMount(async () => {
+    try {
       const data = await getUserFromToken();
-      console.log(data)
       email = data.email;
       firstName = data.firstName;
       lastName = data.lastName;
       isAdmin = data.isAdmin;
     } catch (error) {
       console.error("Error:", error);
-    };
+    }
   });
-
 
   async function handleUpdateUser() {
     if (!password || !confirmPassword || !newPassword) {
@@ -81,8 +79,6 @@
   function goBack() {
     navigate("/");
   }
-
-
 </script>
 
 <Nav />

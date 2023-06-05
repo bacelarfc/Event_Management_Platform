@@ -6,12 +6,15 @@
   import { navigate } from "svelte-navigator";
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
+  import { getUserFromToken } from "../../utils/auth.js";
   import {
     getUsers,
     deleteUser,
     updateUserAdminStatus,
   } from "../../utils/userAPI.js";
 
+
+  let currentUserEmail = "";
   let userList = [];
   let filteredUsers = [];
   let searchQuery = "";
@@ -19,7 +22,7 @@
   async function fetchData() {
     try {
       userList = await getUsers();
-      filteredUsers = [...userList]; // Copy all users initially
+      filteredUsers = [...userList];
     } catch (error) {
       toastr.error("Couldn't get resources");
       console.error("Error fetching data:", error);
@@ -68,6 +71,17 @@
     });
   }
 
+
+  onMount(async () => {
+    try {
+      const data = await getUserFromToken();
+      currentUserEmail = data.email;
+      
+      fetchData();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
   onMount(fetchData);
 </script>
 
@@ -106,12 +120,13 @@
       </thead>
       <tbody>
         {#each filteredUsers as user}
-          <tr>
-            <td>{user.email}</td>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.isAdmin}</td>
-            <td>
+        <tr>
+          <td>{user.email}</td>
+          <td>{user.firstName}</td>
+          <td>{user.lastName}</td>
+          <td>{user.isAdmin}</td>
+          <td>
+            {#if user.email !== currentUserEmail}
               <button
                 class="edit-button"
                 on:click={() => handleUpdateAdminStatus(user.email)}
@@ -121,9 +136,10 @@
                 class="delete-button"
                 on:click={() => handleDeleteUser(user.email)}>Delete</button
               >
-            </td>
-          </tr>
-        {/each}
+            {/if}
+          </td>
+        </tr>
+      {/each}
       </tbody>
     </table>
   {/if}
