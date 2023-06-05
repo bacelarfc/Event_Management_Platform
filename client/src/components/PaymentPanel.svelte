@@ -37,7 +37,7 @@
 
         console.log($cart);
 
-        // Validate the totalCost value
+
         if (typeof totalCostValue !== 'number' || isNaN(totalCostValue) || totalCostValue < 1) {
           console.error('Invalid total cost');
           return;
@@ -65,6 +65,9 @@
           })
         });
         console.log("payment method", paymentMethod);
+
+        toastr.remove();
+
         if (response.ok) {
           const jsonResponse = await response.json();
           console.log(jsonResponse);
@@ -75,6 +78,7 @@
         }
         closeCart();
       } catch (err) {
+        toastr.remove();
         toastr.error("Order failed");
         console.error('Error while sending payment:', err);
       }

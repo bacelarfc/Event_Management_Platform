@@ -39,12 +39,6 @@
   let user;
 
   onMount(async () => {
-  user = await getUserFromToken();
-  if (user) {
-    isAdmin.set(user.isAdmin);
-  } else {
-    isAdmin.set(false);
-  }
 
   document.addEventListener("click", closeDropdown);
   return () => {
@@ -52,12 +46,6 @@
   };
 });
 
-
-  $: {
-    if (user) {
-      isAdmin.set(user.isAdmin);
-    }
-  }
 </script>
 
 <div class="navbar-container">

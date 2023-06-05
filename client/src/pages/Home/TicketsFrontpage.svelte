@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
   import "../../styles/ticketsFrontpage.css";
@@ -31,7 +33,7 @@
 
       events.set(fetchedEvents.map((event) => ({ ...event, tickets: 1 })));
 
-      // Connect to socket.io server
+    
       socket = io("http://localhost:8080");
 
       socket.on("connect", () => {
@@ -51,7 +53,6 @@
     }
   });
 
-  // Don't forget to close the connection when the component is destroyed
   onDestroy(() => {
     if (socket) {
       socket.close();
@@ -115,10 +116,11 @@
     <li class="card" aria-labelledby="event card">
       <div class="card__filter">
         <img
-          class="card__photo"
-          src={`http://localhost:8080/images/${event.image}`}
-          alt={event.name}
-        />
+        class="card__photo"
+        src={`http://localhost:8080/images/${event.image}`}
+        alt={event.name}
+        on:error={(e) => e.target.src = 'http://localhost:5173/images/concert.jpeg'}
+      />
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
@@ -129,6 +131,7 @@
         <time>{event.date}</time>
         <p>{event.description}</p>
         <p>Price: {event.price} EUR</p>
+        <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
         <div class="card__buttons">
           <div class="card__buttons btn secondary">
             <input type="number" min="1" max="10" bind:value={event.tickets} />
