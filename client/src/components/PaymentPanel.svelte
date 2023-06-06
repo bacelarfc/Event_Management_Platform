@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { loadStripe } from '@stripe/stripe-js';
-  import { cart, totalCost } from "../store/ticketsStore";
+  import { cart, totalCost, resetCart, step } from "../store/ticketsStore";
   import '../styles/paymentPanel.css';
   import { sidePanelOpen } from "../store/ticketsStore";
   import "toastr/build/toastr.min.css";
@@ -73,6 +73,8 @@
           const jsonResponse = await response.json();
           console.log(jsonResponse);
           toastr.success("Order was successful");
+          resetCart();
+          step.set(1);
         } else {
           toastr.error("Order failed");
           console.error("Payment processing error:", await response.text());

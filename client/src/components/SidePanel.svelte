@@ -1,5 +1,5 @@
 <script>
-  import { cart, sidePanelOpen } from "../store/ticketsStore";
+  import { cart, sidePanelOpen, step } from "../store/ticketsStore";
   import "../styles/sidepanel.css";
   import { onMount } from "svelte";
   import PaymentPanel from "./PaymentPanel.svelte";
@@ -8,7 +8,7 @@
   let firstName = "";
   let lastName = "";
   let email = "";
-  let step = 1;
+  // let step = 1;
 
 
   onMount(async () => {
@@ -21,8 +21,8 @@
 });
 
   const handleNext = () => {
-    if (step === 1) {
-      step = 2;
+    if ($step === 1) {
+      step.set(2); 
     } else {
       const totalCost = $cart.tickets * $cart.event.price;
 
@@ -42,22 +42,23 @@
   };
 
   const handlePrevious = () => {
-    step = 1;
+    step.set(1)
   };
 </script>
 
 {#if $sidePanelOpen}
+  {$cart} <!-- This is our explicit subscription to the cart -->
   <div class="side-panel">
     <button on:click={() => sidePanelOpen.set(false)}>Close</button>
     <h2>{$cart?.event?.name || ""}</h2>
-    {#if step === 1}
+    {#if $step === 1}
       {#if $cart.tickets === 0}
         <p>Your cart is empty.</p>
       {:else}
         <form>
           <label for="email">Email:</label>
           <input
-          class="read-only"
+            class="read-only"
             bind:value={$cart.customer.email}
             type="email"
             placeholder="Enter your email"
