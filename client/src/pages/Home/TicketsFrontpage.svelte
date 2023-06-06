@@ -3,7 +3,7 @@
 
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
-  import "../../styles/ticketsFrontpage.css";
+  import "../../styles/ticketsFrontpage_Modified.css";
   import "../../styles/modal.css";
   import Nav from "../../components/Nav.svelte";
   import SidePanel from "../../components/SidePanel.svelte";

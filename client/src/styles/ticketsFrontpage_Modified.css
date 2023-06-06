@@ -10,9 +10,9 @@
     --red-violet: #CC19BF;
     --mariner: #405CD2;
     --seance: #7623A2;
-  }
-  
-  .card {
+}
+
+.card {
     margin-top: 10px;
     padding: 6px;
     max-width: 248px;
@@ -24,16 +24,16 @@
     flex-direction: column;
     border: 2px solid var(--white);
     box-sizing: border-box;
-  }
+}
 
-  .card__filter {
-    height: 160px; 
+.card__filter {
+    height: 160px;
     overflow: hidden;
     position: relative;
     object-fit: cover;
-  }
-  
-  .card__filter::before {
+}
+
+.card__filter::before {
     content: '';
     display: block;
     position: absolute;
@@ -44,40 +44,38 @@
     mix-blend-mode: multiply;
     background: linear-gradient(-150deg, var(--shocking-pink) 0%, var(--curious-blue) 100%);
     z-index: 1;
-  }
-  
-  .card__photo {
+}
+
+.card__photo {
     width: 100%;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-  }
-  
-  .card__container {
+}
+
+.card__container {
     background: var(--white);
     width: 100%;
     display: flex;
-    align-items: center; 
     flex-direction: column;
     justify-content: center;
     padding: 0.5em;
-    overflow: hidden; 
+    align-items: center;
     box-sizing: border-box;
     flex: 1;
-  }
+}
 
-  .card h2 {
+.card h2 {
     font-family: 'Poppins', sans-serif;
     font-weight: regular;
     color: var(--mariner);
-    text-align: center;
     letter-spacing: -1.06px;
-    font-size: 24px;
+    font-size: 28px;
     margin: 0;
-  }
+}
 
-  .card time,
-  .card p,
-  .card .card__location {
+.card time,
+.card p,
+.card .card__location {
     font-family: 'IBM Plex Mono', sans-serif;
     font-weight: regular;
     color: var(--emperor);
@@ -88,45 +86,46 @@
     word-wrap: break-word;
     hyphens: auto;
     line-height: 1.4;
-    max-height: 5em;/* Adjust the max height as needed */
-    overflow-y: auto; /* Add this line */
-    scrollbar-width: thin; /* Add this line */
-  }
-  
+    max-height: 5em;
+    overflow-y: auto;
+    scrollbar-width: thin;
 
-  
-  .card__location {
+}
+
+
+
+.card__location {
     text-decoration-color: var(--shocking-pink);
     -webkit-text-decoration-color: var(--shocking-pink);
     transition: all 250ms ease;
-    max-width: 10em; 
-  }
-  
-  .card__location:hover {
+    max-width: 10em;
+}
+
+.card__location:hover {
     background-color: rgba(var(--shocking-pink), 0.2);
     text-decoration-color: rgba(var(--shocking-pink), 0.2);
-  }
-  
-  .card__buttons {
+}
+
+.card__buttons {
     display: flex;
     align-items: center;
     width: 100%;
     margin: 0.5em 0 0.2em 0;
     flex-direction: row;
-  }
-  
-  .card__buttons .btn {
+}
+
+.card__buttons .btn {
     padding: 0.6em 1em;
     position: relative;
     border: 2px solid var(--white);
-  }
-  
-  .card__buttons .btn i.material-icons {
+}
+
+.card__buttons .btn i.material-icons {
     margin-left: 0.5em;
     vertical-align: middle;
-  }
-  
-  .material-icons {
+}
+
+.material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -145,44 +144,43 @@
     -moz-osx-font-smoothing: grayscale;
     /* Support for IE. */
     font-feature-settings: 'liga';
-  }
-  
-  .material-icons.md-light {
-    color: rgba(255, 255, 255, 1);
-  }
-  
-  .material-icons.md-light.md-inactive {
-    color: rgba(255, 255, 255, 0.3);
-  }
+}
 
-  .events-container {
-    margin-top: 50px; 
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.events-container {
+    margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    max-height: 70vh; /* Adjust the value as needed */
+    max-height: 70vh;
     overflow-y: auto;
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-  }
-  .icon-location {
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  justify-content: center;
-  color: var(--emperor);
+    overflow-x: hidden;
+}
+
+.icon-location {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    color: var(--emperor);
 }
 
 .icon-location .iconify-icon {
-  margin-right: 18px;
-  width: 24px;
-  height: 24px;
+    margin-right: 18px;
+    width: 24px;
+    height: 24px;
 }
 
 .icon-location h3 {
-  margin: 0;
-  font-size: 16px;
-  text-align: center; 
-  font-weight: normal;
-  color: var(--emperor);
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+
 }

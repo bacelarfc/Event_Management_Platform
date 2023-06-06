@@ -147,9 +147,9 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    max-height: 70vh; /* Adjust the value as needed */
+    max-height: 70vh;
     overflow-y: auto;
-    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-x: hidden; 
   }
   .icon-location {
     display: flex;
