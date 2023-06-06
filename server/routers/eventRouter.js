@@ -69,7 +69,7 @@ router.put('/events/:id', async (req, res) => {
         if (modifiedCount === 0) {
             return res.status(404).json({ message: 'Event not found' });
         }
-
+        req.io.emit('eventUpdated', { id, updatedData });
         res.json({ message: 'Event updated' });
     } catch (error) {
         res.status(500).json({ message: 'Error updating event', error });
@@ -84,7 +84,7 @@ router.delete('/events/:id', async (req, res) => {
         if (deletedCount === 0) {
             return res.status(404).json({ message: 'Event not found' });
         }
-
+         req.io.emit('eventDeleted', id);
         res.json({ message: 'Event deleted' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting event', error });

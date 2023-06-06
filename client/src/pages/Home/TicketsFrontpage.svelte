@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+  // @ts-nocheck
 
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
@@ -16,7 +16,7 @@
   import { derived } from "svelte/store";
   import { writable } from "svelte/store";
   import { isAuthenticated } from "../../store/store";
-    import Eventur from "../../components/Eventur.svelte";
+  import Eventur from "../../components/Eventur.svelte";
 
   let socket;
 
@@ -33,7 +33,6 @@
 
       events.set(fetchedEvents.map((event) => ({ ...event, tickets: 1 })));
 
-    
       socket = io("http://localhost:8080");
 
       socket.on("connect", () => {
@@ -48,6 +47,22 @@
       socket.on("disconnect", (reason) => {
         console.log("Socket.io connection lost: ", reason);
       });
+
+      socket.on("eventUpdated", ({ id, updatedData }) => {
+        console.log("Updated event received: ", id, updatedData);
+        events.update((currEvents) =>
+          currEvents.map((event) =>
+            event._id === id ? { ...event, ...updatedData } : event
+          )
+        );
+      });
+
+      socket.on("eventDeleted", (id) => {
+        console.log("Deleted event id received: ", id);
+        events.update((currEvents) =>
+          currEvents.filter((event) => event._id !== id)
+        );
+      });
     } catch (error) {
       console.log("Fetch or Socket.io Error: ", error);
     }
@@ -61,46 +76,49 @@
   });
 
   const addToCart = (event) => {
-  const { _id, name, time, description, price } = event;
+    const { _id, name, time, description, price } = event;
 
-  let authenticated;
-  isAuthenticated.subscribe(value => authenticated = value);
+    let authenticated;
+    isAuthenticated.subscribe((value) => (authenticated = value));
 
-  if (!authenticated) {
-    // Goes to the login page if the user is not authenticated
-    navigate("/login");
-  } else {
-    cart.update((value) => ({
-      ...value,
-      event: { _id, name, time, description, price },
-      tickets: event.tickets,
-      showPaymentPanel: false,
-    }));
-    sidePanelOpen.set(true);
-  }
-};
+    if (!authenticated) {
+      // Goes to the login page if the user is not authenticated
+      navigate("/login");
+    } else {
+      cart.update((value) => ({
+        ...value,
+        event: { _id, name, time, description, price },
+        tickets: event.tickets,
+        showPaymentPanel: false,
+      }));
+      sidePanelOpen.set(true);
+    }
+  };
 
   const searchQuery = writable("");
 
-  const filteredEvents = derived([events, searchQuery], ([$events, $searchQuery]) => {
-    const query = $searchQuery.toLowerCase().trim();
+  const filteredEvents = derived(
+    [events, searchQuery],
+    ([$events, $searchQuery]) => {
+      const query = $searchQuery.toLowerCase().trim();
 
-    if (!query) {
-      return $events;
-    } else {
-      return $events.filter((event) => {
-        const lowerCaseEventName = event.name.toLowerCase();
-        const lowerCaseEventDate = event.date.toLowerCase();
-        const lowerCaseEventLocation = event.location.toLowerCase();
+      if (!query) {
+        return $events;
+      } else {
+        return $events.filter((event) => {
+          const lowerCaseEventName = event.name.toLowerCase();
+          const lowerCaseEventDate = event.date.toLowerCase();
+          const lowerCaseEventLocation = event.location.toLowerCase();
 
-        return (
-          lowerCaseEventName.includes(query) ||
-          lowerCaseEventDate.includes(query) ||
-          lowerCaseEventLocation.includes(query)
-        );
-      });
+          return (
+            lowerCaseEventName.includes(query) ||
+            lowerCaseEventDate.includes(query) ||
+            lowerCaseEventLocation.includes(query)
+          );
+        });
+      }
     }
-  });
+  );
 
   function handleSearch(event) {
     searchQuery.set(event.detail);
@@ -116,11 +134,12 @@
     <li class="card" aria-labelledby="event card">
       <div class="card__filter">
         <img
-        class="card__photo"
-        src={`http://localhost:8080/images/${event.image}`}
-        alt={event.name}
-        on:error={(e) => e.target.src = 'http://localhost:5173/images/concert.jpeg'}
-      />
+          class="card__photo"
+          src={`http://localhost:8080/images/${event.image}`}
+          alt={event.name}
+          on:error={(e) =>
+            (e.target.src = "http://localhost:5173/images/concert.jpeg")}
+        />
       </div>
       <div class="card__container">
         <h2>{event.name}</h2>
