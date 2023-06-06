@@ -3,7 +3,7 @@
 
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
-  import "../../styles/ticketsFrontpage.css";
+  import "../../styles/ticketsFrontpage_Modified.css";
   import "../../styles/modal.css";
   import Nav from "../../components/Nav.svelte";
   import SidePanel from "../../components/SidePanel.svelte";
@@ -33,6 +33,7 @@
 
       events.set(fetchedEvents.map((event) => ({ ...event, tickets: 1 })));
 
+
       socket = io("http://localhost:8080");
 
       socket.on("connect", () => {
@@ -46,6 +47,22 @@
 
       socket.on("disconnect", (reason) => {
         console.log("Socket.io connection lost: ", reason);
+      });
+
+      socket.on("eventUpdated", ({ id, updatedData }) => {
+        console.log("Updated event received: ", id, updatedData);
+        events.update((currEvents) =>
+          currEvents.map((event) =>
+            event._id === id ? { ...event, ...updatedData } : event
+          )
+        );
+      });
+
+      socket.on("eventDeleted", (id) => {
+        console.log("Deleted event id received: ", id);
+        events.update((currEvents) =>
+          currEvents.filter((event) => event._id !== id)
+        );
       });
     } catch (error) {
       console.log("Fetch or Socket.io Error: ", error);
@@ -80,8 +97,10 @@
 
   const searchQuery = writable("");
 
-  const filteredEvents = derived([events, searchQuery], ([$events, $searchQuery]) => {
-    const query = $searchQuery.toLowerCase().trim();
+  const filteredEvents = derived(
+    [events, searchQuery],
+    ([$events, $searchQuery]) => {
+      const query = $searchQuery.toLowerCase().trim();
 
     if (!query) {
       return $events.filter((event) => event.ticket_left > 0);
