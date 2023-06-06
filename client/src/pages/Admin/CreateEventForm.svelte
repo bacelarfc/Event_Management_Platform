@@ -14,15 +14,19 @@
   let ticket_max = 0;
   let ticket_left = 0;
   let price = 0;
-  let errorMessage = "";
 
   async function handleCreateEvent() {
-    if (!name || !date || !time || !location || !description || !image || !ticket_max || !ticket_left || !price) {
-      errorMessage = "Please fill in all required fields.";
-      toastr.error("Please fill in all required fields.");
-      return;
-    }
+  if (!name || !date || !time || !location || !description || !ticket_max || !ticket_left || !price) {
+    toastr.error("Please fill in all required fields.");
+    return;
+  }
 
+  if (ticket_max < ticket_left) {
+    toastr.error("Max tickets can't be less than tickets left")
+    return;
+  }
+
+  if (image) {
     const formData = new FormData();
     formData.append("image", image);
 
@@ -34,7 +38,6 @@
 
       if (!uploadResponse.ok) {
         toastr.error("Failed to upload image");
-        console.error("Failed to upload image.");
         return;
       }
 
@@ -58,9 +61,29 @@
       navigate("/manageEvents");
     } catch (error) {
       toastr.error("Error creating event");
-      console.error("Error creating event:", error);
+    }
+  } else {
+    const event = {
+      name,
+      date,
+      time,
+      location,
+      description,
+      image: null,
+      ticket_max,
+      ticket_left,
+      price,
+    };
+
+    try {
+      await createEvent(event);
+      toastr.success("Event was created");
+      navigate("/manageEvents");
+    } catch (error) {
+      toastr.error("Error creating event");
     }
   }
+}
 
   function goBack() {
     navigate("/manageEvents");
@@ -100,9 +123,10 @@
     </div>
 
     <div class="form-group">
-        <label for="image">Image:</label>
-        <input type="file" accept="image/*" name="image" on:change="{handleImageUpload}" />
-    </div>
+      <label for="image">Image:</label>
+      <input type="file" accept="image/*" name="image" on:change="{handleImageUpload}" />
+  </div>
+  
 
     <div class="form-group">
         <label for="ticket_max">Max Tickets:</label>

@@ -14,7 +14,6 @@
   let ticket_max = 0;
   let ticket_left = 0;
   let price = 0;
-  let errorMessage = "";
 
   function getEventIdFromUrl() {
     const urlParts = window.location.pathname.split("/");
@@ -34,19 +33,16 @@
       }
     } catch (error) {
       toastr.error("Error retrieving event data");
-      console.error("Error retrieving event data:", error);
     }
   }
 
   async function handleUpdateEvent() {
     if (!name || !date || !time || !location || !description || !image || !ticket_max || !ticket_left || !price) {
-      errorMessage = "Please fill in all required fields.";
       toastr.error("Please fill in all required fields.");
       return;
     }
 
     const event = {
-      id: eventId,
       name,
       date,
       time,
@@ -59,10 +55,9 @@
     };
 
     try {
-      let updatedImage = image; // Keep the existing image value by default
+      let updatedImage = image; 
 
       if (typeof image === "object") {
-        // If a new image is selected, upload it
         const uploadedImage = await uploadImage(image);
         updatedImage = uploadedImage ? uploadedImage.filename : image;
       }
@@ -74,15 +69,10 @@
       navigate("/manageEvents");
     } catch (error) {
       toastr.error("Error updating event");
-      console.error("Error updating event:", error);
     }
   }
 
   async function uploadImage(image) {
-    if (!image) {
-      toastr.error("Please select an image to upload");
-      return null;
-    }
 
     const formData = new FormData();
     formData.append("image", image);

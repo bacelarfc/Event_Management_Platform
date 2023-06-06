@@ -90,7 +90,13 @@
             <td>{event.ticket_max}</td>
             <td>{event.ticket_left}</td>
             <td>{event.price} EUR</td>
-            <td>{event.image}</td>
+            <td>
+              {#if event.image}
+                {event.image}
+              {:else}
+                No image
+              {/if}
+            </td>
             <td>
               <button
                 class="edit-button"
