@@ -17,11 +17,9 @@
   import { isAuthenticated, isAdmin } from "./store/store.js";
   import { getUserFromToken } from "./utils/auth";
   import { theme } from "./store/themeStore";
-    import Footer from "./components/Footer.svelte";
-    import Eventur from "./components/Eventur.svelte";
 
   socket.on("themeChanged", (newTheme) => {
-    theme.set(newTheme); // Update the theme in the store
+    theme.set(newTheme); 
   });
 
   onDestroy(() => {
@@ -52,13 +50,11 @@
   });
 
   onDestroy(() => {
-    // Cleanup the listener when the component is unmounted
     if (stopListeningToStorage) {
       stopListeningToStorage();
     }
   });
 
-  // Function to sync authentication status across tabs
   async function syncAuthentication(event) {
     if (event.key === "token") {
       if (event.newValue) {
@@ -99,4 +95,3 @@
   </Route>
   <Route path="*" component={TicketsFrontpage} />
 </Router>
-<!-- <Footer /> -->
