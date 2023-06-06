@@ -56,6 +56,7 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            tickets: $cart.tickets,
             amount: totalCostValue,
             email: $cart.customer.email,
             paymentMethodId: paymentMethod.id,

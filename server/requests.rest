@@ -133,6 +133,18 @@ Content-Type: application/json
 
 ###
 
+// Update tickets
+
+PUT http://localhost:8080/events/647e69c10013c3441e166073/updateTickets
+Content-Type: application/json
+
+{
+  "ticket_left": 110
+}
+
+
+###
+
 // Delete
 DELETE http://localhost:8080/events/64661ed1098eb5382b98d4e7
 ###
@@ -150,13 +162,14 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/payment
+POST http://localhost:8080/orders
 Content-Type: application/json
 
 {
-  "eventId": "64661ed1098eb5382b98d4e7",
+  "eventId": "647098722d766860c7f44b76",
   "paymentMethodId": "pm_123456789",
-  "amount": 10.99,
+  "tickets": 4,
+  "amount": 1000,
   "email": "example@example.com"
 }
 

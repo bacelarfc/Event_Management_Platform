@@ -49,7 +49,7 @@ router.get('/orders', async (req, res) => {
 
 router.post('/orders', async (req, res) => {
   try {
-    const { eventId, eventName, orderDateTime, paymentMethodId, amount, email } = req.body;
+    const { eventId, eventName, orderDateTime, paymentMethodId, tickets, amount, email } = req.body;
     const currency = 'EUR';
     console.log(req.body);
     console.log(`Received paymentMethodId: ${paymentMethodId}`);
@@ -60,7 +60,7 @@ router.post('/orders', async (req, res) => {
       confirm: true,
     });
 
-    await createOrder(eventId, eventName, orderDateTime, email, paymentIntent.id, Math.round(amount * 100), currency);
+    await createOrder(eventId, eventName, orderDateTime, email, paymentIntent.id, tickets, Math.round(amount * 100), currency);
 
     res.json({ success: true, message: 'Payment processed successfully' });
   } catch (error) {
