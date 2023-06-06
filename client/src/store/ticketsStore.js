@@ -21,8 +21,18 @@
     },
     0
   );
+  export const resetCart = () => cart.set({
+    event: {},
+    tickets: 0,
+    showPaymentPanel: false,
+    customer: {
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
+    totalCost: 0, 
+  });
   
-
   export const sidePanelOpen = writable(false);
 
   export const step = writable(1);
