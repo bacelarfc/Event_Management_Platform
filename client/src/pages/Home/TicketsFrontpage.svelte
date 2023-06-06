@@ -1,6 +1,5 @@
 <script>
   // @ts-nocheck
-
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
   import "../../styles/ticketsFrontpage_Modified.css";
@@ -15,7 +14,8 @@
   import { events } from "../../store/eventStore.js";
   import { derived } from "svelte/store";
   import { writable } from "svelte/store";
-  import { isAuthenticated } from "../../store/store";
+  import { isAuthenticated, isAdmin } from "../../store/store";
+  import { getUserFromToken } from "../../utils/auth";
   import Eventur from "../../components/Eventur.svelte";
 
   let socket;
@@ -32,7 +32,6 @@
       console.log("Fetched events: ", fetchedEvents);
 
       events.set(fetchedEvents.map((event) => ({ ...event, tickets: 1 })));
-
 
       socket = io("http://localhost:8080");
 
@@ -64,6 +63,13 @@
           currEvents.filter((event) => event._id !== id)
         );
       });
+
+      socket.on("adminStatusChanged", async ({ email, newAdminStatus }) => {
+        const user = await getUserFromToken();
+        isAdmin.set(user.isAdmin);
+      });
+
+
     } catch (error) {
       console.log("Fetch or Socket.io Error: ", error);
     }
@@ -102,23 +108,24 @@
     ([$events, $searchQuery]) => {
       const query = $searchQuery.toLowerCase().trim();
 
-    if (!query) {
-      return $events.filter((event) => event.ticket_left > 0);
-    } else {
-      return $events.filter((event) => {
-        const lowerCaseEventName = event.name.toLowerCase();
-        const lowerCaseEventDate = event.date.toLowerCase();
-        const lowerCaseEventLocation = event.location.toLowerCase();
+      if (!query) {
+        return $events.filter((event) => event.ticket_left > 0);
+      } else {
+        return $events.filter((event) => {
+          const lowerCaseEventName = event.name.toLowerCase();
+          const lowerCaseEventDate = event.date.toLowerCase();
+          const lowerCaseEventLocation = event.location.toLowerCase();
 
-        return (
-          (lowerCaseEventName.includes(query) ||
-            lowerCaseEventDate.includes(query) ||
-            lowerCaseEventLocation.includes(query)) &&
-          event.ticket_left > 0
-        );
-      });
+          return (
+            (lowerCaseEventName.includes(query) ||
+              lowerCaseEventDate.includes(query) ||
+              lowerCaseEventLocation.includes(query)) &&
+            event.ticket_left > 0
+          );
+        });
+      }
     }
-  });
+  );
 
   function handleSearch(event) {
     searchQuery.set(event.detail);
@@ -131,34 +138,40 @@
 <EventSearch on:search={handleSearch} />
 <div class="events-container">
   {#each $filteredEvents as event (event._id)}
-  {#if event.ticket_left > 0}
-  <li class="card" aria-labelledby="event card">
-    <div class="card__filter">
-      <img
-        class="card__photo"
-        src={`http://localhost:8080/images/${event.image}`}
-        alt={event.name}
-        on:error={(e) => (e.target.src = "http://localhost:5173/images/concert.jpeg")}
-      />
-    </div>
-    <div class="card__container">
-      <h2>{event.name}</h2>
-      <div class="icon-location">
-        <Icon icon="ion:location-outline" />
-        <h3>{event.location}</h3>
-      </div>
-      <time>{event.date}</time>
-      <p>{event.description}</p>
-      <p>Price: {event.price} EUR</p>
-      <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
-      <div class="card__buttons">
-        <div class="card__buttons btn secondary">
-          <input type="number" min="1" max="10" bind:value={event.tickets} />
+    {#if event.ticket_left > 0}
+      <li class="card" aria-labelledby="event card">
+        <div class="card__filter">
+          <img
+            class="card__photo"
+            src={`http://localhost:8080/images/${event.image}`}
+            alt={event.name}
+            on:error={(e) =>
+              (e.target.src = "http://localhost:5173/images/concert.jpeg")}
+          />
         </div>
-        <button on:click={() => addToCart(event)}>Buy</button>
-      </div>
-    </div>
-  </li>
-  {/if}
+        <div class="card__container">
+          <h2>{event.name}</h2>
+          <div class="icon-location">
+            <Icon icon="ion:location-outline" />
+            <h3>{event.location}</h3>
+          </div>
+          <time>{event.date}</time>
+          <p>{event.description}</p>
+          <p>Price: {event.price} EUR</p>
+          <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
+          <div class="card__buttons">
+            <div class="card__buttons btn secondary">
+              <input
+                type="number"
+                min="1"
+                max="10"
+                bind:value={event.tickets}
+              />
+            </div>
+            <button on:click={() => addToCart(event)}>Buy</button>
+          </div>
+        </div>
+      </li>
+    {/if}
   {/each}
 </div>
