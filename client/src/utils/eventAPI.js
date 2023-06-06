@@ -70,7 +70,7 @@ export async function deleteEvent(eventId) {
   }
 }
 
-export async function updateTicketLeft(eventId, ticketLeft) {
+export async function updateTicketsLeft(eventId, ticketLeft) {
   try {
     const updatedData = { ticket_left: ticketLeft };
     await updateEvent(eventId, updatedData);

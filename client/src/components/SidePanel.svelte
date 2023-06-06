@@ -1,28 +1,29 @@
 <script>
-  import { cart, sidePanelOpen, step } from "../store/ticketsStore";
+  import { cart, sidePanelOpen } from "../store/ticketsStore";
   import "../styles/sidepanel.css";
   import { onMount } from "svelte";
   import PaymentPanel from "./PaymentPanel.svelte";
   import { getUserFromToken } from "../utils/auth";
+  import { getEventById } from "../utils/eventAPI";
+  import toastr from "toastr";
 
   let firstName = "";
   let lastName = "";
   let email = "";
-  // let step = 1;
-
+  let step = 1;
 
   onMount(async () => {
-  const user = await getUserFromToken();
-  if (user) {
-    $cart.customer.firstName = user.firstName;
-    $cart.customer.lastName = user.lastName;
-    $cart.customer.email = user.email;
-  }
-});
+    const user = await getUserFromToken();
+    if (user) {
+      $cart.customer.firstName = user.firstName;
+      $cart.customer.lastName = user.lastName;
+      $cart.customer.email = user.email;
+    }
+  });
 
-  const handleNext = () => {
-    if ($step === 1) {
-      step.set(2); 
+  const handleNext = async () => {
+    if (step === 1) {
+      step = 2;
     } else {
       const totalCost = $cart.tickets * $cart.event.price;
 
@@ -39,19 +40,27 @@
         showPaymentPanel: true,
       }));
     }
+
+    const eventId = $cart?.event?._id;
+    const event = await getEventById(eventId);
+    const availableTickets = event.ticket_left - $cart.tickets;
+
+    if (availableTickets < 0) {
+      toastr.error("Event has not enough tickets for your order");
+      step = 1;
+    };
   };
 
   const handlePrevious = () => {
-    step.set(1)
+    step = 1;
   };
 </script>
 
 {#if $sidePanelOpen}
-  {$cart} <!-- This is our explicit subscription to the cart -->
   <div class="side-panel">
     <button on:click={() => sidePanelOpen.set(false)}>Close</button>
     <h2>{$cart?.event?.name || ""}</h2>
-    {#if $step === 1}
+    {#if step === 1}
       {#if $cart.tickets === 0}
         <p>Your cart is empty.</p>
       {:else}
@@ -65,9 +74,17 @@
             readonly
           />
           <label for="firstName">First Name:</label>
-          <input id="firstName" type="text" bind:value={$cart.customer.firstName} />
+          <input
+            id="firstName"
+            type="text"
+            bind:value={$cart.customer.firstName}
+          />
           <label for="lastName">Last Name:</label>
-          <input id="lastName" type="text" bind:value={$cart.customer.lastName} />
+          <input
+            id="lastName"
+            type="text"
+            bind:value={$cart.customer.lastName}
+          />
           <label for="tickets">Tickets:</label>
           <input
             id="tickets"
@@ -77,7 +94,9 @@
             bind:value={$cart.tickets}
             required
           />
-          <p>Total cost: {($cart.tickets * $cart.event.price).toFixed(2)} EUR</p>
+          <p>
+            Total cost: {($cart.tickets * $cart.event.price).toFixed(2)} EUR
+          </p>
           <button on:click={handleNext}>Next</button>
         </form>
       {/if}

@@ -42,6 +42,11 @@
       return;
     }
 
+    if (ticket_max < ticket_left) {
+    toastr.error("Max tickets can't be less than tickets left")
+    return;
+    }
+
     const event = {
       name,
       date,

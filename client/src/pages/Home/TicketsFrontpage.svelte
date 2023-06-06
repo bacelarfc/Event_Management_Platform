@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+  // @ts-nocheck
 
   import Icon from "@iconify/svelte";
   import "../../styles/global.css";
@@ -16,7 +16,7 @@
   import { derived } from "svelte/store";
   import { writable } from "svelte/store";
   import { isAuthenticated } from "../../store/store";
-    import Eventur from "../../components/Eventur.svelte";
+  import Eventur from "../../components/Eventur.svelte";
 
   let socket;
 
@@ -33,7 +33,6 @@
 
       events.set(fetchedEvents.map((event) => ({ ...event, tickets: 1 })));
 
-    
       socket = io("http://localhost:8080");
 
       socket.on("connect", () => {
@@ -61,24 +60,23 @@
   });
 
   const addToCart = (event) => {
-  const { _id, name, time, description, price } = event;
+    const { _id, name, time, description, price } = event;
 
-  let authenticated;
-  isAuthenticated.subscribe(value => authenticated = value);
+    let authenticated;
+    isAuthenticated.subscribe((value) => (authenticated = value));
 
-  if (!authenticated) {
-    // Goes to the login page if the user is not authenticated
-    navigate("/login");
-  } else {
-    cart.update((value) => ({
-      ...value,
-      event: { _id, name, time, description, price },
-      tickets: event.tickets,
-      showPaymentPanel: false,
-    }));
-    sidePanelOpen.set(true);
-  }
-};
+    if (!authenticated) {
+      navigate("/login");
+    } else {
+      cart.update((value) => ({
+        ...value,
+        event: { _id, name, time, description, price },
+        tickets: event.tickets,
+        showPaymentPanel: false,
+      }));
+      sidePanelOpen.set(true);
+    }
+  };
 
   const searchQuery = writable("");
 
@@ -86,7 +84,7 @@
     const query = $searchQuery.toLowerCase().trim();
 
     if (!query) {
-      return $events;
+      return $events.filter((event) => event.ticket_left > 0);
     } else {
       return $events.filter((event) => {
         const lowerCaseEventName = event.name.toLowerCase();
@@ -94,9 +92,10 @@
         const lowerCaseEventLocation = event.location.toLowerCase();
 
         return (
-          lowerCaseEventName.includes(query) ||
-          lowerCaseEventDate.includes(query) ||
-          lowerCaseEventLocation.includes(query)
+          (lowerCaseEventName.includes(query) ||
+            lowerCaseEventDate.includes(query) ||
+            lowerCaseEventLocation.includes(query)) &&
+          event.ticket_left > 0
         );
       });
     }
@@ -113,32 +112,34 @@
 <EventSearch on:search={handleSearch} />
 <div class="events-container">
   {#each $filteredEvents as event (event._id)}
-    <li class="card" aria-labelledby="event card">
-      <div class="card__filter">
-        <img
+  {#if event.ticket_left > 0}
+  <li class="card" aria-labelledby="event card">
+    <div class="card__filter">
+      <img
         class="card__photo"
         src={`http://localhost:8080/images/${event.image}`}
         alt={event.name}
-        on:error={(e) => e.target.src = 'http://localhost:5173/images/concert.jpeg'}
+        on:error={(e) => (e.target.src = "http://localhost:5173/images/concert.jpeg")}
       />
+    </div>
+    <div class="card__container">
+      <h2>{event.name}</h2>
+      <div class="icon-location">
+        <Icon icon="ion:location-outline" />
+        <h3>{event.location}</h3>
       </div>
-      <div class="card__container">
-        <h2>{event.name}</h2>
-        <div class="icon-location">
-          <Icon icon="ion:location-outline" />
-          <h3>{event.location}</h3>
+      <time>{event.date}</time>
+      <p>{event.description}</p>
+      <p>Price: {event.price} EUR</p>
+      <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
+      <div class="card__buttons">
+        <div class="card__buttons btn secondary">
+          <input type="number" min="1" max="10" bind:value={event.tickets} />
         </div>
-        <time>{event.date}</time>
-        <p>{event.description}</p>
-        <p>Price: {event.price} EUR</p>
-        <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
-        <div class="card__buttons">
-          <div class="card__buttons btn secondary">
-            <input type="number" min="1" max="10" bind:value={event.tickets} />
-          </div>
-          <button on:click={() => addToCart(event)}>Buy</button>
-        </div>
+        <button on:click={() => addToCart(event)}>Buy</button>
       </div>
-    </li>
+    </div>
+  </li>
+  {/if}
   {/each}
 </div>

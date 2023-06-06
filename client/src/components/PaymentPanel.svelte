@@ -6,7 +6,7 @@
   import { sidePanelOpen } from "../store/ticketsStore";
   import "toastr/build/toastr.min.css";
   import toastr from "toastr";
-  import { getEventById } from "../utils/eventAPI.js";
+  import { getEventById, updateTicketsLeft } from "../utils/eventAPI.js";
 
   export let handlePrevious;
 
@@ -46,6 +46,13 @@
         const event = await getEventById(eventId);
         const eventName = event?.name || '';
 
+        const availableTickets = event.ticket_left - $cart.tickets;
+
+        if (availableTickets < 0) {
+          toastr.error("Event has not enough tickets for your order");
+          return;
+        }
+
         const orderDateTime = new Date().toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
         toastr.info("Processing your order...");
@@ -73,6 +80,7 @@
           const jsonResponse = await response.json();
           console.log(jsonResponse);
           toastr.success("Order was successful");
+          await updateTicketsLeft(eventId, event.ticket_left - $cart.tickets);
           resetCart();
           step.set(1);
         } else {
