@@ -10,7 +10,6 @@ export async function getEventById(id) {
     const event = await eventsCollection.findOne({ _id: objectId });
     return event;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -23,7 +22,6 @@ export async function getAllEvents() {
     const events = await eventsCollection.find({}).toArray();
     return events;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -36,7 +34,6 @@ export async function createEvent(event) {
     const result = await eventsCollection.insertOne(event);
     return result.insertedId;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -50,7 +47,6 @@ export async function updateEvent(id, updatedData) {
     const result = await eventsCollection.updateOne({ _id: objectId }, { $set: updatedData });
     return result.modifiedCount;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -64,7 +60,6 @@ export async function deleteEvent(id) {
     const result = await eventsCollection.deleteOne({ _id: objectId });
     return result.deletedCount;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }

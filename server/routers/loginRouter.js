@@ -26,12 +26,10 @@ router.get('/home', passport.authenticate('jwt', { session: false }), (req, res)
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(`Login attempt for email: ${email}`);
 
     const user = await getUserByEmail(email);
 
     if (!user) {
-      console.log(`No user found for email: ${email}`); // Debug log
       return res.status(404).json({ message: 'User not found' });
     }
 
@@ -42,16 +40,11 @@ router.post('/login', async (req, res) => {
 
       const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-      console.log(`Login successful for email: ${email}`);
-      console.log(`Generated token: Bearer ${token}`);
-
       res.json({ message: 'Logged in', token: 'Bearer ' + token });
     } else {
-      console.log(`Password mismatch for email: ${email}`); // Debug log
       res.status(400).json({ message: 'Incorrect password' });
     }
   } catch (error) {
-    console.log('Error during login:', error);
     res.status(500).json({ message: 'Error logging in', error });
   }
 });

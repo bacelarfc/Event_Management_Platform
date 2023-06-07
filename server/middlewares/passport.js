@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { getUserByEmail } from '../queries/userQueries.js';
-import jwt from 'jsonwebtoken';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -15,13 +14,11 @@ export default (passport) => {
       try {
         const user = await getUserByEmail(jwt_payload.email);
         if (user) {
-          return done(null, user); // pass the user object, not a new token
+          return done(null, user);
         } else {
-          console.log('User not found!');
           return done(null, false);
         }
       } catch (error) {
-        console.log('Error:', error);
         return done(error, false);
       }
     })

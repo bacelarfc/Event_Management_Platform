@@ -21,7 +21,6 @@ router.get('/orders/id/:id', async (req, res) => {
     const order = await getOrderById(orderId);
     res.json(order);
   } catch (error) {
-    console.error('Error retrieving order:', error);
     res.status(500).json({ error: 'Failed to retrieve order' });
   }
 });
@@ -32,7 +31,6 @@ router.get('/orders/email/:email', async (req, res) => {
     const orders = await getOrdersByEmail(email);
     res.json(orders);
   } catch (error) {
-    console.error('Error retrieving orders:', error);
     res.status(500).json({ error: 'Failed to retrieve orders' });
   }
 });
@@ -42,7 +40,6 @@ router.get('/orders', async (req, res) => {
     const orders = await getAllOrders();
     res.json(orders);
   } catch (error) {
-    console.error('Error retrieving orders:', error);
     res.status(500).json({ error: 'Failed to retrieve orders' });
   }
 });
@@ -51,8 +48,6 @@ router.post('/orders', async (req, res) => {
   try {
     const { eventId, eventName, orderDateTime, paymentMethodId, tickets, amount, email } = req.body;
     const currency = 'EUR';
-    console.log(req.body);
-    console.log(`Received paymentMethodId: ${paymentMethodId}`);
     const paymentIntent = await stripeClient.paymentIntents.create({
       amount,
       currency,
@@ -64,7 +59,6 @@ router.post('/orders', async (req, res) => {
 
     res.json({ success: true, message: 'Payment processed successfully' });
   } catch (error) {
-    console.error('Payment processing error:', error);
     res.status(500).json({ error: 'Payment processing failed' });
   }
 });
@@ -76,7 +70,6 @@ router.delete('/orders/:id', async (req, res) => {
     const deletedCount = await deleteOrder(orderId);
     res.json({ deletedCount });
   } catch (error) {
-    console.error('Error deleting order:', error);
     res.status(500).json({ error: 'Failed to delete order' });
   }
 });
