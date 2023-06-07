@@ -21,6 +21,8 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
+app.use(express.static("../client/dist"));
+
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",  // The origin of your Svelte app
