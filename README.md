@@ -1,6 +1,6 @@
 ### Eventur
 <p align="center">
-  <img src="[https://user-images.githubusercontent.com/60754393/235303876-5cae66e8-0146-4ef8-a857-2ba426fdd52b.jpg](https://github.com/bacelarfc/Event_Management_Platform/assets/60754393/6d08d882-ab71-4b24-97de-2c53797f9133)" alt="lock">
+  <img src="https://github.com/bacelarfc/Event_Management_Platform/assets/60754393/6d08d882-ab71-4b24-97de-2c53797f9133" alt="lock">
 </p>
 
 
