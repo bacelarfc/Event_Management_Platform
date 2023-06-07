@@ -130,7 +130,7 @@
   }
 
   const handleImageError = (event) => {
-    event.target.src = "http://localhost:5173/images/concert.jpeg";
+    event.target.src = "http://localhost:8080/images/concert.jpeg";
   };
 </script>
 
@@ -150,11 +150,11 @@
         >
           <div class="card__filter">
             <img
-              class="card__photo"
-              src={`http://localhost:8080/images/${event.image}`}
-              alt={event.name}
-              on:error={handleImageError}
-            />
+  class="card__photo"
+  src={`http://localhost:8080/images/${event.image ? event.image : 'default_image.jpeg'}`}
+  alt={event.name}
+  on:error={handleImageError}
+/>
           </div>
 
           <div class="card__container">
