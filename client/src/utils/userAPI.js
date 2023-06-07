@@ -46,7 +46,7 @@ export async function getUsers() {
 
 export async function createUser(user) {
   try {
-    const response = await request('POST', '/createUser', user);
+    const response = await request('POST', '/users', user);
     return response;
   } catch (error) {
     throw error;

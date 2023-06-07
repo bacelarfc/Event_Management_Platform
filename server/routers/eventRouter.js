@@ -25,7 +25,7 @@ router.get('/events/:id', async (req, res) => {
     }
 });
 
-router.post('/createEvent', async (req, res) => {
+router.post('/events', async (req, res) => {
     try {
         const {
             name,

@@ -26,7 +26,7 @@ async function request(method, url, data) {
 
 export async function uploadImage(formData) {
   try {
-    const response = await request('POST', '/image/upload', formData);
+    const response = await request('POST', '/api/image/upload', formData);
     return response;
   } catch (error) {
     throw error;

@@ -1,5 +1,6 @@
 *.vscode
 uploads
+*requests.rest
 
 # Logs
 logs

@@ -46,7 +46,7 @@ export async function getEventById(eventId) {
 
 export async function createEvent(event) {
   try {
-    const response = await request('POST', '/createEvent', event);
+    const response = await request('POST', '/events', event);
     return response;
   } catch (error) {
     throw error;

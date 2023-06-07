@@ -33,7 +33,7 @@ router.get('/users/:email', async (req, res) => {
 });
 
 
-router.post('/createUser', async (req, res) => {
+router.post('/users', async (req, res) => {
   try {
     const { email, password, firstName, lastName, isAdmin } = req.body;
     const existingUser = await getUserByEmail(email);

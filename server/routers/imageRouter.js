@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/image/upload', upload.single('image'), async (req, res) => {
+router.post('/api/image/upload', upload.single('image'), async (req, res) => {
     try {
       res.status(200).json({ success: true, filename: req.file.filename });
     } catch (error) {
