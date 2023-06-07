@@ -1,4 +1,4 @@
-### Eventur
+# Eventur
 <p align="center">
   <img src="https://github.com/bacelarfc/Event_Management_Platform/assets/60754393/6d08d882-ab71-4b24-97de-2c53797f9133" alt="lock">
 </p>
