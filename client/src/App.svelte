@@ -25,7 +25,6 @@
   onDestroy(() => {
     if (socket) {
       socket.close();
-      console.log("Socket.io connection closed");
     }
   });
 

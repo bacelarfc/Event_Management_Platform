@@ -58,9 +58,7 @@ export function getToken() {
 }
 
 export function removeToken() {
-  console.log('Token before removal: ', localStorage.getItem('token'));
   localStorage.removeItem('token');
-  console.log('Token after removal: ', localStorage.getItem('token'));
 }
 
 
@@ -79,14 +77,11 @@ export async function getUser() {
         },
       });
   
-      console.log('getUser:', response); 
-  
       if (response.ok) {
         const userData = await response.json();
         user.set(userData);
         return userData;
       } else {
-       // removeToken();
         user.set(null);
         return null;
       }
@@ -100,7 +95,6 @@ export async function getUser() {
       const userData = await getUser();
       return userData ? userData.email : '';
     } catch (error) {
-      console.error('Error getting user email', error.message);
       return '';
     }
   }
@@ -113,7 +107,6 @@ export async function getUser() {
       }
   
       const formattedToken = token.replace('Bearer ', '');
-      console.log("Getuser: " + formattedToken)
   
       const response = await fetch(`${API_BASE_URL}/auth/user`, {
         method: "GET",
