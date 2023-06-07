@@ -6,9 +6,9 @@
   import ManageUsers from "./pages/Admin/ManageUsers.svelte";
   import ManageEvents from "./pages/Admin/ManageEvents.svelte";
   import CreateUserForm from "./pages/Admin/CreateUserForm.svelte";
+  import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
   import CreateEventForm from "./pages/Admin/CreateEventForm.svelte";
   import EditEventForm from "./pages/Admin/EditEventForm.svelte";
-  import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
   import AdminProtectedRoute from "./components/AdminProtectedRoute.svelte";
   import ProtectedRoute from "./components/ProtectedRoute.svelte";
   import AccountSettings from "./pages/Home/AccountSettings.svelte";

@@ -76,6 +76,26 @@ router.put('/events/:id', async (req, res) => {
     }
 });
 
+
+router.put('/events/:id/updateTickets', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ticket_left } = req.body;
+
+        const updatedData = { ticket_left };
+
+        const modifiedCount = await updateEvent(id, updatedData);
+        if (modifiedCount === 0) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        res.json({ message: 'Tickets left updated' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating ticket left', error });
+    }
+});
+
+
 router.delete('/events/:id', async (req, res) => {
     try {
         const { id } = req.params;

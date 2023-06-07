@@ -53,19 +53,27 @@ export async function createEvent(event) {
   }
 }
 
-export async function updateEvent(eventId, event) {
+export async function updateEvent(eventId, updatedData) {
   try {
-    const response = await request('PUT', `/events/${eventId}`, event);
+    const response = await request('PUT', `/events/${eventId}`, updatedData);
     return response;
   } catch (error) {
     throw error;
   }
 }
 
-
 export async function deleteEvent(eventId) {
   try {
     await request('DELETE', `/events/${eventId}`);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateTicketsLeft(eventId, ticketLeft) {
+  try {
+    const updatedData = { ticket_left: ticketLeft };
+    await updateEvent(eventId, updatedData);
   } catch (error) {
     throw error;
   }
@@ -76,11 +84,9 @@ export async function fetchOrdersByEmail(email) {
     const response = await request('GET', `/orders/email/${email}`);
     const orders = response.orders;
 
-    // Fetch event names for the orders
     const eventIds = orders.map((order) => order.eventId);
     const events = await Promise.all(eventIds.map((eventId) => getEventById(eventId)));
 
-    // Add event names to the orders
     const ordersWithEventNames = orders.map((order) => {
       const event = events.find((event) => event._id === order.eventId);
       return { ...order, eventName: event.name };

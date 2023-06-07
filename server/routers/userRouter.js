@@ -1,17 +1,9 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from "dotenv";
 import { check, validationResult } from 'express-validator';
 import { authenticateToken } from '../middlewares/authenticateToken.js';
-import {
-  setUserAdminStatusByEmail,
-  createUser,
-  getAllUsers,
-  deleteUser,
-  getUserByEmail,
-  updateUser,
-} from '../queries/userQueries.js';
+import { setUserAdminStatusByEmail, createUser, getAllUsers, deleteUser, getUserByEmail, updateUser,} from '../queries/userQueries.js';
 
 dotenv.config();
 const router = express.Router();
@@ -136,7 +128,9 @@ router.patch(
 
       const updatedIsAdmin = !user.isAdmin;
       const updatedUser = await setUserAdminStatusByEmail(userEmail, updatedIsAdmin);
-
+  
+      req.io.emit('adminStatusChanged', { email: updatedUser.email, newAdminStatus: updatedIsAdmin });
+  
       res.json({ message: 'User admin status updated', user: updatedUser });
     } catch (error) {
       res.status(500).json({ message: 'Error updating user admin status', error });

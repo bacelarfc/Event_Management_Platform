@@ -38,6 +38,7 @@
           <th>Date of Order</th>
           <th>Event Name</th>
           <th>Email</th>
+          <th>Tickets</th>
           <th>Amount</th>
           <th>Currency</th>
         </tr>
@@ -48,6 +49,7 @@
             <td>{order.orderDateTime}</td>
             <td>{order.eventName}</td>
             <td>{order.email}</td>
+            <td>{order.tickets}</td>
             <td>{order.amount}</td>
             <td>{order.currency}</td>
           </tr>

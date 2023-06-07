@@ -1,4 +1,5 @@
 <script>
+  import Icon from "@iconify/svelte";
   import "../styles/global.css";
   import "../styles/navbar.css"
   import { Link } from "svelte-navigator";
@@ -53,7 +54,11 @@
     <ToggleTheme />
     <ul>
       <li><Link to="/">Home</Link></li>
-      <li><a href="/dontwant" on:click|preventDefault={openCart}>Cart</a></li>
+      <li>
+        <button class="cartButton"on:click={openCart}>
+          <Icon icon="gridicons:cart" />
+        </button>
+      </li>
     </ul>
     {#if $isAuthenticated}
       <div class="right-side">

@@ -11,41 +11,12 @@
   import { navigate } from "svelte-navigator";
   import { events } from "../../store/eventStore.js";
   import { derived, writable } from "svelte/store";
-  import { isAuthenticated } from "../../store/store";
   import Footer from "../../components/Footer.svelte";
+  import { isAuthenticated, isAdmin } from "../../store/store";
+  import { getUserFromToken } from "../../utils/auth";
   import Eventur from "../../components/Eventur.svelte";
 
   let socket;
-
-  const searchQuery = writable("");
-
-  const filteredEvents = derived(
-    [events, searchQuery],
-    ([$events, $searchQuery]) => {
-      const query = $searchQuery.toLowerCase().trim();
-
-      if (!query) {
-        return $events;
-      } else {
-        return $events.filter((event) => {
-          const lowerCaseEventName = event.name.toLowerCase();
-          const lowerCaseEventDate = event.date.toLowerCase();
-          const lowerCaseEventLocation = event.location.toLowerCase();
-
-          return (
-            lowerCaseEventName.includes(query) ||
-            lowerCaseEventDate.includes(query) ||
-            lowerCaseEventLocation.includes(query)
-          );
-        });
-      }
-    }
-  );
-
-  function handleSearch(event) {
-    searchQuery.set(event.detail);
-  }
-
   let selectedEventId = null;
   let isModalOpen = false;
 
@@ -56,7 +27,7 @@
 
   const openModal = (event, id) => {
     isModalOpen = true;
-    event.preventDefault(); // Prevent the default anchor link behavior
+    event.preventDefault(); 
     selectedEventId = id;
   };
 
@@ -98,6 +69,12 @@
           currEvents.filter((event) => event._id !== id)
         );
       });
+
+      socket.on("adminStatusChanged", async ({ email, newAdminStatus }) => {
+        const user = await getUserFromToken();
+        isAdmin.set(user.isAdmin);
+      });
+
     } catch (error) {
       console.log("Fetch or Socket.io Error: ", error);
     }
@@ -117,7 +94,6 @@
     isAuthenticated.subscribe((value) => (authenticated = value));
 
     if (!authenticated) {
-
       navigate("/login");
     } else {
       cart.update((value) => ({
@@ -130,6 +106,36 @@
     }
   };
 
+  const searchQuery = writable("");
+
+  const filteredEvents = derived(
+    [events, searchQuery],
+    ([$events, $searchQuery]) => {
+      const query = $searchQuery.toLowerCase().trim();
+
+      if (!query) {
+        return $events.filter((event) => event.ticket_left > 0);
+      } else {
+        return $events.filter((event) => {
+          const lowerCaseEventName = event.name.toLowerCase();
+          const lowerCaseEventDate = event.date.toLowerCase();
+          const lowerCaseEventLocation = event.location.toLowerCase();
+
+          return (
+            (lowerCaseEventName.includes(query) ||
+              lowerCaseEventDate.includes(query) ||
+              lowerCaseEventLocation.includes(query)) &&
+            event.ticket_left > 0
+          );
+        });
+      }
+    }
+  );
+
+  function handleSearch(event) {
+    searchQuery.set(event.detail);
+  }
+
   const handleImageError = (event) => {
     event.target.src = "http://localhost:5173/images/concert.jpeg";
   };
@@ -139,48 +145,58 @@
 <Eventur />
 <SidePanel />
 <EventSearch on:search={handleSearch} />
+
 <div class="events-container">
   {#each $filteredEvents as event (event._id)}
-    <li class="card" aria-labelledby="event card">
-      <div class="card-container" on:keydown on:click={(e) => openModal(e, event._id)}>
-        <div class="card__filter">
-          <img
-            class="card__photo"
-            src={`http://localhost:8080/images/${event.image}`}
-            alt={event.name}
-            on:error={handleImageError}
-          />
-        </div>
-        <div class="card__container">
-          <h2>{event.name}</h2>
-          <div class="icon-location">
-            <Icon icon="ion:location-outline" />
-            <h3>{event.location}</h3>
+    {#if event.ticket_left > 0}
+      <li class="card" aria-labelledby="event card">
+        <div class="card-container" on:keydown on:click={(e) => openModal(e, event._id)}>
+          <div class="card__filter">
+            <img
+              class="card__photo"
+              src={`http://localhost:8080/images/${event.image}`}
+              alt={event.name}
+              on:error={handleImageError}
+            />
           </div>
-          <time>{event.date}</time>
-          <div class="card__buttons">
-            <div class="card__buttons btn secondary">
-              <input type="number" min="1" max="10" bind:value={event.tickets} />
-            </div>
-            <button on:click|stopPropagation={() => addToCart(event)}>Buy</button>
 
-          </div>
-        </div>
-      </div>
-      {#if selectedEventId === event._id}
-      <div class="modal {isModalOpen ? 'open' : ''}">    
-          <div class="modal-content">
-            <span class="close" on:keydown on:click={closeModal}>&times;</span>
+          <div class="card__container">
             <h2>{event.name}</h2>
-            <h3>{event.location}</h3>
+            <div class="icon-location">
+              <Icon icon="ion:location-outline" />
+              <h3>{event.location}</h3>
+            </div>
+            <time>{event.date}</time>
             <p>{event.description}</p>
+            <p>Price: {event.price} EUR</p>
+            <p>Tickets: {event.ticket_max} / {event.ticket_left}</p>
+            <div class="card__buttons">
+              <div class="card__buttons btn secondary">
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  bind:value={event.tickets}
+                  />
+              </div>
+              <button on:click|stopPropagation={() => addToCart(event)}>Buy</button>
+            </div>
           </div>
         </div>
-      {/if}
-    </li>
+
+        {#if selectedEventId === event._id}
+          <div class="modal {isModalOpen ? 'open' : ''}">
+            <div class="modal-content">
+              <span class="close" on:keydown on:click={closeModal}>&times;</span>
+              <h2>{event.name}</h2>
+              <h3>{event.location}</h3>
+              <p>{event.description}</p>
+            </div>
+          </div>
+        {/if}
+      </li>
+    {/if}
   {/each}
 </div>
+
 <Footer />
-
-
-
