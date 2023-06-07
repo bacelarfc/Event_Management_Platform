@@ -12,13 +12,12 @@ export async function createOrder(eventId, eventName, orderDateTime, email, paym
       email: email,
       paymentIntentId: paymentIntentId,
       tickets: tickets,
-      amount: amount / 100, //temporary
+      amount: amount / 100,
       currency: currency,
     });
 
-    console.log('Order created successfully!');
   } catch (error) {
-    console.error('Error creating order:', error);
+    throw error;
   }
 }
 
@@ -32,7 +31,6 @@ export async function getOrderById(id) {
     const order = await ordersCollection.findOne({ _id: objectId });
     return order;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -45,7 +43,6 @@ export async function getOrdersByEmail(email) {
     const orders = await ordersCollection.find({ email }).toArray();
     return orders;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -58,7 +55,6 @@ export async function getAllOrders() {
     const orders = await ordersCollection.find({}).toArray();
     return orders;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -72,7 +68,6 @@ export async function updateOrder(id, updatedData) {
     const result = await ordersCollection.updateOne({ _id: objectId }, { $set: updatedData });
     return result.modifiedCount;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }
@@ -86,7 +81,6 @@ export async function deleteOrder(id) {
     const result = await ordersCollection.deleteOne({ _id: objectId });
     return result.deletedCount;
   } catch (error) {
-    console.error('An error occurred:', error);
     throw error;
   }
 }

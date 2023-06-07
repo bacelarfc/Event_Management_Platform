@@ -25,7 +25,7 @@ app.use(express.static("../client/dist"));
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",  // The origin of your Svelte app
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true
@@ -34,7 +34,6 @@ const io = new Server(server, {
 
 let currentTheme = 'dark';
 io.on('connection', (socket) => {
-  console.log('a user connected');
 
   socket.on('toggle-theme', () => {
     currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -42,7 +41,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
   });
 });
 

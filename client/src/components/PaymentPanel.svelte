@@ -36,7 +36,6 @@
         const totalCostValue = $totalCost;
         const eventId = $cart?.event?._id;
 
-        console.log($cart);
 
         if (
           typeof totalCostValue !== "number" ||
@@ -84,7 +83,6 @@
         toastr.remove();
 
         if (response) {
-          console.log(response);
           toastr.success("Order was successful");
           await updateTicketsLeft(eventId, event.ticket_left - $cart.tickets);
           resetCart();
