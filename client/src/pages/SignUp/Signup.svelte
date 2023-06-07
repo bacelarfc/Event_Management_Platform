@@ -21,7 +21,6 @@
         toastr.success("Registered successfully");
         navigate("/login");
       } catch (error) {
-        console.error(error.message);
         toastr.error("Registration failed: " + error.message);
         throw new Error("Registration failed: " + error.message);
       }

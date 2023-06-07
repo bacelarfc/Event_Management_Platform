@@ -6,10 +6,7 @@ import Icon from '@iconify/svelte';
 import "../styles/global.css";
 
 async function toggleTheme() {
-  // Toggle theme locally
   theme.update(value => value === 'dark' ? 'light' : 'dark');
-  
-  // Emit 'toggle-theme' event to the server
   socket.emit('toggle-theme');
 }
 

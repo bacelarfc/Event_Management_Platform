@@ -5,6 +5,7 @@
   import { navigate } from "svelte-navigator";
   import { getEvents, deleteEvent } from "../../utils/eventAPI.js";
   import EventSearch from '../../components/EventSearch.svelte';
+  import toastr from "toastr";
 
   let events = [];
   let filteredEvents = [];
@@ -14,7 +15,7 @@
       events = await getEvents();
       filteredEvents = [...events];
     } catch (error) {
-      console.error("Error fetching data:", error);
+
     }
   }
 
@@ -24,7 +25,7 @@
       events = events.filter((event) => event._id !== id);
       filteredEvents = [...events];
     } catch (error) {
-      console.error("Error deleting event:", error);
+      toastr.error("Error loading events")
     }
   }
 

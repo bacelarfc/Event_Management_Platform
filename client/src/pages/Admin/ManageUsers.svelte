@@ -35,8 +35,7 @@
       userList = await getUsers();
       filteredUsers = [...userList];
     } catch (error) {
-      toastr.error("Couldn't get resources");
-      console.error("Error fetching data:", error);
+      toastr.error("Error loading users");
     }
   }
 
@@ -51,7 +50,6 @@
       toastr.success("User admin status updated");
     } catch (error) {
       toastr.error("Error updating user admin status");
-      console.error("Error updating user admin status:", error);
     }
   }
 
@@ -63,7 +61,6 @@
       filteredUsers = filteredUsers.filter((user) => user.email !== email);
     } catch (error) {
       toastr.error("Error deleting user");
-      console.error("Error deleting user:", error);
     }
   }
 
@@ -89,7 +86,7 @@
 
       fetchData();
     } catch (error) {
-      console.error("Error:", error);
+      toastr.error("Error loading logged in admin");
     }
   });
   onMount(fetchData);

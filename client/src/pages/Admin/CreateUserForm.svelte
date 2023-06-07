@@ -11,24 +11,20 @@
     let firstName = "";
     let lastName = "";
     let isAdmin = false;
-    let errorMessage = "";
   
     async function handleCreateUser() {
       if (!email || !password || !confirmPassword || !firstName || !lastName) {
-        errorMessage = "Please fill in all required fields.";
         toastr.error("Please fill in all required fields.");
         return;
       }
   
       const emailPattern = /^\S+@\S+\.\S+$/;
       if (!emailPattern.test(email)) {
-        errorMessage = "Please enter a valid email address.";
         toastr.error("Please enter a valid email address.");
         return;
       }
   
       if (password !== confirmPassword) {
-        errorMessage = "Passwords do not match.";
         toastr.error("Passwords do not match.");
         return;
       }
@@ -47,13 +43,10 @@
         navigate("/manageUsers");
       } catch (error) {
         if (error.status === 400) {
-          errorMessage = error.message;
           setTimeout(() => {
-            errorMessage = "";
           }, 3000);
         } else {
           toastr.error("Email already in use");
-          console.error("Error creating user:", error);
         }
       }
     }

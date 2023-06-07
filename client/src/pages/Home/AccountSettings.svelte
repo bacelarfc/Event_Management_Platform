@@ -15,7 +15,6 @@
   let firstName = "";
   let lastName = "";
   let isAdmin = false;
-  let errorMessage = "";
 
   onMount(async () => {
     try {
@@ -25,25 +24,22 @@
       lastName = data.lastName;
       isAdmin = data.isAdmin;
     } catch (error) {
-      console.error("Error:", error);
+      toastr.error("Error loading user information");
     }
   });
 
   async function handleUpdateUser() {
     if (!password || !confirmPassword || !newPassword) {
-      errorMessage = "Please fill in all password fields.";
       toastr.error("Please fill in all password fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      errorMessage = "Passwords do not match.";
       toastr.error("Passwords do not match.");
       return;
     }
 
     if (password === newPassword) {
-      errorMessage = "New password cannot be the same as the old password.";
       toastr.error("New password cannot be the same as the old password.");
       return;
     }
@@ -52,7 +48,6 @@
       await login(email, password);
     } catch (error) {
       toastr.error("Incorrect password for user: " + email);
-      console.error("Error updating user:", error);
       return;
     }
 

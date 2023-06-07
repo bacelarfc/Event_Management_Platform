@@ -10,7 +10,6 @@
 
   let email = "";
   let password = "";
-  let errorMessage = "";
 
   async function handleLogin() {
     try {
@@ -27,12 +26,9 @@
 
       toastr.success("Welcome " + email);
       navigate("/");
-    } else {
-      console.error("Failed to login");
     }
   } catch (error) {
     toastr.error(error.message);
-    console.error("An error occurred during login:", error);
   }
 }
 </script>
@@ -61,9 +57,6 @@
       placeholder="Password"
       required
     />
-    {#if errorMessage}
-      <p>{errorMessage}</p>
-    {/if}
     <button class="sign-up" type="button"
       ><a href="/signUp">Not a member? Sign up!</a>
     </button>

@@ -16,8 +16,7 @@
       orders = await fetchOrdersByEmail(user.email);
       filteredOrders = [...orders];
     } catch (error) {
-      toastr.error("Couldn't get resources");
-      console.error("Error fetching data:", error);
+      toastr.error("Error loading user information");
     }
   }
 

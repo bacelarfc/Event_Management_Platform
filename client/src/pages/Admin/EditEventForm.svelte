@@ -90,7 +90,6 @@
 
       if (!uploadResponse.ok) {
         toastr.error("Failed to upload image");
-        console.error("Failed to upload image.");
         return null;
       }
 
@@ -98,7 +97,6 @@
       return responseJson;
     } catch (error) {
       toastr.error("Error uploading image");
-      console.error("Error uploading image:", error);
       return null;
     }
   }

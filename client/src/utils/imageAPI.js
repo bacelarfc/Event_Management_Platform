@@ -2,8 +2,6 @@ const API_BASE_URL = 'http://localhost:8080';
 
 async function request(method, url, data) {
   const headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-
   const token = localStorage.getItem('token');
 
   if (token) {
@@ -13,7 +11,7 @@ async function request(method, url, data) {
   const requestOptions = {
     method: method,
     headers: headers,
-    body: JSON.stringify(data),
+    body: data,
   };
 
   const response = await fetch(API_BASE_URL + url, requestOptions);
@@ -26,29 +24,11 @@ async function request(method, url, data) {
   }
 }
 
-export async function fetchAllOrders() {
+export async function uploadImage(formData) {
   try {
-    const response = await request('GET', '/orders');
+    const response = await request('POST', '/image/upload', formData);
     return response;
   } catch (error) {
     throw error;
   }
 }
-
-export async function fetchOrdersByEmail(email) {
-    try {
-      const response = await request('GET', `/orders/email/${email}`);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-  
-  export async function createOrder(orderDetails) {
-    try {
-      const response = await request('POST', '/orders', orderDetails);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }

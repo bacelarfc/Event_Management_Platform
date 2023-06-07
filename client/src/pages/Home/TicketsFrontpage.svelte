@@ -15,6 +15,7 @@
   import { isAuthenticated, isAdmin } from "../../store/store";
   import { getUserFromToken } from "../../utils/auth";
   import Eventur from "../../components/Eventur.svelte";
+  import toastr from "toastr";
 
   let socket;
   let selectedEventId = null;
@@ -27,7 +28,7 @@
 
   const openModal = (event, id) => {
     isModalOpen = true;
-    event.preventDefault(); 
+    event.preventDefault();
     selectedEventId = id;
   };
 
@@ -35,7 +36,7 @@
     try {
       const response = await fetch("http://localhost:8080/events");
       if (!response.ok) {
-        console.log("Error: ", response.status, response.statusText);
+        toastr.error("Error loading events");
         return;
       }
 
@@ -44,17 +45,13 @@
 
       socket = io("http://localhost:8080");
 
-      socket.on("connect", () => {
-        console.log("Socket.io connection established");
-      });
+      socket.on("connect", () => {});
 
       socket.on("event", (newEvent) => {
         events.update((currEvents) => [newEvent, ...currEvents]);
       });
 
-      socket.on("disconnect", (reason) => {
-        console.log("Socket.io connection lost: ", reason);
-      });
+      socket.on("disconnect", (reason) => {});
 
       socket.on("eventUpdated", ({ id, updatedData }) => {
         events.update((currEvents) =>
@@ -74,16 +71,12 @@
         const user = await getUserFromToken();
         isAdmin.set(user.isAdmin);
       });
-
-    } catch (error) {
-      console.log("Fetch or Socket.io Error: ", error);
-    }
+    } catch (error) {}
   });
 
   onDestroy(() => {
     if (socket) {
       socket.close();
-      console.log("Socket.io connection closed");
     }
   });
 
@@ -150,7 +143,11 @@
   {#each $filteredEvents as event (event._id)}
     {#if event.ticket_left > 0}
       <li class="card" aria-labelledby="event card">
-        <div class="card-container" on:keydown on:click={(e) => openModal(e, event._id)}>
+        <div
+          class="card-container"
+          on:keydown
+          on:click={(e) => openModal(e, event._id)}
+        >
           <div class="card__filter">
             <img
               class="card__photo"
@@ -177,9 +174,11 @@
                   min="1"
                   max="10"
                   bind:value={event.tickets}
-                  />
+                />
               </div>
-              <button on:click|stopPropagation={() => addToCart(event)}>Buy</button>
+              <button on:click|stopPropagation={() => addToCart(event)}
+                >Buy</button
+              >
             </div>
           </div>
         </div>
@@ -187,7 +186,8 @@
         {#if selectedEventId === event._id}
           <div class="modal {isModalOpen ? 'open' : ''}">
             <div class="modal-content">
-              <span class="close" on:keydown on:click={closeModal}>&times;</span>
+              <span class="close" on:keydown on:click={closeModal}>&times;</span
+              >
               <h2>{event.name}</h2>
               <h3>{event.location}</h3>
               <p>{event.description}</p>
