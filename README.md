@@ -5,7 +5,7 @@
 
 
 ## What the project does:
-Eventur is an online event management platform built using Node.js and Svelte. It allows users to create, manage, and join events. The platform provides features such as user authentication, event creation, event search, and event registration.
+Eventur is an online event management platform built using Node.js and Svelte. It allows users to create, manage, and join events. The platform provides features such as user authentication, event creation, event search, and event registration. 
 
 ## Why the project is useful:
 Eventur simplifies the process of event management for both event organizers and attendees. Organizers can easily create and manage events, while attendees can search for events, register, and receive updates. The platform enhances the overall event experience and streamlines event-related tasks.
