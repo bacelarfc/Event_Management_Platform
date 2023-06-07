@@ -1,55 +1,29 @@
-# Event manager Platform - Node.js Exam project
-
-## Project Idea: Online Event Management Platform
-### Overview: 
-Create an online event management platform that allows users to create, manage, and join events. The platform will have features like event creation, event search, user authentication, and authorization.
-## Main Features:
-### User Authentication & Authorization: 
-Use Passport.js for authentication and authorization with the platform.
-Allow users to sign up and log in using their email and password or with social media accounts (e.g., Google, Facebook).
-Implement role-based access control for different user types (e.g., event organizers, attendees).
-### Event Creation:
-Allow event organizers to create and manage events.
-Provide a form to input event details, such as name, date, time, location, description, and cover image.
-Use Svelte to create a responsive and dynamic user interface.
-### Event Search:
-Create a search functionality that allows users to search for events based on keywords, location, date, and category.
-Implement filters and sorting options to refine the search results.
-Display search results in a visually appealing, responsive layout using Svelte.
-### Event Registration & Attendance:
-Allow users to join events as attendees.
-Ticket sale
-Implement a feature to track attendance and display the list of attendees on the event page.
-Send email notifications to attendees about upcoming events and updates.
-### Database: 
-Use a database like MongoDB or PostgreSQL to store user and event data.
-Create database schemas for users, events, and attendance.
-Implement CRUD operations for managing data.
-### API:
-Develop a RESTful API using Node.js and Express.js to handle all backend operations.
+### Eventur
+<p align="center">
+  <img src="[https://user-images.githubusercontent.com/60754393/235303876-5cae66e8-0146-4ef8-a857-2ba426fdd52b.jpg](https://github.com/bacelarfc/Event_Management_Platform/assets/60754393/6d08d882-ab71-4b24-97de-2c53797f9133)" alt="lock">
+</p>
 
 
 
-## TODO:
-Analytics (how many tickets were sold): Dani
-Account History: Dani
-Reset password email: Dani 
-Switchable: Fernanda <br>
-Send SMS: Fernanda <br>
-Web sockets all events:Fernanda
-Admin: 
 
-## Important
-Style: darkmode, maybe switchable? <br> 
-Mainpage/eventpage
-<br> 
-Navbar: Home/logo <br>  Search bar? <br> 
-Login, sign up (Logged in : Account img?, name) <br> 
-Account dropdown - settings(change password, put image, delete account), history (what events were booked)<br> 
-Admin sidebar: Manage events, Manage accounts, event/user statistics<br>
-Footer
+## What the project does:
+Eventur is an online event management platform built using Node.js and Svelte. It allows users to create, manage, and join events. The platform provides features such as user authentication, event creation, event search, and event registration.
 
-## Features for later
-Chat - related to events <br> 
-Send mail, send sms<br> 
-Payment API - payment history done
+## Why the project is useful:
+Eventur simplifies the process of event management for both event organizers and attendees. Organizers can easily create and manage events, while attendees can search for events, register, and receive updates. The platform enhances the overall event experience and streamlines event-related tasks.
+
+## How users can get started with the project:
+To get started with Eventur, follow these steps:
+
+## Clone the repository to your local machine.
+Install the necessary dependencies using npm install.
+Set up the database by configuring MongoDB or PostgreSQL.
+Configure the authentication provider (e.g., Passport.js) and social media account integration.
+Start the server from the root folder: node app.js.
+Start the client-side server from the "client" folder: npm run dev.
+Access Eventur through your browser at http://localhost:5370.
+Where users can get help with the project:
+If you need help with Eventur, you can seek assistance by opening an issue on the GitHub repository. The project maintains a dedicated support channel to address user questions and concerns.
+
+## Who maintains and contributes to the project:
+Eventur is currently maintained by bacelarf and KingAlistair. The project welcomes contributions from the open-source community. If you would like to contribute, please submit a pull request on the GitHub repository.
