@@ -67,7 +67,7 @@
         );
       });
 
-      socket.on("adminStatusChanged", async ({ email, newAdminStatus }) => {
+      socket.on("adminStatusChanged", async () => {
         const user = await getUserFromToken();
         isAdmin.set(user.isAdmin);
       });

@@ -2,29 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import multer from 'multer';
 import path from 'path';
-import mongoose from 'mongoose';
+import { connectToDb } from '../databases/connection.js';
 
 const router = express.Router();
 
 dotenv.config();
 
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
-
-const Event = mongoose.model('Event', {
-  name: String,
-  date: String,
-  time: String,
-  location: String,
-  description: String,
-  image: String,
-  ticket_max: Number,
-  ticket_left: Number,
-  price: Number,
-});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -40,6 +24,7 @@ const upload = multer({ storage });
 
 router.post('/api/image/upload', upload.single('image'), async (req, res) => {
     try {
+      await connectToDb();
       res.status(200).json({ success: true, filename: req.file.filename });
     } catch (error) {
       console.error(error);

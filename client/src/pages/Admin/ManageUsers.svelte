@@ -2,7 +2,7 @@
   import "../../styles/adminpages.css";
   import "../../styles/eventur.css";
   import Nav from "../../components/Nav.svelte";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { navigate } from "svelte-navigator";
   import { io } from "socket.io-client";
   import "toastr/build/toastr.min.css";
@@ -20,15 +20,6 @@
   let filteredUsers = [];
   let searchQuery = "";
   let socket;
-
-  socket = io("http://localhost:8080");
-
-  socket.on("connect", () => {});
-
-  socket.on("adminStatusChanged", async ({ email, newAdminStatus }) => {
-    const user = await getUserFromToken();
-    isAdmin.set(user.isAdmin);
-  });
 
   async function fetchData() {
     try {
@@ -90,6 +81,23 @@
     }
   });
   onMount(fetchData);
+
+
+   socket = io("http://localhost:8080");
+
+  socket.on("connect", () => {});
+
+  socket.on("adminStatusChanged", async () => {
+    const user = await getUserFromToken();
+    isAdmin.set(user.isAdmin);
+  });
+
+  onDestroy(() => {
+    if (socket) {
+      socket.close();
+    }
+  });
+
 </script>
 
 <Nav />

@@ -129,7 +129,7 @@ router.patch(
       const updatedIsAdmin = !user.isAdmin;
       const updatedUser = await setUserAdminStatusByEmail(userEmail, updatedIsAdmin);
   
-      req.io.emit('adminStatusChanged', { email: updatedUser.email, newAdminStatus: updatedIsAdmin });
+      req.io.emit('adminStatusChanged');
   
       res.json({ message: 'User admin status updated', user: updatedUser });
     } catch (error) {
