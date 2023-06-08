@@ -48,13 +48,7 @@
 
         const event = await getEventById(eventId);
         const eventName = event?.name || "";
-
-        const availableTickets = event.ticket_left - $cart.tickets;
-
-        if (availableTickets < 0) {
-          toastr.error("Event has not enough tickets for your order");
-          return;
-        }
+        
 
         const orderDateTime = new Date().toLocaleString("en-US", {
           day: "2-digit",

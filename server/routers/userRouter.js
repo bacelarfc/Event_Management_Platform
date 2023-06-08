@@ -1,12 +1,15 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import { check, validationResult } from 'express-validator';
 import { authenticateToken } from '../middlewares/authenticateToken.js';
 import { setUserAdminStatusByEmail, createUser, getAllUsers, deleteUser, getUserByEmail, updateUser,} from '../queries/userQueries.js';
+import passport from 'passport'
+import passportConfig from '../middlewares/passport.js'
 
 dotenv.config();
 const router = express.Router();
+passportConfig(passport);
 
 
 router.get('/users', async (req, res) => {
@@ -138,7 +141,7 @@ router.patch(
   }
 );
 
-router.get("/auth/user", authenticateToken, async (req, res) => {
+router.get("/auth/user", passport.authenticate("jwt",{session:false}), async (req, res) => {
   const user = await getUserByEmail(req.user.email)
   res.json(user);
 });

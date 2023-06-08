@@ -36,8 +36,6 @@
     navigate("/login");
   }
 
-  let user;
-
   onMount(async () => {
     document.addEventListener("click", closeDropdown);
     return () => {

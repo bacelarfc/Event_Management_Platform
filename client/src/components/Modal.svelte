@@ -16,6 +16,5 @@
       <h2>{event.name}</h2>
       <h3>{event.location}</h3>
       <p>{event.description}</p>
-      <!-- add other details you want to display -->
     </div>
   </div>

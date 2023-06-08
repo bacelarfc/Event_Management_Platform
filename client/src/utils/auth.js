@@ -106,13 +106,12 @@ export async function getUser() {
         return null;
       }
   
-      const formattedToken = token.replace('Bearer ', '');
   
       const response = await fetch(`${API_BASE_URL}/auth/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: formattedToken,
+          Authorization: token,
         },
       });
   

@@ -2,8 +2,7 @@
   import { onDestroy } from "svelte";
   import { navigate } from "svelte-navigator";
   import { isAuthenticated } from "../store/store.js";
-
-  export const component = null;
+  
 
   let userAuthenticated = false;
 
