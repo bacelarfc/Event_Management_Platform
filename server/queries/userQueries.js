@@ -32,6 +32,7 @@ export async function createUser(user) {
     const db = getDb(); 
     const usersCollection = db.collection('users');
 
+    user.favorites = [];
     const result = await usersCollection.insertOne(user);
     return result.insertedId;
   } catch (error) {
@@ -40,6 +41,28 @@ export async function createUser(user) {
   }
 }
 
+// export async function getUserById(userId) {
+//   try {
+//     await connectToDb();
+//     const db = getDb();
+//     const usersCollection = db.collection('users');
+//     const user = await usersCollection.findOne({ _id: userId });
+//     return user;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+export async function getUserById(userId) {
+  try {
+    await connectToDb();
+    const db = getDb();
+    const usersCollection = db.collection('users');
+
+    return await usersCollection.findOne({ _id: userId });
+  } catch (error) {
+    throw error;
+  }
+}
 export async function updateUser(email, updatedData) {
   try {
     await connectToDb(); 

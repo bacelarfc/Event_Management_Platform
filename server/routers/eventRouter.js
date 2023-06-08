@@ -1,5 +1,8 @@
 import express from 'express';
 import { getEventById, createEvent, getAllEvents, updateEvent, deleteEvent } from '../queries/eventQueries.js';
+import { addEventToFavorites, removeEventFromFavorites } from '../queries/favoritesQueries.js';
+import { getUserById } from '../queries/userQueries.js';
+
 
 const router = express.Router();
 
@@ -90,5 +93,24 @@ router.delete('/events/:id', async (req, res) => {
         res.status(500).json({ message: 'Error deleting event', error });
     }
 });
+
+router.delete('/events/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const deletedCount = await deleteEvent(id);
+      if (deletedCount === 0) {
+        return res.status(404).json({ message: 'Event not found' });
+      }
+      req.io.emit('eventDeleted', id);
+      res.json({ message: 'Event deleted' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting event', error });
+    }
+  });
+  
+
+  
+
 
 export default router;

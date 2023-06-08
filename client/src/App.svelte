@@ -10,6 +10,13 @@
   import CreateEventForm from './pages/Admin/CreateEventForm.svelte'
   import EditEventForm from './pages/Admin/EditEventForm.svelte'
   import TicketsFrontpage from "./pages/Home/TicketsFrontpage.svelte";
+  import CreateEventForm from "./pages/Admin/CreateEventForm.svelte";
+  import EditEventForm from "./pages/Admin/EditEventForm.svelte";
+  import AdminProtectedRoute from "./components/AdminProtectedRoute.svelte";
+  import ProtectedRoute from "./components/ProtectedRoute.svelte";
+  import AccountSettings from "./pages/Home/AccountSettings.svelte";
+  import AccountHistory from "./pages/Home/AccountHistory.svelte";
+  import Favorites from "./components/Favorites.svelte";
   import ProtectedRoute from './components/ProtectedRoute.svelte'; 
   import AccountSettings from './pages/Home/AccountSettings.svelte';
   import { onMount, onDestroy } from "svelte";
@@ -57,6 +64,9 @@
   </Route>
   <Route path="/manageEvents">
     <ProtectedRoute><ManageEvents /></ProtectedRoute>
+  </Route>
+  <Route path="/favorites">
+    <ProtectedRoute><Favorites /></ProtectedRoute>
   </Route>
   <Route path="/userForm">
     <ProtectedRoute><CreateUserForm /></ProtectedRoute>

@@ -82,7 +82,11 @@ export async function getUser() {
       if (response.ok) {
         const userData = await response.json();
         user.set(userData);
-        return userData;
+        return {
+          ...userData,
+          id: userData._id, // Assuming the user object has an "_id" property for the ID
+        };
+
       } else {
        // removeToken();
         user.set(null);
@@ -116,7 +120,7 @@ export async function getUser() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: formattedToken,
+          Authorization: `Bearer ${token}`,
         },
       });
   

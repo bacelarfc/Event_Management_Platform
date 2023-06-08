@@ -13,7 +13,6 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
 });
 
-
 const Event = mongoose.model('Event', {
   name: String,
   date: String,

@@ -1,9 +1,8 @@
 <script>
   import "../styles/global.css";
   import "../styles/navbar.css";
-  import { Link } from "svelte-navigator";
-  import { navigate } from "svelte-navigator";
-  import { sidePanelOpen } from "../store/ticketsStore";
+  import { Link, navigate } from "svelte-navigator";
+  import { cart, sidePanelOpen, resetCart } from "../store/ticketsStore";
   import { onMount } from "svelte";
   import { isAuthenticated, logout } from "../store/store.js";
 
@@ -14,22 +13,31 @@
     navigate("/login");
   }
 
-  const openCart = () => sidePanelOpen.set(true);
+  function handleLogin() {
+    navigate("/login");
+  }
+
+  function openCart() {
+    sidePanelOpen.set(true);
+  }
 
   function handleDropdownClick(event) {
     event.currentTarget.classList.toggle("active");
   }
 
-  function closeDropdown(event) {
-    const dropdown = event.target.closest(".dropdown");
-    if (dropdown) {
-      dropdown.classList.remove("active");
-    } else {
-      const dropdowns = document.querySelectorAll(".dropdown");
-      dropdowns.forEach((d) => d.classList.remove("active"));
-    }
+  let cartIsEmpty = true;
+
+  $: {
+    cartIsEmpty = Object.keys($cart.event).length === 0 &&
+      $cart.tickets === 0 &&
+      $cart.totalCost === 0 &&
+      !$cart.showPaymentPanel &&
+      Object.values($cart.customer).every(val => val === '');
   }
 
+  function handleFavorites() {
+    navigate("/favorites");
+  }
   onMount(() => {
     document.addEventListener("click", closeDropdown);
     return () => {
