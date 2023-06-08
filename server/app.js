@@ -44,6 +44,16 @@ io.on('connection', (socket) => {
   });
 });
 
+const authenticateMiddleware = (req, res, next) => {
+  const isAuthenticated = req.session && req.session.user;
+
+  if (!isAuthenticated) {
+    return res.redirect('/');
+  }
+  next();
+};
+
+
 app.use((req, res, next) => {
   req.io = io;
   next();
@@ -62,6 +72,7 @@ app.use('/api/auth', registerRouter);
 app.use(userRouter);
 app.use(orderRouter);
 app.use(imageRouter);
+app.use(authenticateMiddleware);
 
 
 const PORT = process.env.PORT || 8080;

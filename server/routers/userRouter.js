@@ -2,7 +2,6 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { check, validationResult } from 'express-validator';
-import { authenticateToken } from '../middlewares/authenticateToken.js';
 import { setUserAdminStatusByEmail, createUser, getAllUsers, deleteUser, getUserByEmail, updateUser,} from '../queries/userQueries.js';
 import passport from 'passport'
 import passportConfig from '../middlewares/passport.js'
@@ -33,6 +32,11 @@ router.get('/users/:email', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving user', error });
   }
+});
+
+router.get("/auth/user", passport.authenticate("jwt",{session:false}), async (req, res) => {
+  const user = await getUserByEmail(req.user.email)
+  res.json(user);
 });
 
 
@@ -94,22 +98,6 @@ router.put('/users/:email', async (req, res) => {
   }
 });
 
-router.delete('/users/:email', async (req, res) => {
-  try {
-    const { email } = req.params;
-
-    const deletedCount = await deleteUser(email);
-    if (deletedCount === 0) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json({ message: 'User deleted' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error deleting user', error });
-  }
-});
-
-
 router.patch(
   '/users/:userEmail/admin',
   [
@@ -141,9 +129,19 @@ router.patch(
   }
 );
 
-router.get("/auth/user", passport.authenticate("jwt",{session:false}), async (req, res) => {
-  const user = await getUserByEmail(req.user.email)
-  res.json(user);
+router.delete('/users/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const deletedCount = await deleteUser(email);
+    if (deletedCount === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
 });
 
 

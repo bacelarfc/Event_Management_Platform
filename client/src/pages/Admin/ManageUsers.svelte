@@ -80,10 +80,8 @@
       toastr.error("Error loading logged in admin");
     }
   });
-  onMount(fetchData);
 
-
-   socket = io("http://localhost:8080");
+  socket = io("http://localhost:8080");
 
   socket.on("connect", () => {});
 
@@ -97,7 +95,6 @@
       socket.close();
     }
   });
-
 </script>
 
 <Nav />

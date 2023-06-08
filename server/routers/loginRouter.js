@@ -11,16 +11,13 @@ import passportConfig from '../middlewares/passport.js';
 const router = express.Router();
 passportConfig(passport);
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the front page!' });
-});
-
 router.get('/ticketsFrontpage', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.json({ message: 'Welcome to the tickets page!', user: req.user });
 });
 
-router.get('/home', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ message: 'Welcome to the home page!', user: req.user });
+router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { id, email } = req.user;
+  res.json({ id, email });
 });
 
 router.post('/login', async (req, res) => {
@@ -49,9 +46,5 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { id, email } = req.user;
-  res.json({ id, email });
-});
 
 export default router;

@@ -1,5 +1,4 @@
 const API_BASE_URL = 'http://localhost:8080'
-import { user } from '../store/store.js';
 
 async function request(method, url, data) {
   const headers = new Headers();
@@ -10,7 +9,6 @@ async function request(method, url, data) {
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
   }
-  const headersObj = Object.fromEntries(headers.entries());
   
   const requestOptions = {
     method: method,
@@ -46,12 +44,6 @@ export async function login(email, password) {
   }
 }
 
-export function setToken(token) {
-  if (token) {
-    localStorage.setItem('token', token.replace('Bearer ', ''));
-  }
-}
-
 export function getToken() {
   const token = localStorage.getItem('token');
   return token ? token.replace('Bearer ', '') : null;
@@ -62,46 +54,9 @@ export function removeToken() {
 }
 
 
-
-export async function getUser() {
-    try {
-      const token = getToken();
-  
-      if (!token) {
-        return null;
-      }
-
-      const response = await fetch(API_BASE_URL + '/api/auth/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (response.ok) {
-        const userData = await response.json();
-        user.set(userData);
-        return userData;
-      } else {
-        user.set(null);
-        return null;
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  export async function getUserEmail() {
-    try {
-      const userData = await getUser();
-      return userData ? userData.email : '';
-    } catch (error) {
-      return '';
-    }
-  }
-
   export async function getUserFromToken() {
     try {
-      const token = getToken();
+      const token = localStorage.getItem('token');
       if (!token) {
         return null;
       }

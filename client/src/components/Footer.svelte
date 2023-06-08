@@ -5,6 +5,7 @@
   import { onMount } from "svelte";
 
   let showFooter = false;
+  let footerHeight = 100;
 
   onMount(() => {
     window.addEventListener("scroll", handleScroll);
@@ -14,7 +15,7 @@
   function handleScroll() {
     const footer = document.querySelector(".footer");
     const scrollPosition = window.innerHeight + window.scrollY;
-    const pageHeight = document.documentElement.scrollHeight;
+    const pageHeight = document.documentElement.scrollHeight - footerHeight;
 
     if (scrollPosition >= pageHeight) {
       showFooter = true;

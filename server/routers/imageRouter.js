@@ -8,8 +8,6 @@ const router = express.Router();
 
 dotenv.config();
 
-
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
